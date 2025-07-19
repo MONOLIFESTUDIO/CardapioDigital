@@ -25,16 +25,16 @@
 //---LINKS DE DEMONSTRAÇÃO ABAIXO: TROQUE PELO SEUS LINKS
 
 // URL of the spreadsheet with menu items (tab: Items)
-const MENU_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSL_-m5LL9vOU4Nua4BtL4bWC_G8ACdhQX0v1Ik-YAcaf4Wt4JmLRtJCTm-z9l9WPWXgxXq00R9WXA6/pub?gid=1132427241&single=true&output=csv';
+const MENU_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnrZHFYsZXTp6ir3vShgttufxOpEUgA37pm4UrZjtkQ_5ZdBQ-S5zXN3vMBeipG-rvFkKddE8dGFH8/pub?gid=1132427241&single=true&output=csv';
 
 // URL of the spreadsheet with menu categories (tab: Categories)
-const CATEGORIES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSL_-m5LL9vOU4Nua4BtL4bWC_G8ACdhQX0v1Ik-YAcaf4Wt4JmLRtJCTm-z9l9WPWXgxXq00R9WXA6/pub?gid=271394769&single=true&output=csv';
+const CATEGORIES_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnrZHFYsZXTp6ir3vShgttufxOpEUgA37pm4UrZjtkQ_5ZdBQ-S5zXN3vMBeipG-rvFkKddE8dGFH8/pub?gid=271394769&single=true&output=csv';
 
 // URL of the spreadsheet with general settings (tab: Config)
-const CONFIG_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSL_-m5LL9vOU4Nua4BtL4bWC_G8ACdhQX0v1Ik-YAcaf4Wt4JmLRtJCTm-z9l9WPWXgxXq00R9WXA6/pub?gid=0&single=true&output=csv';
+const CONFIG_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnrZHFYsZXTp6ir3vShgttufxOpEUgA37pm4UrZjtkQ_5ZdBQ-S5zXN3vMBeipG-rvFkKddE8dGFH8/pub?gid=0&single=true&output=csv';
 
 // URL of the spreadsheet with operating hours (tab: Hours)
-const HOURS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSL_-m5LL9vOU4Nua4BtL4bWC_G8ACdhQX0v1Ik-YAcaf4Wt4JmLRtJCTm-z9l9WPWXgxXq00R9WXA6/pub?gid=1842804489&single=true&output=csv';
+const HOURS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnrZHFYsZXTp6ir3vShgttufxOpEUgA37pm4UrZjtkQ_5ZdBQ-S5zXN3vMBeipG-rvFkKddE8dGFH8/pub?gid=1842804489&single=true&output=csv';
 
 // URL of the spreadsheet with neighborhoods and delivery fees (tab: Bairros) **OPCIONAL**
-const NEIGHBORHOODS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSL_-m5LL9vOU4Nua4BtL4bWC_G8ACdhQX0v1Ik-YAcaf4Wt4JmLRtJCTm-z9l9WPWXgxXq00R9WXA6/pub?gid=1634629476&single=true&output=csv';
+const NEIGHBORHOODS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnrZHFYsZXTp6ir3vShgttufxOpEUgA37pm4UrZjtkQ_5ZdBQ-S5zXN3vMBeipG-rvFkKddE8dGFH8/pub?gid=1634629476&single=true&output=csv';
