@@ -1,7 +1,7 @@
 <!--
 //====================================================================\\
 ||                                                                    ||
-||   CARDÁPIO SHEETS - V3.4   - 19/07/2025 - 01h44                    ||
+||   CARDÁPIO SHEETS - V3.5  - 20/07/2025 - 22h05                    ||
 ||                                                                    ||
 ||    Desenvolvido com ❤️ por Dante Testa                             ||
 ||    www.dantetesta.com.br | WhatsApp: (19) 99802-9156              ||
@@ -43,7 +43,9 @@
     <script src="config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+	
+	
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
         
         :root {
             /* ===== CORES PRINCIPAIS - ESTILO iFOOD ===== */
@@ -119,7 +121,7 @@
             --gradiente-sucesso-hover: linear-gradient(135deg, #45A049 0%, #5CB85C 100%);
         }
         
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Montserrat', sans-serif; }
         
         .category-nav {
             backdrop-filter: blur(10px);
@@ -245,6 +247,34 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        
+        /* ===== CUPOM EXPANSÍVEL - TRANSIÇÕES SUAVES ===== */
+        .coupon-toggle-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .coupon-toggle-btn:hover {
+            background-color: var(--cor-fundo-card);
+            transform: translateY(-1px);
+            box-shadow: var(--sombra-card);
+        }
+        
+        .coupon-toggle-btn:active {
+            transform: translateY(0);
+        }
+        
+        .coupon-field-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .coupon-arrow {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .bounce {
@@ -499,6 +529,22 @@
         .checkout-disabled .food-card:hover {
             transform: none;
         }
+        
+        /* Animação pulse para badge de desconto */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body style="background-color: var(--cor-fundo) !important;">
@@ -548,7 +594,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
-                    <button id="search-btn" onclick="performSearch()" class="rounded-full w-8 h-8 flex items-center justify-center transition-colors" style="background-color: var(--cor-primaria) !important; color: white !important;" title="Pesquisar" onmouseover="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
+                    <button id="search-btn" onclick="performSearch()" class="rounded-full w-8 h-8 flex items-center justify-center transition-colors" style="background-color: var(--cor-primaria) !important; color: white !important;" title="Pesquisar" onmouseover="this.style.backgroundColor='var(--cor-primaria-hover)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
@@ -571,7 +617,7 @@
                 <h3 class="text-2xl font-bold mb-3" style="color: var(--cor-texto) !important;">Gostou da experiência?</h3>
                 <p class="mb-6" style="color: var(--cor-texto-secundario) !important;">Sua avaliação nos ajuda a melhorar e alcançar mais pessoas!</p>
                 <a id="google-reviews-link" href="" target="_blank" 
-                   class="inline-flex items-center space-x-2 px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg" style="background-color: var(--cor-terciaria) !important; color: white !important;" onmouseover="this.style.backgroundColor='var(--cor-terciaria-escura)'" onmouseout="this.style.backgroundColor='var(--cor-terciaria)'">
+                   class="inline-flex items-center space-x-2 px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg" style="background-color: var(--cor-terciaria) !important; color: white !important;" onmouseover="this.style.backgroundColor='var(--cor-terciaria-hover)'" onmouseout="this.style.backgroundColor='var(--cor-terciaria)'">
                     <span>⭐</span>
                     <span>Avaliar no Google</span>
                 </a>
@@ -654,7 +700,7 @@
     </button>
 
     <!-- Cart FAB -->
-    <button id="cart-fab" class="cart-fab text-white shadow-lg hidden" style="background-color: var(--cor-whatsapp) !important;" onclick="openCart()" onmouseover="this.style.backgroundColor='var(--cor-whatsapp-escura)'" onmouseout="this.style.backgroundColor='var(--cor-whatsapp)'">
+    <button id="cart-fab" class="cart-fab text-white shadow-lg hidden" style="background-color: var(--cor-whatsapp) !important;" onclick="openCart()" onmouseover="this.style.backgroundColor='var(--cor-whatsapp-hover)'" onmouseout="this.style.backgroundColor='var(--cor-whatsapp)'">
         <div class="flex items-center space-x-4 px-5">
             <div class="relative">
                 <svg class="w-9 h-9 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-top: 6px;">
@@ -703,8 +749,8 @@
                             <span class="text-lg font-bold">Total:</span>
                             <span class="text-xl font-bold" style="color: var(--cor-primaria) !important;" id="cart-modal-total">R$ 0,00</span>
                         </div>
-                        <button onclick="proceedToCheckout()" class="w-full text-white py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-primaria) !important;" onmouseover="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
-                            Finalizar Pedido
+                        <button onclick="proceedToCheckout()" class="w-full text-white py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-primaria) !important;" onmouseover="this.style.backgroundColor='var(--cor-primaria-hover)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
+                            Finalizar Pedido →
                         </button>
                     </div>
                 </div>
@@ -750,7 +796,7 @@
                         <button onclick="closeEditNotes()" class="flex-1 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-fundo-secundario) !important; color: var(--cor-texto) !important;" onmouseover="this.style.backgroundColor='var(--cor-borda)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'">
                             Cancelar
                         </button>
-                        <button onclick="saveItemNotes()" class="flex-1 text-white py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-secundaria) !important;" onmouseover="this.style.backgroundColor='var(--cor-secundaria-escura)'" onmouseout="this.style.backgroundColor='var(--cor-secundaria)'">
+                        <button onclick="saveItemNotes()" class="flex-1 text-white py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-secundaria) !important;" onmouseover="this.style.backgroundColor='var(--cor-secundaria-hover)'" onmouseout="this.style.backgroundColor='var(--cor-secundaria)'">
                             Salvar
                         </button>
                     </div>
@@ -816,11 +862,11 @@
                     </div>
                     
                     <div class="flex space-x-3">
-                        <button onclick="closeCheckout()" class="flex-1 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-fundo-secundario) !important; color: var(--cor-texto) !important;" onmouseover="this.style.backgroundColor='var(--cor-borda)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'">
-                            Cancelar
+                        <button onclick="backToCart()" class="flex-1 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-fundo-secundario) !important; color: var(--cor-texto) !important;" onmouseover="this.style.backgroundColor='var(--cor-borda)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'">
+                            ← Voltar
                         </button>
-                        <button onclick="nextStep(3)" id="step2-continue" class="flex-1 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-primaria) !important; color: white !important;" onmouseover="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
-                            Continuar
+                        <button onclick="nextStep(3)" id="step2-continue" class="flex-1 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-primaria) !important; color: white !important;" onmouseover="this.style.backgroundColor='var(--cor-primaria-hover)'" onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
+                            Continuar →
                         </button>
                     </div>
                 </div>
@@ -833,6 +879,108 @@
                             <h3 class="text-xl font-bold">Finalizar Pedido</h3>
                         </div>
                         <button onclick="closeCheckout()" style="color: var(--cor-texto-secundario) !important;" onmouseover="this.style.color='var(--cor-texto)'" onmouseout="this.style.color='var(--cor-texto-secundario)'">✕</button>
+                    </div>
+                    
+                    <!-- RESUMO DO PEDIDO - VERSÃO COMPACTA -->
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4 mb-4">
+                        
+                        <!-- Título -->
+                        <div class="flex items-center space-x-2 mb-3">
+                            <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <h3 class="text-sm font-semibold text-gray-800">Resumo do Pedido</h3>
+                        </div>
+                        
+                        <!-- BREAKDOWN DETALHADO -->
+                        <div class="space-y-2 mb-3">
+                            
+                            <!-- Subtotal Produtos -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">Subtotal</span>
+                                <span id="order-subtotal" class="text-sm font-medium text-gray-800">R$ 0,00</span>
+                            </div>
+                            
+                            <!-- Frete (quando aplicável) -->
+                            <div id="delivery-row" class="flex justify-between items-center hidden">
+                                <span class="text-sm text-gray-600">Frete</span>
+                                <span id="order-delivery-fee" class="text-sm font-medium text-gray-800">R$ 0,00</span>
+                            </div>
+                            
+                            <!-- Desconto (quando aplicável) -->
+                            <div id="discount-row" class="flex justify-between items-center hidden">
+                                <span class="text-green-600 flex items-center space-x-1">
+                                    <span class="text-xs">💸</span>
+                                    <span id="discount-label" class="text-xs sm:text-sm">Desconto</span>
+                                </span>
+                                <span id="order-discount" class="text-xs sm:text-sm font-medium text-green-600">-R$ 0,00</span>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- LINHA SEPARADORA -->
+                        <div class="border-t border-gray-200 pt-3 mb-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-base font-semibold text-gray-800">Total</span>
+                                <span id="checkout-order-total" class="text-xl font-bold" style="color: var(--cor-primaria) !important;">R$ 0,00</span>
+                            </div>
+                        </div>
+                        
+                        <!-- CAMPO DE CUPOM EXPANSÍVEL -->
+                        <div class="border-t border-gray-200 pt-3">
+                            
+                            <!-- Botão para expandir cupom -->
+                            <div id="coupon-toggle-btn" class="cursor-pointer transition-all duration-200" onclick="toggleCouponField()">
+                                <div class="flex items-center justify-center space-x-2 py-2 px-3 rounded-lg border border-dashed transition-all duration-200" style="border-color: var(--cor-primaria) !important; background-color: rgba(var(--cor-primaria-rgb), 0.05) !important;" onmouseover="this.style.backgroundColor='rgba(var(--cor-primaria-rgb), 0.1)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.backgroundColor='rgba(var(--cor-primaria-rgb), 0.05)'; this.style.transform='translateY(0)'">
+                                    <span class="text-xs font-medium" style="color: var(--cor-primaria) !important;">🎟️ Tenho um cupom de desconto</span>
+                                    <svg id="coupon-arrow" class="w-3 h-3 transition-transform duration-200" style="color: var(--cor-primaria) !important;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Campo expansível (inicialmente oculto) -->
+                            <div id="coupon-field-container" class="overflow-hidden transition-all duration-300" style="max-height: 0; opacity: 0;">
+                                <div class="pt-3">
+                                    
+                                    <div class="flex space-x-2">
+                                        <!-- Input com botão de limpar inline -->
+                                        <div class="flex-1 relative">
+                                            <input 
+                                                type="text" 
+                                                id="coupon-code" 
+                                                class="w-full px-2 sm:px-3 py-2 pr-8 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent uppercase" 
+                                                placeholder="Código do cupom"
+                                                style="text-transform: uppercase;"
+                                                oninput="this.value = this.value.toUpperCase(); toggleClearButton()"
+                                                onkeypress="if(event.key==='Enter') applyCouponFromButton()">
+                                            <!-- Botão de limpar dentro do input -->
+                                            <button 
+                                                id="clear-coupon-btn"
+                                                onclick="clearCouponInput()" 
+                                                class="absolute right-2 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors hidden"
+                                                title="Limpar código"
+                                                type="button">
+                                                <span class="text-xs font-bold">×</span>
+                                            </button>
+                                        </div>
+                                        <button 
+                                            onclick="applyCouponFromButton()" 
+                                            class="px-3 sm:px-4 py-2 text-xs sm:text-sm text-white rounded-lg transition-colors whitespace-nowrap"
+                                            style="background-color: var(--cor-primaria) !important;"
+                                            onmouseover="this.style.backgroundColor='var(--cor-primaria-hover)'"
+                                            onmouseout="this.style.backgroundColor='var(--cor-primaria)'">
+                                            Aplicar
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Feedback do Cupom -->
+                                    <div id="coupon-feedback" class="mt-2 text-xs hidden"></div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
                     </div>
                     
                     <div class="space-y-4 mb-6">
@@ -889,8 +1037,9 @@
                         </div>
                         
                         <div id="money-change" class="hidden">
-                            <label class="block text-sm font-medium mb-2" style="color: var(--cor-texto) !important;">Troco para quanto?</label>
-                            <input type="tel" id="change-amount" class="w-full px-3 py-2 rounded-lg" style="border: 1px solid var(--cor-borda) !important; --tw-ring-color: var(--cor-primaria) !important;" placeholder="R$ 50,00" oninput="formatMoney(this)" inputmode="numeric" onfocus="this.style.borderColor='var(--cor-primaria)'; this.style.outline='2px solid var(--cor-primaria)'; this.style.outlineOffset='2px'" onblur="this.style.borderColor='var(--cor-borda)'; this.style.outline='none'">
+                            <label class="block text-sm font-medium mb-1" style="color: var(--cor-texto) !important;">Valor para Troco *</label>
+                            <p class="text-xs mb-2" style="color: var(--cor-texto-secundario) !important;">Informe um valor maior que o total do pedido</p>
+                            <input type="tel" id="change-amount" class="w-full px-3 py-2 rounded-lg" style="border: 1px solid var(--cor-borda) !important; --tw-ring-color: var(--cor-primaria) !important;" placeholder="R$ 50,00" inputmode="numeric" onfocus="this.style.borderColor='var(--cor-primaria)'; this.style.outline='2px solid var(--cor-primaria)'; this.style.outlineOffset='2px'" onblur="this.style.borderColor='var(--cor-borda)'; this.style.outline='none'">
                         </div>
                         
                         <div>
@@ -900,10 +1049,10 @@
                     </div>
                     
                     <div class="flex space-x-3">
-                        <button onclick="prevStep(2)" class="flex-1 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-fundo-secundario) !important; color: var(--cor-texto) !important;" onmouseover="this.style.backgroundColor='var(--cor-borda)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'">
-                            Voltar
+                        <button onclick="prevStep(2)" class="w-2/5 py-3 rounded-lg font-medium transition-colors" style="background-color: var(--cor-fundo-secundario) !important; color: var(--cor-texto) !important;" onmouseover="this.style.backgroundColor='var(--cor-borda)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'">
+                            ← Voltar
                         </button>
-                        <button onclick="finalizeOrder()" class="flex-1 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2" style="background-color: #25D366 !important; color: white !important;" onmouseover="this.style.backgroundColor='#128C7E'" onmouseout="this.style.backgroundColor='#25D366'">
+                        <button onclick="finalizeOrder()" class="w-3/5 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2" style="background-color: var(--cor-whatsapp) !important; color: white !important;" onmouseover="this.style.backgroundColor='var(--cor-whatsapp-hover)'" onmouseout="this.style.backgroundColor='var(--cor-whatsapp)'">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                             </svg>
@@ -946,6 +1095,12 @@
         let neighborhoodsData = []; // Dados dos bairros para taxa de delivery
         let currentDeliveryFee = null; // Taxa de delivery atual
         let isDataLoaded = false;
+        
+        // Sistema de Cupons - Variáveis Globais
+        let couponsData = []; // Dados dos cupons carregados da planilha
+        let appliedCoupon = null; // Cupom atualmente aplicado
+        let couponDiscount = 0; // Valor do desconto aplicado
+        let couponTimeout = null; // Timeout para aplicação automática
 
         // CSV URLs - agora importadas do config.js
         // As URLs das planilhas estão definidas no arquivo config.js
@@ -1170,6 +1325,69 @@
                     favicon.href = processImageUrl(appConfig.identidade_visual.favicon_url);
                 }
 
+                /**
+                 * Função para calcular uma cor 20% mais escura
+                 */
+                function darkenColor(color, percent = 20) {
+                    // Remove # se presente
+                    color = color.replace('#', '');
+                    
+                    // Converte para RGB
+                    const r = parseInt(color.substr(0, 2), 16);
+                    const g = parseInt(color.substr(2, 2), 16);
+                    const b = parseInt(color.substr(4, 2), 16);
+                    
+                    // Aplica o escurecimento
+                    const factor = (100 - percent) / 100;
+                    const newR = Math.round(r * factor);
+                    const newG = Math.round(g * factor);
+                    const newB = Math.round(b * factor);
+                    
+                    // Converte de volta para hex
+                    return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
+                }
+                
+                /**
+                 * Aplica cores escuras automaticamente para hover dos botões
+                 */
+                function applyDarkerColors() {
+                    const root = document.documentElement;
+                    
+                    // Obter cores atuais
+                    const primaryColor = getComputedStyle(root).getPropertyValue('--cor-primaria').trim();
+                    const secondaryColor = getComputedStyle(root).getPropertyValue('--cor-secundaria').trim();
+                    const tertiaryColor = getComputedStyle(root).getPropertyValue('--cor-terciaria').trim();
+                    const whatsappColor = getComputedStyle(root).getPropertyValue('--cor-whatsapp').trim();
+                    
+                    // Calcular e aplicar cores escuras
+                    if (primaryColor) {
+                        const darkerPrimary = darkenColor(primaryColor, 20);
+                        root.style.setProperty('--cor-primaria-hover', darkerPrimary, 'important');
+                    }
+                    
+                    if (secondaryColor) {
+                        const darkerSecondary = darkenColor(secondaryColor, 20);
+                        root.style.setProperty('--cor-secundaria-hover', darkerSecondary, 'important');
+                    }
+                    
+                    if (tertiaryColor) {
+                        const darkerTertiary = darkenColor(tertiaryColor, 20);
+                        root.style.setProperty('--cor-terciaria-hover', darkerTertiary, 'important');
+                    }
+                    
+                    if (whatsappColor) {
+                        const darkerWhatsapp = darkenColor(whatsappColor, 20);
+                        root.style.setProperty('--cor-whatsapp-hover', darkerWhatsapp, 'important');
+                    }
+                    
+                    console.log('Cores de hover aplicadas:', {
+                        primary: primaryColor + ' → ' + darkenColor(primaryColor, 20),
+                        secondary: secondaryColor + ' → ' + darkenColor(secondaryColor, 20),
+                        tertiary: tertiaryColor + ' → ' + darkenColor(tertiaryColor, 20),
+                        whatsapp: whatsappColor + ' → ' + darkenColor(whatsappColor, 20)
+                    });
+                }
+
                 // Apply colors as CSS custom properties with !important
                 if (appConfig.cores) {
                     const root = document.documentElement;
@@ -1225,6 +1443,9 @@
                             `linear-gradient(135deg, ${appConfig.cores.cor_terciaria}, ${appConfig.cores.cor_terciaria_escura})`, 'important');
                     }
                 }
+                
+                // Aplicar cores escuras automaticamente (20% mais escuro)
+                applyDarkerColors();
 
                 // Apply delivery options configuration
                 setupDeliveryOptions();
@@ -1649,33 +1870,36 @@
         }
 
         // Function to show preloader
-        function showPreloader() {
-            const preloaderHTML = `
-                <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
-                    <div class="text-center">
-                        <div class="mb-4">
-                            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
-                        </div>
-                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando Cardápio</h2>
-                        <p class="text-gray-600">Aguarde o carregamento...</p>
-                        <div class="mt-4">
-                            <div class="bg-gray-200 rounded-full h-2 w-64 mx-auto">
-                                <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-                            </div>
-                        </div>
+     function showPreloader() {
+    const preloaderHTML = `
+        <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+            <div class="text-center">
+                <div class="mb-4">
+                    <svg class="animate-spin h-12 w-12 text-red-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando Cardápio</h2>
+                <p class="text-gray-600">Aguarde o carregamento...</p>
+                <div class="mt-4">
+                    <div class="bg-gray-200 rounded-full h-2 w-64 mx-auto">
+                        <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
                     </div>
                 </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', preloaderHTML);
-        }
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', preloaderHTML);
+}
 
         // Function to update progress
-        function updateProgress(percentage) {
-            const progressBar = document.getElementById('progress-bar');
-            if (progressBar) {
-                progressBar.style.width = percentage + '%';
-            }
-        }
+       function updateProgress(percentage) {
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        progressBar.style.width = percentage + '%';
+    }
+}
 
         // Function to hide preloader
         function hidePreloader() {
@@ -1786,15 +2010,32 @@
                 console.log('🏘️ Loading neighborhoods data...');
                 try {
                     neighborhoodsData = await loadCSVData(NEIGHBORHOODS_CSV_URL);
-                    // Process neighborhoods data
+                    // Process neighborhoods data - mapear para formato consistente
                     neighborhoodsData = neighborhoodsData.map(row => ({
-                        nome_bairro: (row.nome_bairro || '').trim().toLowerCase(),
-                        valor_taxa: parseFloat((row.valor_taxa || '0').toString().replace(',', '.')) || 0
-                    })).filter(item => item.nome_bairro); // Remove empty entries
-                    console.log(`✅ ${neighborhoodsData.length} bairros carregados:`, neighborhoodsData);
+                        // Tentar várias possibilidades de nomes de colunas
+                        bairro: (row.bairro || row.nome_bairro || row.Bairro || row.BAIRRO || '').trim().toLowerCase(),
+                        taxa: parseFloat((row.taxa || row.valor_taxa || row.Taxa || row.TAXA || '0').toString().replace(',', '.')) || 0
+                    })).filter(item => item.bairro); // Remove empty entries
+                    
+                    // Expor dados globalmente para acesso em outras funções
+                    window.neighborhoodsData = neighborhoodsData;
+                    
+                    console.log(`✅ ${neighborhoodsData.length} bairros carregados:`, neighborhoodsData.slice(0, 3));
+                    console.log('DEBUG - Estrutura dos dados:', neighborhoodsData.slice(0, 3));
+                    console.log('DEBUG - window.neighborhoodsData definido:', !!window.neighborhoodsData);
                 } catch (error) {
                     console.error('❌ Erro ao carregar dados dos bairros:', error);
                     neighborhoodsData = []; // Fallback to empty array
+                }
+                
+                // Load coupons data
+                console.log('🎟️ Carregando dados dos cupons...');
+                try {
+                    couponsData = await loadCSVData(COUPONS_CSV_URL);
+                    console.log(`✅ ${couponsData.length} cupons carregados:`, couponsData.slice(0, 3));
+                } catch (error) {
+                    console.error('❌ Erro ao carregar dados dos cupons:', error);
+                    couponsData = []; // Fallback to empty array
                 }
                 updateProgress(85);
 
@@ -2091,7 +2332,7 @@
                                             ${item.observacoes ? `<p class="text-xs text-gray-500 mt-1">${item.observacoes}</p>` : ''}
                                             <div class="flex items-center justify-between mt-3">
                                                 <span class="text-lg font-bold" style="color: var(--cor-primaria)">${formatCurrency(item.preco)}</span>
-                                                <button class="add-to-cart-btn text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors" style="background-color: var(--cor-primaria)" onmouseenter="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'" onclick="event.stopPropagation(); addToCart(${item.id})">
+                                                <button class="add-to-cart-btn text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors" style="background-color: var(--cor-primaria)" onmouseenter="this.style.backgroundColor='var(--cor-primaria-hover)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'" onclick="event.stopPropagation(); addToCart(${item.id})">
                                                     <div class="flex items-center space-x-1">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L6 5H3m4 8a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
@@ -2213,7 +2454,7 @@
                         
                         <!-- Coluna 2: Botão Adicionar (50%) -->
                         <div>
-                            <button onclick="addToCartFromModal()" id="add-to-cart-btn" class="text-white py-2 px-6 rounded-lg font-medium transition-colors text-sm" style="background-color: var(--cor-primaria)" onmouseenter="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'">
+                            <button onclick="addToCartFromModal()" id="add-to-cart-btn" class="text-white py-2 px-6 rounded-lg font-medium transition-colors text-sm" style="background-color: var(--cor-primaria)" onmouseenter="this.style.backgroundColor='var(--cor-primaria-hover)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'">
                                 <div class="flex items-center justify-center space-x-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L6 5H3m4 8a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
@@ -2499,10 +2740,10 @@
             // 5. Limpar taxa de delivery
             clearDeliveryFee();
             
-            // 6. Desabilitar botão continuar
+            // 6. Manter botão continuar habilitado para validação
             const continueBtn = document.getElementById('step2-continue');
             if (continueBtn) {
-                continueBtn.disabled = true;
+                continueBtn.disabled = false; // Manter habilitado para mostrar erro de validação
             }
             
             // 7. Mostrar todas as opções de delivery
@@ -2510,6 +2751,22 @@
             
             // 8. Ocultar botão "outras opções"
             hideOtherOptionsButton();
+            
+            // 9. Reset modo endereço manual - sempre voltar para modo CEP
+            const cepContainer = document.getElementById('cep-mode-container');
+            const manualContainer = document.getElementById('manual-address-container');
+            if (cepContainer && manualContainer) {
+                cepContainer.classList.remove('hidden');
+                manualContainer.classList.add('hidden');
+                clearManualAddressFields();
+            }
+            
+            // 10. Limpar timeout de busca por bairro
+            if (typeof neighborhoodSearchTimeout !== 'undefined' && neighborhoodSearchTimeout) {
+                clearTimeout(neighborhoodSearchTimeout);
+                neighborhoodSearchTimeout = null;
+                console.log('Timeout de busca limpo');
+            }
             
             console.log('Step 2 resetado completamente');
         }
@@ -2605,12 +2862,29 @@
                 document.getElementById('cart-fab').style.display = 'flex';
             }
         }
+        
+        // Back to cart from checkout
+        function backToCart() {
+            // Fechar checkout
+            document.getElementById('checkout-modal').classList.add('hidden');
+            currentStep = 2;
+            
+            // Abrir carrinho
+            setTimeout(() => {
+                openCart();
+            }, 100);
+        }
 
         // Show specific step
         function showStep(step) {
             document.querySelectorAll('.checkout-step').forEach(el => el.classList.add('hidden'));
             document.getElementById(`checkout-step-${step}`).classList.remove('hidden');
             currentStep = step;
+            
+            // Atualizar total do pedido no Step 3
+            if (step === 3) {
+                updateCheckoutOrderTotal();
+            }
         }
 
         // Next step with enhanced validation
@@ -2661,33 +2935,71 @@
                     orderData.tableNumber = '';
                 }
             } else if (deliveryType === 'delivery') {
-                const cep = document.getElementById('cep')?.value.replace(/\D/g, '');
-                const number = document.getElementById('number')?.value.trim();
+                // Verificar se está no modo CEP ou modo manual
+                const cepContainer = document.getElementById('cep-mode-container');
+                const manualContainer = document.getElementById('manual-address-container');
+                const isManualMode = manualContainer && !manualContainer.classList.contains('hidden');
                 
-                // Validate CEP
-                if (!cep || cep.length !== 8) {
-                    showFieldError('cep', cep ? 'CEP deve ter 8 dígitos' : 'CEP é obrigatório');
-                    document.getElementById('cep').focus();
-                    hasErrors = true;
-                }
-                
-                // Validate if address was loaded
-                if (cep && cep.length === 8 && !orderData.address) {
-                    showFieldError('cep', 'Por favor, aguarde o carregamento do endereço ou verifique o CEP');
-                    hasErrors = true;
-                }
-                
-                // Validate number field
-                if (!number) {
-                    showFieldError('number', 'Número do endereço é obrigatório');
-                    hasErrors = true;
-                }
-                
-                // If no errors, update orderData
-                if (!hasErrors && orderData.address) {
-                    orderData.address.number = number;
-                    if (document.getElementById('complement')?.value) {
-                        orderData.address.complement = document.getElementById('complement').value;
+                if (isManualMode) {
+                    // Validação modo manual
+                    const street = document.getElementById('manual-street')?.value.trim();
+                    const number = document.getElementById('manual-number')?.value.trim();
+                    const neighborhood = document.getElementById('manual-neighborhood')?.value.trim();
+                    const city = document.getElementById('manual-city')?.value.trim();
+                    
+                    // Validar campos obrigatórios do modo manual
+                    if (!street) {
+                        showFieldError('manual-street', 'Endereço é obrigatório');
+                        hasErrors = true;
+                    }
+                    if (!number) {
+                        showFieldError('manual-number', 'Número é obrigatório');
+                        hasErrors = true;
+                    }
+                    if (!neighborhood) {
+                        showFieldError('manual-neighborhood', 'Bairro é obrigatório');
+                        hasErrors = true;
+                    }
+                    if (!city) {
+                        showFieldError('manual-city', 'Cidade é obrigatória');
+                        hasErrors = true;
+                    }
+                    
+                    // Se não há erros, garantir que orderData está atualizado
+                    if (!hasErrors) {
+                        updateManualAddressData();
+                    }
+                    
+                } else {
+                    // Validação modo CEP (original)
+                    const cep = document.getElementById('cep')?.value.replace(/\D/g, '');
+                    const number = document.getElementById('number')?.value.trim();
+                    
+                    // Validate CEP
+                    if (!cep || cep.length !== 8) {
+                        showFieldError('cep', cep ? 'CEP deve ter 8 dígitos' : 'CEP é obrigatório');
+                        document.getElementById('cep').focus();
+                        hasErrors = true;
+                    }
+                    
+                    // Validate if address was loaded
+                    if (cep && cep.length === 8 && !orderData.address) {
+                        showFieldError('cep', 'Por favor, aguarde o carregamento do endereço ou verifique o CEP');
+                        hasErrors = true;
+                    }
+                    
+                    // Validate number field
+                    if (!number) {
+                        showFieldError('number', 'Número do endereço é obrigatório');
+                        hasErrors = true;
+                    }
+                    
+                    // If no errors, update orderData
+                    if (!hasErrors && orderData.address) {
+                        orderData.address.number = number;
+                        if (document.getElementById('complement')?.value) {
+                            orderData.address.complement = document.getElementById('complement').value;
+                        }
                     }
                 }
             }
@@ -2703,7 +3015,10 @@
         
         // Clear all field errors
         function clearAllFieldErrors() {
-            const errorFields = ['table-number', 'cep', 'number'];
+            const errorFields = [
+                'table-number', 'cep', 'number',
+                'manual-street', 'manual-number', 'manual-neighborhood', 'manual-city'
+            ];
             errorFields.forEach(fieldId => {
                 clearFieldError(fieldId);
             });
@@ -2864,7 +3179,7 @@
             orderData.deliveryType = selectedType;
             
             if (!selectedType) {
-                continueBtn.disabled = true;
+                continueBtn.disabled = false; // Manter habilitado para mostrar erro de validação
                 fieldsContainer.innerHTML = '';
                 showAllDeliveryOptions();
                 hideOtherOptionsButton();
@@ -2933,9 +3248,49 @@
                                 </div>
                             </div>
                             
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">CEP *</label>
+                            <!-- Modo CEP (Padrão) -->
+                            <div id="cep-mode-container">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="block text-sm font-medium text-gray-700">CEP *</label>
+                                    <button type="button" onclick="toggleAddressMode()" class="text-sm text-blue-600 hover:text-blue-800 underline transition-colors duration-200">
+                                        Não sei meu CEP
+                                    </button>
+                                </div>
                                 <input type="tel" id="cep" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="00000-000" oninput="clearFieldError('cep'); handleCepInput();" onchange="fetchAddress(); updateContinueButton();" onblur="updateContinueButton();" maxlength="9" inputmode="numeric">
+                            </div>
+
+                            <!-- Modo Endereço Manual (Oculto inicialmente) -->
+                            <div id="manual-address-container" class="hidden space-y-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="block text-sm font-medium text-gray-700">Endereço Manual</label>
+                                    <button type="button" onclick="toggleAddressMode()" class="text-sm text-blue-600 hover:text-blue-800 underline transition-colors duration-200">
+                                        Usar meu CEP
+                                    </button>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Endereço Completo *</label>
+                                    <input type="text" id="manual-street" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Rua das Flores, 123" oninput="updateManualAddressData(); clearFieldError('manual-street');" onchange="updateContinueButton();" onblur="updateContinueButton();">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Número *</label>
+                                        <input type="text" id="manual-number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="123" oninput="updateManualAddressData(); clearFieldError('manual-number');" onchange="updateContinueButton();" onblur="updateContinueButton();">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
+                                        <input type="text" id="manual-complement" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Apto 45" oninput="updateManualAddressData();">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Bairro *</label>
+                                        <input type="text" id="manual-neighborhood" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Centro" oninput="updateManualAddressData(); searchNeighborhoodFee(); clearFieldError('manual-neighborhood');" onchange="updateContinueButton();" onblur="updateContinueButton();">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Cidade *</label>
+                                        <input type="text" id="manual-city" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="São Paulo" oninput="updateManualAddressData(); clearFieldError('manual-city');" onchange="updateContinueButton();" onblur="updateContinueButton();">
+                                    </div>
+                                </div>
                             </div>
                             <div id="address-fields" class="hidden space-y-4">
                                 <div>
@@ -3429,6 +3784,466 @@
             return true;
         }
         
+        /**
+         * Calcula o total do carrinho
+         */
+        function calculateCartTotal() {
+            return cart.reduce((sum, item) => sum + (item.preco * item.quantity), 0);
+        }
+        
+        // Atualizar total do pedido no Step 3 (checkout) - MODIFICADO PARA CUPONS
+        function updateCheckoutOrderTotal() {
+            const totalElement = document.getElementById('checkout-order-total');
+            if (totalElement) {
+                const cartTotal = calculateCartTotal();
+                const deliveryFee = currentDeliveryFee || 0;
+                let finalTotal = cartTotal + deliveryFee;
+                
+                // Aplicar desconto do cupom se houver
+                if (appliedCoupon && couponDiscount > 0) {
+                    finalTotal = Math.max(0, finalTotal - couponDiscount);
+                }
+                
+                console.log('=== ATUALIZANDO TOTAL DO CHECKOUT ===');
+                console.log('Subtotal carrinho:', formatCurrency(cartTotal));
+                console.log('Taxa de delivery:', formatCurrency(deliveryFee));
+                console.log('Desconto cupom:', formatCurrency(couponDiscount));
+                console.log('Total final:', formatCurrency(finalTotal));
+                
+                // Atualizar total final (sempre limpo)
+                totalElement.textContent = formatCurrency(finalTotal);
+                
+                // Atualizar novo resumo limpo
+                updateOrderSummary(cartTotal, deliveryFee);
+            }
+        }
+        
+        // ===== SISTEMA DE CUPONS =====
+        
+        // Atualizar resumo do pedido - NOVA VERSÃO LIMPA
+        function updateOrderSummary(cartTotal, deliveryFee) {
+            // Elementos do novo layout
+            const subtotalElement = document.getElementById('order-subtotal');
+            const deliveryRow = document.getElementById('delivery-row');
+            const deliveryFeeElement = document.getElementById('order-delivery-fee');
+            const discountRow = document.getElementById('discount-row');
+            const discountLabelElement = document.getElementById('discount-label');
+            const discountElement = document.getElementById('order-discount');
+            
+            if (!subtotalElement) return;
+            
+            // 1. SUBTOTAL (sempre visível)
+            subtotalElement.textContent = formatCurrency(cartTotal);
+            
+            // 2. FRETE (apenas se houver)
+            if (deliveryFee > 0) {
+                deliveryRow.classList.remove('hidden');
+                deliveryFeeElement.textContent = formatCurrency(deliveryFee);
+            } else {
+                deliveryRow.classList.add('hidden');
+            }
+            
+            // 3. DESCONTO (apenas se houver cupom aplicado)
+            if (appliedCoupon && couponDiscount > 0) {
+                discountRow.classList.remove('hidden');
+                
+                // Obter valor do desconto do cupom
+                const discountValue = appliedCoupon.valor_desconto || appliedCoupon.valor || '';
+                const discountType = appliedCoupon.tipo_desconto || appliedCoupon.tipo || '';
+                const couponCode = appliedCoupon.codigo_cupom || appliedCoupon.codigo;
+                
+                // Formatar valor do desconto (% ou R$)
+                let discountPrefix = '';
+                if (discountValue.toString().includes('%')) {
+                    // Se contém %, mostrar como percentual
+                    discountPrefix = `${discountValue} `;
+                } else {
+                    // Se é valor fixo, mostrar como moeda
+                    const numericValue = parseFloat(discountValue.toString().replace(/[^0-9.,]/g, '').replace(',', '.'));
+                    if (!isNaN(numericValue)) {
+                        discountPrefix = `${formatCurrency(numericValue)} `;
+                    }
+                }
+                
+                // Definir label baseado no tipo de desconto
+                let label = 'Desconto';
+                
+                switch (discountType.toLowerCase()) {
+                    case 'produtos':
+                        label = `${discountPrefix}Desconto (${couponCode})`;
+                        break;
+                    case 'frete':
+                        label = `${discountPrefix}Desconto Frete (${couponCode})`;
+                        break;
+                    case 'total':
+                        label = `${discountPrefix}Desconto Total (${couponCode})`;
+                        break;
+                    default:
+                        label = `${discountPrefix}Desconto (${couponCode})`;
+                        break;
+                }
+                
+                discountLabelElement.textContent = label;
+                discountElement.textContent = '-' + formatCurrency(couponDiscount);
+            } else {
+                discountRow.classList.add('hidden');
+            }
+        }
+        
+        // Aplicar cupom via botão
+        function applyCouponFromButton() {
+            const couponInput = document.getElementById('coupon-code');
+            if (!couponInput) return;
+            
+            const code = couponInput.value.trim().toUpperCase();
+            if (!code) {
+                showCouponFeedback('Digite um código de cupom', 'error');
+                return;
+            }
+            
+            applyCoupon(code);
+        }
+        
+        // Aplicar cupom automaticamente ao digitar (REMOVIDO - agora só via botão)
+        function applyCouponOnType(code) {
+            // Função mantida para compatibilidade, mas não é mais usada
+            // Agora o cupom só é aplicado via botão
+        }
+        
+        // Aplicar cupom
+        function applyCoupon(code) {
+            console.log('🔍 Validando cupom:', code);
+            
+            // Buscar cupom nos dados
+            const coupon = couponsData.find(c => 
+                (c.codigo_cupom || c.codigo || '').toString().toUpperCase() === code
+            );
+            
+            if (!coupon) {
+                showCouponFeedback('Cupom não encontrado', 'error');
+                return false;
+            }
+            
+            // Validar datas
+            if (!validateCouponDates(coupon)) {
+                return false;
+            }
+            
+            // Calcular desconto
+            const discount = calculateCouponDiscount(coupon);
+            
+            // Tratar erros específicos
+            if (discount === -1) {
+                showCouponFeedback('Cupom não aplicável: carrinho vazio', 'error');
+                return false;
+            } else if (discount === -2) {
+                const discountType = coupon.tipo_desconto || coupon.tipo || '';
+                if (discountType.toLowerCase() === 'frete') {
+                    showCouponFeedback('Cupom de frete: selecione delivery primeiro', 'error');
+                } else {
+                    showCouponFeedback('Cupom não aplicável: sem taxa de delivery', 'error');
+                }
+                return false;
+            } else if (discount <= 0) {
+                showCouponFeedback('Cupom não aplicável', 'error');
+                return false;
+            }
+            
+            // Aplicar cupom
+            appliedCoupon = coupon;
+            couponDiscount = discount;
+            
+            console.log('✅ Cupom aplicado:', code, 'Desconto:', formatCurrency(discount));
+            
+            // Atualizar interface com feedback simples
+            showCouponFeedback('✅ Cupom aplicado com sucesso!', 'success');
+            updateCheckoutOrderTotal();
+            
+            return true;
+        }
+        
+        // Validar datas do cupom
+        function validateCouponDates(coupon) {
+            const now = new Date();
+            
+            // Validar data de início
+            if (coupon.data_inicio && coupon.data_inicio !== '-' && coupon.data_inicio.trim()) {
+                const startDate = parseCouponDate(coupon.data_inicio);
+                if (startDate && now < startDate) {
+                    showCouponFeedback('Cupom ainda não válido', 'error');
+                    return false;
+                }
+            }
+            
+            // Validar data de fim
+            if (coupon.data_fim && coupon.data_fim !== '-' && coupon.data_fim.trim()) {
+                const endDate = parseCouponDate(coupon.data_fim);
+                if (endDate && now > endDate) {
+                    showCouponFeedback('Cupom expirado', 'error');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        // Parsear data do cupom
+        function parseCouponDate(dateStr) {
+            if (!dateStr || dateStr === '-') return null;
+            
+            // Formato DD/MM/YYYY ou DD/MM/YYYY HH:MM
+            const parts = dateStr.split(' ');
+            const datePart = parts[0];
+            const timePart = parts[1] || '00:00';
+            
+            const [day, month, year] = datePart.split('/');
+            const [hour, minute] = timePart.split(':');
+            
+            return new Date(year, month - 1, day, hour || 0, minute || 0);
+        }
+        
+        // Calcular desconto do cupom
+        function calculateCouponDiscount(coupon) {
+            const cartTotal = calculateCartTotal();
+            const deliveryFee = currentDeliveryFee || 0;
+            const discountValue = coupon.valor_desconto || coupon.valor || '';
+            const discountType = coupon.tipo_desconto || coupon.tipo || '';
+            
+            console.log('💰 Calculando desconto do cupom:');
+            console.log('- Tipo:', discountType);
+            console.log('- Valor:', discountValue);
+            console.log('- Cart Total:', cartTotal);
+            console.log('- Delivery Fee:', deliveryFee);
+            
+            let baseValue = 0;
+            
+            // Determinar valor base para cálculo
+            switch (discountType.toLowerCase()) {
+                case 'produtos':
+                    baseValue = cartTotal;
+                    if (baseValue <= 0) {
+                        console.log('❌ Cupom de produtos: carrinho vazio');
+                        return -1; // Indicador de erro específico
+                    }
+                    break;
+                case 'frete':
+                    baseValue = deliveryFee;
+                    if (baseValue <= 0) {
+                        console.log('❌ Cupom de frete: sem taxa de delivery definida');
+                        return -2; // Indicador de erro específico
+                    }
+                    break;
+                case 'total':
+                    baseValue = cartTotal + deliveryFee;
+                    if (baseValue <= 0) {
+                        console.log('❌ Cupom de total: valores zerados');
+                        return -1; // Indicador de erro específico
+                    }
+                    break;
+                default:
+                    console.log('❌ Tipo de desconto inválido:', discountType);
+                    return 0;
+            }
+            
+            console.log('- Base Value:', baseValue);
+            
+            // Calcular desconto
+            let discount = 0;
+            
+            if (discountValue.toString().includes('%')) {
+                // Desconto percentual
+                const percentage = parseFloat(discountValue.replace('%', ''));
+                discount = (baseValue * percentage) / 100;
+                console.log('- Desconto percentual:', percentage + '%', '=', discount);
+            } else {
+                // Desconto fixo
+                discount = parseFloat(discountValue.toString().replace(',', '.')) || 0;
+                console.log('- Desconto fixo:', discount);
+            }
+            
+            // Limitar desconto ao valor base
+            const finalDiscount = Math.min(discount, baseValue);
+            console.log('- Desconto final:', finalDiscount);
+            
+            return finalDiscount;
+        }
+        
+        // Mostrar feedback do cupom
+        function showCouponFeedback(message, type) {
+            const feedback = document.getElementById('coupon-feedback');
+            if (!feedback) return;
+            
+            feedback.className = `mt-2 text-xs ${type === 'success' ? 'text-green-600' : 'text-red-600'}`;
+            feedback.textContent = message;
+            feedback.classList.remove('hidden');
+            
+            // Ocultar após 3 segundos se for erro
+            if (type === 'error') {
+                setTimeout(() => {
+                    feedback.classList.add('hidden');
+                }, 3000);
+            }
+        }
+        
+
+        
+        // Controlar expansão do campo de cupom
+        function toggleCouponField() {
+            const container = document.getElementById('coupon-field-container');
+            const arrow = document.getElementById('coupon-arrow');
+            const toggleBtn = document.getElementById('coupon-toggle-btn');
+            
+            if (!container || !arrow) return;
+            
+            const isExpanded = container.style.maxHeight !== '0px' && container.style.maxHeight !== '';
+            
+            if (isExpanded) {
+                // Contrair
+                container.style.maxHeight = '0';
+                container.style.opacity = '0';
+                arrow.style.transform = 'rotate(0deg)';
+                console.log('🎟️ Campo de cupom contraído');
+            } else {
+                // Expandir
+                container.style.maxHeight = '200px';
+                container.style.opacity = '1';
+                arrow.style.transform = 'rotate(180deg)';
+                
+                // Focar no campo após expansão
+                setTimeout(() => {
+                    const couponInput = document.getElementById('coupon-code');
+                    if (couponInput) {
+                        couponInput.focus();
+                    }
+                }, 300);
+                
+                console.log('🎟️ Campo de cupom expandido');
+            }
+        }
+        
+
+        
+        // Controlar visibilidade do botão de limpar inline
+        function toggleClearButton() {
+            const couponInput = document.getElementById('coupon-code');
+            const clearBtn = document.getElementById('clear-coupon-btn');
+            
+            if (!couponInput || !clearBtn) return;
+            
+            if (couponInput.value.trim().length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        }
+        
+        // Limpar input e resetar cupom completamente
+        function clearCouponInput() {
+            const couponInput = document.getElementById('coupon-code');
+            const clearBtn = document.getElementById('clear-coupon-btn');
+            
+            // Limpar o input
+            if (couponInput) {
+                couponInput.value = '';
+                couponInput.focus();
+            }
+            
+            // Esconder botão de limpar
+            if (clearBtn) {
+                clearBtn.classList.add('hidden');
+            }
+            
+            // Resetar cupom aplicado (usar função existente)
+            clearCoupon();
+            
+            // Atualizar resumo do pedido
+            updateOrderSummary();
+            
+            console.log('🎟️ Input limpo e cupom resetado completamente');
+        }
+        
+        // Limpar cupom
+        function clearCoupon() {
+            appliedCoupon = null;
+            couponDiscount = 0;
+            
+            // Limpar interface
+            const feedback = document.getElementById('coupon-feedback');
+            if (feedback) feedback.classList.add('hidden');
+            
+            // Contrair campo de cupom
+            const container = document.getElementById('coupon-field-container');
+            const arrow = document.getElementById('coupon-arrow');
+            if (container && arrow) {
+                container.style.maxHeight = '0';
+                container.style.opacity = '0';
+                arrow.style.transform = 'rotate(0deg)';
+            }
+            
+            // Limpar campo de input
+            const couponInput = document.getElementById('coupon-code');
+            if (couponInput) {
+                couponInput.value = '';
+            }
+            
+            // Atualizar total e resumo
+            updateCheckoutOrderTotal();
+        }
+        
+        // Resetar sistema de cupons
+        function resetCouponSystem() {
+            console.log('🔄 Resetando sistema de cupons');
+            
+            // Limpar variáveis
+            appliedCoupon = null;
+            couponDiscount = 0;
+            
+            // Limpar timeout
+            if (couponTimeout) {
+                clearTimeout(couponTimeout);
+                couponTimeout = null;
+            }
+            
+            // Limpar campo de entrada
+            const couponInput = document.getElementById('coupon-code');
+            if (couponInput) couponInput.value = '';
+            
+            // Limpar interface
+            clearCoupon();
+        }
+        
+        // Adicionar informações do cupom à mensagem do WhatsApp
+        function addCouponInfoToWhatsAppMessage(message) {
+            if (!appliedCoupon || couponDiscount <= 0) {
+                return message;
+            }
+            
+            const discountType = appliedCoupon.tipo_desconto || appliedCoupon.tipo || '';
+            let typeText = '';
+            
+            switch (discountType.toLowerCase()) {
+                case 'produtos':
+                    typeText = 'nos produtos';
+                    break;
+                case 'frete':
+                    typeText = 'no frete';
+                    break;
+                case 'total':
+                    typeText = 'no total';
+                    break;
+            }
+            
+            const couponInfo = `\n\n🎟️ *Cupom Aplicado:*\n   ${appliedCoupon.codigo_cupom || appliedCoupon.codigo}\n   Desconto: ${formatCurrency(couponDiscount)} (${typeText})`;
+            
+            // Inserir antes do total final
+            const totalIndex = message.lastIndexOf('💰 *Total:');
+            if (totalIndex !== -1) {
+                return message.slice(0, totalIndex) + couponInfo + '\n\n' + message.slice(totalIndex);
+            }
+            
+            return message + couponInfo;
+        }
+        
         // Handle payment method change
         function handlePaymentMethodChange() {
             const paymentMethod = document.getElementById('payment-method').value;
@@ -3436,8 +4251,81 @@
             
             if (paymentMethod === 'dinheiro') {
                 changeDiv.classList.remove('hidden');
+                setupChangeAmountField();
             } else {
                 changeDiv.classList.add('hidden');
+                clearFieldError('change-amount');
+            }
+        }
+        
+        /**
+         * Configura o campo de troco com validação
+         */
+        function setupChangeAmountField() {
+            console.log('=== SETUP CHANGE AMOUNT FIELD ===');
+            const changeInput = document.getElementById('change-amount');
+            const total = calculateCartTotal();
+            
+            console.log('Change input element:', changeInput);
+            console.log('Cart total:', total);
+            console.log('Cart contents:', cart);
+            
+            // Definir placeholder simples
+            changeInput.placeholder = 'Ex: ' + formatCurrency(Math.ceil(total / 10) * 10 + 10);
+            
+            // Adicionar validação em tempo real com máscara da moeda atual
+            changeInput.oninput = function() {
+                formatMoney(this); // Aplicar máscara da moeda atual
+                validateChangeAmount(this.value, total);
+                clearFieldError('change-amount');
+            };
+            
+            // Remover o oninput antigo do HTML que usava formatMoney genérico
+            changeInput.removeAttribute('oninput');
+            
+            // Focar no campo
+            setTimeout(() => changeInput.focus(), 100);
+        }
+        
+        /**
+         * Valida o valor do troco em tempo real
+         */
+        function validateChangeAmount(changeValue, total) {
+            const changeInput = document.getElementById('change-amount');
+            const numericValue = parseFloat(changeValue.replace(/[^\d,]/g, '').replace(',', '.'));
+            
+            // Remover feedback anterior
+            const existingFeedback = changeInput.parentNode.querySelector('.change-feedback');
+            if (existingFeedback) existingFeedback.remove();
+            
+            if (!isNaN(numericValue) && numericValue > total) {
+                const changeAmount = numericValue - total;
+                
+                // Criar feedback positivo
+                const feedback = document.createElement('div');
+                feedback.className = 'change-feedback text-sm mt-1 flex items-center space-x-2';
+                feedback.style.color = 'var(--cor-sucesso)';
+                feedback.innerHTML = `
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Troco: ${formatCurrency(changeAmount)}</span>
+                `;
+                
+                changeInput.parentNode.appendChild(feedback);
+            } else if (!isNaN(numericValue) && numericValue <= total) {
+                // Criar feedback de erro
+                const feedback = document.createElement('div');
+                feedback.className = 'change-feedback text-sm mt-1 flex items-center space-x-2';
+                feedback.style.color = 'var(--cor-erro)';
+                feedback.innerHTML = `
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Valor deve ser maior que ${formatCurrency(total)}</span>
+                `;
+                
+                changeInput.parentNode.appendChild(feedback);
             }
         }
         
@@ -3478,28 +4366,31 @@
          * @returns {number|null} - Valor da taxa ou null se não encontrado
          */
         function findDeliveryFeeByNeighborhood(neighborhood) {
-            if (!neighborhood || !neighborhoodsData.length) {
+            // Usar dados globais se disponíveis
+            const dataSource = window.neighborhoodsData || neighborhoodsData;
+            
+            if (!neighborhood || !dataSource.length) {
                 return null;
             }
             
             const normalizedNeighborhood = neighborhood.trim().toLowerCase();
             
             // Busca exata primeiro
-            let found = neighborhoodsData.find(item => 
-                item.nome_bairro === normalizedNeighborhood
+            let found = dataSource.find(item => 
+                item.bairro === normalizedNeighborhood
             );
             
             // Se não encontrou, tenta busca parcial
             if (!found) {
-                found = neighborhoodsData.find(item => 
-                    item.nome_bairro.includes(normalizedNeighborhood) ||
-                    normalizedNeighborhood.includes(item.nome_bairro)
+                found = dataSource.find(item => 
+                    item.bairro.includes(normalizedNeighborhood) ||
+                    normalizedNeighborhood.includes(item.bairro)
                 );
             }
             
             if (found) {
-                console.log(`💰 Taxa encontrada para "${neighborhood}": R$ ${found.valor_taxa.toFixed(2)}`);
-                return found.valor_taxa;
+                console.log(`💰 Taxa encontrada para "${neighborhood}": R$ ${found.taxa.toFixed(2)}`);
+                return found.taxa;
             }
             
             console.log(`❌ Taxa não encontrada para o bairro: "${neighborhood}"`);
@@ -3667,6 +4558,272 @@
             }
         }
 
+        // ====================================================================
+        // SISTEMA MODO ENDEREÇO MANUAL - "NÃO SEI MEU CEP" - V3.5
+        // ====================================================================
+
+        // Variável para controlar timeout de busca por bairro
+        let neighborhoodSearchTimeout = null;
+
+        /**
+         * Alterna entre modo CEP e modo endereço manual
+         */
+        function toggleAddressMode() {
+            console.log('=== ALTERNANDO MODO DE ENDEREÇO ===');
+            
+            const cepContainer = document.getElementById('cep-mode-container');
+            const manualContainer = document.getElementById('manual-address-container');
+            const addressFields = document.getElementById('address-fields');
+            
+            if (!cepContainer || !manualContainer) {
+                console.error('Containers de modo não encontrados');
+                return;
+            }
+            
+            // Limpar timeout de busca se existir
+            if (neighborhoodSearchTimeout) {
+                clearTimeout(neighborhoodSearchTimeout);
+                neighborhoodSearchTimeout = null;
+                console.log('Timeout de busca limpo');
+            }
+            
+            const isManualMode = !manualContainer.classList.contains('hidden');
+            
+            if (isManualMode) {
+                // Mudando para modo CEP
+                console.log('Mudando para modo CEP');
+                manualContainer.classList.add('hidden');
+                cepContainer.classList.remove('hidden');
+                
+                // Limpar campos manuais
+                clearManualAddressFields();
+                
+                // Ocultar campos de endereço automático
+                if (addressFields) {
+                    addressFields.classList.add('hidden');
+                }
+                
+                // Foco no campo CEP
+                setTimeout(() => {
+                    const cepField = document.getElementById('cep');
+                    if (cepField) {
+                        cepField.focus();
+                    }
+                }, 100);
+                
+            } else {
+                // Mudando para modo manual
+                console.log('Mudando para modo MANUAL');
+                cepContainer.classList.add('hidden');
+                manualContainer.classList.remove('hidden');
+                
+                // Limpar campos CEP
+                clearAddressFields();
+                
+                // Foco no primeiro campo manual
+                setTimeout(() => {
+                    const streetField = document.getElementById('manual-street');
+                    if (streetField) {
+                        streetField.focus();
+                    }
+                }, 100);
+            }
+            
+            // Limpar taxa de delivery ao alternar
+            clearDeliveryFee();
+            
+            // Limpar dados do endereço
+            if (window.orderData && window.orderData.address) {
+                window.orderData.address = {};
+            }
+            
+            // Atualizar botão continuar
+            updateContinueButton();
+            
+            console.log('Modo atual:', isManualMode ? 'CEP' : 'MANUAL');
+        }
+
+        /**
+         * Atualiza os dados do endereço manual
+         */
+        function updateManualAddressData() {
+            const streetField = document.getElementById('manual-street');
+            const numberField = document.getElementById('manual-number');
+            const complementField = document.getElementById('manual-complement');
+            const neighborhoodField = document.getElementById('manual-neighborhood');
+            const cityField = document.getElementById('manual-city');
+            
+            if (!streetField || !numberField || !neighborhoodField || !cityField) {
+                return;
+            }
+            
+            // Inicializar orderData.address se não existir (usar variável global consistente)
+            if (!orderData) {
+                orderData = {};
+            }
+            if (!orderData.address) {
+                orderData.address = {};
+            }
+            
+            // Preservar taxa de delivery existente
+            const existingDeliveryFee = orderData.address.deliveryFee;
+            
+            // Construir endereço completo
+            const street = streetField.value.trim();
+            const number = numberField.value.trim();
+            const complement = complementField.value.trim();
+            const neighborhood = neighborhoodField.value.trim();
+            const city = cityField.value.trim();
+            
+            // Montar endereço completo
+            let fullAddress = street;
+            if (number) fullAddress += `, ${number}`;
+            if (complement) fullAddress += `, ${complement}`;
+            
+            // Atualizar dados do pedido
+            orderData.address = {
+                cep: '',
+                street: fullAddress,
+                neighborhood: neighborhood,
+                city: city,
+                state: '',
+                isManual: true
+            };
+            
+            // Restaurar taxa de delivery se existia
+            if (existingDeliveryFee) {
+                orderData.address.deliveryFee = existingDeliveryFee;
+            }
+            
+            console.log('DEBUG - Dados endereço manual atualizados:', orderData.address);
+        }
+
+        /**
+         * Busca taxa de delivery por bairro no modo manual (com debounce)
+         */
+        function searchNeighborhoodFee() {
+            const neighborhoodField = document.getElementById('manual-neighborhood');
+            if (!neighborhoodField) return;
+            
+            const neighborhood = neighborhoodField.value.trim();
+            
+            // Limpar timeout anterior
+            if (neighborhoodSearchTimeout) {
+                clearTimeout(neighborhoodSearchTimeout);
+            }
+            
+            // Se menos de 3 caracteres, limpar taxa
+            if (neighborhood.length < 3) {
+                clearDeliveryFee();
+                return;
+            }
+            
+            // Aguardar 800ms após o usuário parar de digitar
+            neighborhoodSearchTimeout = setTimeout(() => {
+                performNeighborhoodSearch(neighborhood);
+            }, 800);
+        }
+
+        /**
+         * Executa a busca real por bairro
+         */
+        function performNeighborhoodSearch(neighborhood) {
+            console.log('=== BUSCANDO TAXA POR BAIRRO (MANUAL) ===');
+            console.log('Bairro pesquisado:', neighborhood);
+            console.log('window.neighborhoodsData existe?', !!window.neighborhoodsData);
+            console.log('Quantidade de registros:', window.neighborhoodsData ? window.neighborhoodsData.length : 0);
+            
+            // Verificar se dados estão disponíveis
+            if (!window.neighborhoodsData) {
+                console.error('ERRO: window.neighborhoodsData não definido!');
+                // Fallback para dados locais
+                if (typeof neighborhoodsData !== 'undefined' && neighborhoodsData.length > 0) {
+                    window.neighborhoodsData = neighborhoodsData;
+                    console.log('Dados locais copiados para global:', neighborhoodsData.length, 'registros');
+                }
+            }
+            
+            if (!window.neighborhoodsData || window.neighborhoodsData.length === 0) {
+                console.log('Dados de bairros não disponíveis');
+                displayDeliveryFee(null, neighborhood);
+                return;
+            }
+            
+            // Log dos primeiros registros para debug
+            console.log('Primeiros 3 registros:', window.neighborhoodsData.slice(0, 3));
+            
+            // Normalizar bairro para busca
+            const normalizedNeighborhood = neighborhood.toLowerCase();
+            console.log('Bairro normalizado para busca:', normalizedNeighborhood);
+            
+            // Buscar na planilha
+            const result = window.neighborhoodsData.find(item => {
+                const itemBairro = (item.bairro || '').toLowerCase();
+                console.log('Comparando:', normalizedNeighborhood, '===', itemBairro);
+                return itemBairro === normalizedNeighborhood;
+            });
+            
+            console.log('Resultado da busca:', result);
+            
+            if (result && result.taxa) {
+                const fee = parseFloat(result.taxa);
+                console.log('Taxa encontrada (raw):', result.taxa);
+                console.log('Taxa parseada:', fee);
+                
+                if (!isNaN(fee) && fee > 0) {
+                    console.log('✅ Taxa válida encontrada:', fee);
+                    
+                    // Definir taxa no orderData
+                    if (orderData && orderData.address) {
+                        orderData.address.deliveryFee = fee;
+                        console.log('Taxa de delivery definida com sucesso:', fee);
+                    }
+                    
+                    // Exibir taxa
+                    displayDeliveryFee(fee, neighborhood);
+                    return;
+                }
+            }
+            
+            console.log('❌ Taxa não encontrada para o bairro:', neighborhood);
+            // Taxa não encontrada - mostrar alerta para consultar
+            displayDeliveryFee(null, neighborhood);
+        }
+
+        /**
+         * Limpa campos de endereço do modo CEP
+         */
+        function clearAddressFields() {
+            const fields = ['cep', 'street', 'number', 'complement', 'neighborhood', 'city'];
+            fields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.value = '';
+                    clearFieldError(fieldId);
+                }
+            });
+            
+            // Ocultar campos de endereço
+            const addressFields = document.getElementById('address-fields');
+            if (addressFields) {
+                addressFields.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Limpa campos de endereço do modo manual
+         */
+        function clearManualAddressFields() {
+            const fields = ['manual-street', 'manual-number', 'manual-complement', 'manual-neighborhood', 'manual-city'];
+            fields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.value = '';
+                    clearFieldError(fieldId);
+                }
+            });
+        }
+
         // Show toast notification
         function showToast(message, type = 'error', duration = 4000) {
             // Remove existing toasts
@@ -3736,7 +4893,7 @@
                 } else if (value.length >= 3) {
                     value = value.replace(/(\d{2})(\d{0,1})(\d{0,4})/, '($1) $2 $3');
                 } else if (value.length >= 1) {
-                    value = value.replace(/(\d{0,2})/, '($1');
+                    value = value.replace(/(\d{0,2})/, '($1)');
                 }
             } else if (countryCode === '1') { // US/Canada
                 if (value.length > 10) {
@@ -3749,7 +4906,7 @@
                 } else if (value.length >= 3) {
                     value = value.replace(/(\d{0,3})(\d{0,3})/, '($1) $2');
                 } else {
-                    value = value.replace(/(\d{0,3})/, '($1');
+                    value = value.replace(/(\d{0,3})/, '($1)');
                 }
             } else if (countryCode === '351') { // Portugal
                 // Limit to 9 digits for Portugal
@@ -3943,6 +5100,35 @@
                     showFieldError('payment-method', 'Selecione a forma de pagamento');
                     hasErrors = true;
                 }
+                
+                // Validar valor do troco se pagamento for em dinheiro
+                if (paymentMethod === 'dinheiro') {
+                    console.log('=== VALIDANDO TROCO ===');
+                    const changeAmountInput = document.getElementById('change-amount');
+                    const changeValue = changeAmountInput?.value?.trim() || '';
+                    
+                    console.log('Change input:', changeAmountInput);
+                    console.log('Change value:', changeValue);
+                    
+                    clearFieldError('change-amount');
+                    
+                    if (!changeValue) {
+                        showFieldError('change-amount', 'Informe o valor para troco');
+                        hasErrors = true;
+                    } else {
+                        const numericChangeValue = parseFloat(changeValue.replace(/[^\d,]/g, '').replace(',', '.'));
+                        const cartTotal = calculateCartTotal();
+                        
+                        if (isNaN(numericChangeValue) || numericChangeValue <= 0) {
+                            showFieldError('change-amount', 'Valor inválido para troco');
+                            hasErrors = true;
+                        } else if (numericChangeValue <= cartTotal) {
+                            showFieldError('change-amount', 
+                                `Valor deve ser maior que ${formatCurrency(cartTotal)}.`);
+                            hasErrors = true;
+                        }
+                    }
+                }
             }
             
             // If there are errors, stop here
@@ -4053,7 +5239,18 @@
         // Format currency value for display
         function formatCurrency(value) {
             const config = getCurrencyConfig();
-            const formattedValue = value.toFixed(2).replace('.', config.decimalSeparator);
+            
+            // Converter para número se for string
+            const numValue = typeof value === 'string' ? parseFloat(value) : value;
+            
+            // Separar parte inteira e decimal
+            const [integerPart, decimalPart] = numValue.toFixed(2).split('.');
+            
+            // Aplicar separador de milhares na parte inteira
+            const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, config.thousandSeparator);
+            
+            // Montar valor final com separador decimal correto
+            const formattedValue = `${formattedInteger}${config.decimalSeparator}${decimalPart}`;
             
             if (config.position === 'before') {
                 return `${config.symbol} ${formattedValue}`;
@@ -4167,17 +5364,39 @@
                 message += `🪑 *Mesa/Comanda:* ${orderData.tableNumber}\n`;
             }
             
+            // Debug da condição de endereço
+            console.log('DEBUG - Condição de endereço:');
+            console.log('deliveryType:', orderData.deliveryType);
+            console.log('orderData.address:', orderData.address);
+            console.log('orderData.address.street:', orderData.address.street);
+            console.log('Condição atendida?', orderData.deliveryType === 'delivery' && orderData.address.street);
+            
             if (orderData.deliveryType === 'delivery' && orderData.address.street) {
                 message += `🏠 *Endereço:*\n`;
-                message += `   ${orderData.address.street}, ${orderData.address.number}`;
-                if (orderData.address.complement) {
-                    message += ` - ${orderData.address.complement}`;
-                }
-                message += `\n   ${orderData.address.neighborhood}\n`;
-                message += `   ${orderData.address.city} - ${orderData.address.state}\n`;
-                message += `   CEP: ${orderData.address.cep}\n`;
                 
-                // Adicionar taxa de delivery se existir
+                // Verificar se é endereço manual ou automático
+                console.log('DEBUG - Verificando tipo de endereço:');
+                console.log('isManual:', orderData.address.isManual);
+                console.log('deliveryFee:', orderData.address.deliveryFee);
+                
+                if (orderData.address.isManual) {
+                    // Endereço manual - formato diferenciado
+                    message += `   ${orderData.address.street}\n`;
+                    message += `   ${orderData.address.neighborhood}\n`;
+                    message += `   ${orderData.address.city}\n`;
+                    message += `   *Endereço informado manualmente*\n`;
+                } else {
+                    // Endereço automático via CEP - formato original
+                    message += `   ${orderData.address.street}, ${orderData.address.number}`;
+                    if (orderData.address.complement) {
+                        message += ` - ${orderData.address.complement}`;
+                    }
+                    message += `\n   ${orderData.address.neighborhood}\n`;
+                    message += `   ${orderData.address.city} - ${orderData.address.state}\n`;
+                    message += `   CEP: ${orderData.address.cep}\n`;
+                }
+                
+                // Adicionar taxa de delivery se existir (funciona para ambos os modos)
                 console.log('DEBUG - Verificando taxa de delivery:');
                 console.log('orderData.address:', orderData.address);
                 console.log('orderData.address.deliveryFee:', orderData.address.deliveryFee);
@@ -4211,12 +5430,13 @@
                 message += `  └ Qtd: ${item.quantity}x | Unitário: ${formatCurrency(item.preco)} | Subtotal: ${formatCurrency(itemSubtotal)}\n\n`;
             });
             
-            // Total
-            let total = cart.reduce((sum, item) => sum + (item.preco * item.quantity), 0);
+            // Total com breakdown detalhado
+            let subtotal = cart.reduce((sum, item) => sum + (item.preco * item.quantity), 0);
+            let total = subtotal;
             
             // Adicionar taxa de delivery ao total se existir
             console.log('DEBUG - Calculando total com taxa:');
-            console.log('Total antes da taxa:', total);
+            console.log('Subtotal produtos:', subtotal);
             console.log('deliveryType:', orderData.deliveryType);
             console.log('address:', orderData.address);
             
@@ -4227,19 +5447,41 @@
             if (orderData.deliveryType === 'delivery' && totalDeliveryFee && totalDeliveryFee > 0) {
                 total += totalDeliveryFee;
                 console.log('Taxa adicionada ao total:', totalDeliveryFee);
-                console.log('Total final:', total);
-            } else {
-                console.log('Taxa NÃO adicionada ao total');
             }
             
             message += `━━━━━━━━━━━━━━\n`;
-            message += `💰 *TOTAL: ${formatCurrency(total)}*`;
+            message += `💰 *RESUMO FINANCEIRO:*\n\n`;
             
-            // Indicar se inclui taxa de delivery
+            // Breakdown detalhado
+            message += `💵 Subtotal produtos: ${formatCurrency(subtotal)}\n`;
+            
             if (orderData.deliveryType === 'delivery' && totalDeliveryFee && totalDeliveryFee > 0) {
-                message += `\n(incluindo taxa de delivery)`;
+                message += `🚚 Taxa de delivery: ${formatCurrency(totalDeliveryFee)}\n`;
             }
-            message += `\n`;
+            
+            // Adicionar informações do cupom se aplicado
+            if (appliedCoupon && couponDiscount > 0) {
+                const discountType = appliedCoupon.tipo_desconto || appliedCoupon.tipo || '';
+                let typeText = '';
+                
+                switch (discountType.toLowerCase()) {
+                    case 'produtos':
+                        typeText = 'nos produtos';
+                        break;
+                    case 'frete':
+                        typeText = 'no frete';
+                        break;
+                    case 'total':
+                        typeText = 'no total';
+                        break;
+                }
+                
+                message += `🎟️ Cupom ${appliedCoupon.codigo_cupom || appliedCoupon.codigo}: -${formatCurrency(couponDiscount)} (${typeText})\n`;
+                total = Math.max(0, total - couponDiscount);
+                console.log('Desconto aplicado:', couponDiscount, 'Total final:', total);
+            }
+            
+            message += `\n💰 *TOTAL FINAL: ${formatCurrency(total)}*\n`;
             message += `━━━━━━━━━━━━━━\n\n`;
             
             // Payment info (only for delivery and takeout)
@@ -4370,7 +5612,10 @@
             // 7. Reset step atual para step 1
             currentStep = 1;
             
-            // 8. Fechar checkout
+            // 8. Reset sistema de cupons
+            resetCouponSystem();
+            
+            // 9. Fechar checkout
             closeCheckout();
             
             console.log('Sistema resetado completamente');
