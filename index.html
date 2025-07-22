@@ -2324,7 +2324,7 @@
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-shrink-0">
                                             <img src="${processImageUrl(item.imagem)}" alt="${item.nome}" class="w-20 h-20 object-cover rounded-lg lazy-image" loading="lazy" onerror="console.error('Erro ao carregar imagem do item:', this.src, 'Item:', '${item.nome}'); this.src='${getPlaceholderImage()}'" onload="this.classList.add('loaded'); console.log('Imagem do item carregada:', this.src)" style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;">
-                                            <div class="text-xs text-gray-500 text-center mt-1 font-mono">${item.sku}</div>
+                                            
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <h3 class="font-semibold text-gray-900 truncate">${item.nome}</h3>
