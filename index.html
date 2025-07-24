@@ -1,7 +1,7 @@
 <!--
 //====================================================================\\
 ||                                                                    ||
-||   CARDÁPIO SHEETS - V3.5  - 20/07/2025 - 22h05                    ||
+||   CARDÁPIO SHEETS - V3.7 - 24/07/2025 - 16h15                      ||
 ||                                                                    ||
 ||    Desenvolvido com ❤️ por Dante Testa                             ||
 ||    www.dantetesta.com.br | WhatsApp: (19) 99802-9156              ||
@@ -42,10 +42,10 @@
     <title>Cardápio Sheets</title>
     <script src="config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
-	
-	
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         :root {
             /* ===== CORES PRINCIPAIS - ESTILO iFOOD ===== */
@@ -121,7 +121,7 @@
             --gradiente-sucesso-hover: linear-gradient(135deg, #45A049 0%, #5CB85C 100%);
         }
         
-        body { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         
         .category-nav {
             backdrop-filter: blur(10px);
@@ -650,6 +650,16 @@
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                         </svg>
                     </div>
+                    
+                    <div id="footer-qrcode" class="cursor-pointer transition-all duration-300" style="color: var(--cor-primaria) !important;" onclick="openQRCodeModal()" title="Ver QR Code do cardápio" onmouseover="this.style.color='var(--cor-secundaria)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--cor-primaria)'; this.style.transform='translateY(0)'">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" style="color: var(--cor-primaria) !important; transition: all 0.3s ease;">
+                            <path d="M2 2h2v2H2z"/>
+                            <path d="M6 0v6H0V0zM5 1H1v4h4zM4 12H2v2h2z"/>
+                            <path d="M6 10v6H0v-6zm-5 1v4h4v-4zm11-9h2v2h-2z"/>
+                            <path d="M10 0v6h6V0zm5 1v4h-4V1zM8 1V0h1v2H8v2H7V1zm0 5V4h1v2zM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8zm0 0v1H2V8H1v1H0V7h3v1zm10 1h-1V7h1zm-1 0h-1v2h2v-1h-1zm-4 0h2v1h-1v1h-1zm2 3v-1h-1v1h-1v1H9v1h3v-2zm0 0h3v1h-2v1h-1zm-4-1v1h1v-2H7v1z"/>
+                            <path d="M7 12h1v3h4v1H7zm9 2v2h-3v-1h2v-1z"/>
+                        </svg>
+                    </div>
                     <div class="flex items-center space-x-2 cursor-pointer transition-all duration-300" onclick="openHoursModal()" title="Ver horários de funcionamento" onmouseover="this.style.transform='translateY(-2px)'; this.querySelector('span').style.color='var(--cor-primaria)'" onmouseout="this.style.transform='translateY(0)'; this.querySelector('span').style.color='var(--cor-primaria)'">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" style="color: var(--cor-primaria) !important; transition: all 0.3s ease;">
                             <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
@@ -680,6 +690,8 @@
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                         </svg>
                     </a>
+                    
+
                 </div>
             </div>
             
@@ -1029,10 +1041,7 @@
                             <label class="block text-sm font-medium mb-2" style="color: var(--cor-texto) !important;">Forma de Pagamento *</label>
                             <select id="payment-method" class="w-full px-3 py-2 rounded-lg" style="border: 1px solid var(--cor-borda) !important; --tw-ring-color: var(--cor-primaria) !important;" onchange="clearFieldError('payment-method'); handlePaymentMethodChange()" onfocus="this.style.borderColor='var(--cor-primaria)'; this.style.outline='2px solid var(--cor-primaria)'; this.style.outlineOffset='2px'" onblur="this.style.borderColor='var(--cor-borda)'; this.style.outline='none'">
                                 <option value="">Selecione...</option>
-                                <option value="dinheiro">💵 Dinheiro</option>
-                                <option value="pix">📱 PIX</option>
-                                <option value="cartao-debito">💳 Cartão de Débito</option>
-                                <option value="cartao-credito">💳 Cartão de Crédito</option>
+                                <!-- Options will be populated dynamically by setupPaymentMethods() from spreadsheet -->
                             </select>
                         </div>
                         
@@ -1086,6 +1095,57 @@
         </div>
     </div>
 
+    <!-- Modal QR Code -->
+    <div id="qrcode-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto" style="background-color: var(--cor-fundo) !important;">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold" style="color: var(--cor-texto) !important;">🔗 QR Code do Cardápio</h2>
+                        <button onclick="closeQRCodeModal()" style="color: var(--cor-texto) !important;" onmouseover="this.style.color='var(--cor-texto)'" onmouseout="this.style.color='var(--cor-texto-secundario)'">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="text-center space-y-4">
+                        <!-- QR Code Container -->
+                        <div id="qrcode-container" class="flex justify-center p-4 rounded-lg" style="background-color: var(--cor-fundo-secundario); border: 2px solid var(--cor-primaria-clara);">
+                            <div id="qrcode-display" class="bg-white p-4 rounded-lg shadow-lg">
+                                <!-- QR Code será gerado aqui -->
+                            </div>
+                        </div>
+                        
+                        <!-- URL Display -->
+                        <div class="p-3 rounded-lg" style="background-color: var(--cor-fundo-secundario); border: 1px solid var(--cor-primaria-clara);">
+                            <p class="text-sm font-medium mb-2" style="color: var(--cor-texto) !important;">📱 Link do Cardápio:</p>
+                            <div class="flex items-center space-x-2">
+                                <input id="qrcode-url" type="text" readonly class="flex-1 p-2 text-sm rounded border" style="background-color: var(--cor-fundo); color: var(--cor-texto); border-color: var(--cor-primaria-clara);" />
+                                <button onclick="copyQRCodeURL(event)" class="px-3 py-2 text-sm font-medium rounded transition-all duration-300" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white;" onmouseover="this.style.background='linear-gradient(135deg, var(--cor-secundaria), var(--cor-terciaria))'" onmouseout="this.style.background='linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))'">
+                                    📋 Copiar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col space-y-3">
+                            <button id="download-qr-button" onclick="downloadQRCode(event)" disabled class="w-full py-3 px-4 font-medium rounded-lg transition-all duration-300" style="background: linear-gradient(135deg, #ccc, #999); color: #666; cursor: not-allowed;">
+                                ⏳ Aguarde o QR Code...
+                            </button>
+                        </div>
+                        
+                        <!-- Info -->
+                        <div class="text-xs text-center" style="color: var(--cor-texto-secundario); opacity: 0.8;">
+                            <p>📱 Escaneie com a câmera do celular</p>
+                            <p>🔗 Ou compartilhe o link diretamente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Global variables for menu data
         let menuData = {};
@@ -1117,50 +1177,87 @@
             envio: {}
         };
 
-        // Function to parse CSV data with proper handling of quoted fields
+        // Function to parse CSV data with proper handling of quoted fields and line breaks
         function parseCSV(csvText) {
-            const lines = csvText.trim().split('\n');
-            if (lines.length === 0) return [];
+            if (!csvText || csvText.trim().length === 0) return [];
             
-            // Parse CSV line considering quoted fields
-            function parseCSVLine(line) {
-                const result = [];
-                let current = '';
-                let inQuotes = false;
+            // Normalizar quebras de linha
+            csvText = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            
+            const rows = [];
+            let currentRow = [];
+            let currentField = '';
+            let inQuotes = false;
+            let i = 0;
+            
+            while (i < csvText.length) {
+                const char = csvText[i];
+                const nextChar = csvText[i + 1];
                 
-                for (let i = 0; i < line.length; i++) {
-                    const char = line[i];
-                    
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
-                        result.push(current.trim());
-                        current = '';
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        // Aspas duplas escapadas dentro de campo com aspas
+                        currentField += '"';
+                        i += 2; // Pular as duas aspas
+                        continue;
                     } else {
-                        current += char;
+                        // Início ou fim de campo com aspas
+                        inQuotes = !inQuotes;
                     }
+                } else if (char === ',' && !inQuotes) {
+                    // Fim do campo
+                    currentRow.push(currentField.trim());
+                    currentField = '';
+                } else if (char === '\n' && !inQuotes) {
+                    // Fim da linha
+                    currentRow.push(currentField.trim());
+                    if (currentRow.some(field => field.length > 0)) {
+                        rows.push(currentRow);
+                    }
+                    currentRow = [];
+                    currentField = '';
+                } else {
+                    // Caractere normal (incluindo quebras de linha dentro de aspas)
+                    currentField += char;
                 }
                 
-                result.push(current.trim());
-                return result;
+                i++;
             }
             
-            const headers = parseCSVLine(lines[0]).map(header => header.replace(/"/g, '').trim());
+            // Adicionar último campo e linha se necessário
+            if (currentField.length > 0 || currentRow.length > 0) {
+                currentRow.push(currentField.trim());
+                if (currentRow.some(field => field.length > 0)) {
+                    rows.push(currentRow);
+                }
+            }
+            
+            if (rows.length === 0) return [];
+            
+            // Processar cabeçalhos
+            const headers = rows[0].map(header => {
+                let cleanHeader = header.replace(/^"|"$/g, '').trim();
+                return cleanHeader;
+            });
+            
+            // Processar dados
             const data = [];
-
-            for (let i = 1; i < lines.length; i++) {
-                if (lines[i].trim() === '') continue; // Skip empty lines
-                
-                const values = parseCSVLine(lines[i]);
+            for (let rowIndex = 1; rowIndex < rows.length; rowIndex++) {
                 const row = {};
+                const values = rows[rowIndex];
                 
-                headers.forEach((header, index) => {
-                    let value = values[index] || '';
-                    // Remove surrounding quotes if present
+                headers.forEach((header, colIndex) => {
+                    let value = values[colIndex] || '';
+                    
+                    // Remover aspas externas se presentes
                     if (value.startsWith('"') && value.endsWith('"')) {
                         value = value.slice(1, -1);
                     }
-                    row[header] = value.trim();
+                    
+                    // Processar aspas duplas escapadas
+                    value = value.replace(/""/g, '"');
+                    
+                    row[header] = value;
                 });
                 
                 data.push(row);
@@ -1848,7 +1945,7 @@
                     const processedItem = {
                         id: index + 1,
                         nome: item.item,
-			sku: item.SKU,
+                        sku: item.SKU,
                         descricao: item.descricao,
                         preco: parseFloat(item.preco.replace('R$', '').replace(',', '.')),
                         imagem: processImageUrl(item.foto_url),
@@ -1870,36 +1967,33 @@
         }
 
         // Function to show preloader
-     function showPreloader() {
-    const preloaderHTML = `
-        <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
-            <div class="text-center">
-                <div class="mb-4">
-                    <svg class="animate-spin h-12 w-12 text-red-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                    </svg>
-                </div>
-                <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando Cardápio</h2>
-                <p class="text-gray-600">Aguarde o carregamento...</p>
-                <div class="mt-4">
-                    <div class="bg-gray-200 rounded-full h-2 w-64 mx-auto">
-                        <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+        function showPreloader() {
+            const preloaderHTML = `
+                <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="mb-4">
+                            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+                        </div>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando Cardápio</h2>
+                        <p class="text-gray-600">Aguarde o carregamento...</p>
+                        <div class="mt-4">
+                            <div class="bg-gray-200 rounded-full h-2 w-64 mx-auto">
+                                <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', preloaderHTML);
-}
+            `;
+            document.body.insertAdjacentHTML('beforeend', preloaderHTML);
+        }
 
         // Function to update progress
-       function updateProgress(percentage) {
-    const progressBar = document.getElementById('progress-bar');
-    if (progressBar) {
-        progressBar.style.width = percentage + '%';
-    }
-}
+        function updateProgress(percentage) {
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) {
+                progressBar.style.width = percentage + '%';
+            }
+        }
 
         // Function to hide preloader
         function hidePreloader() {
@@ -1908,6 +2002,10 @@
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.remove();
+                    // Mostrar toast da mesa após carregamento completo
+                    setTimeout(() => {
+                        mostrarIndicadorMesaURL();
+                    }, 500);
                 }, 300);
             }
         }
@@ -2128,45 +2226,154 @@
         function parseVariations(classificacaoAdicional) {
             if (!classificacaoAdicional) return null;
             
-            // Check if it's a variation (starts with #Var: or Var:)
-            const isRequiredVariation = classificacaoAdicional.startsWith('#Var:');
-            const isOptionalVariation = classificacaoAdicional.startsWith('Var:') && !isRequiredVariation;
+            console.log('🔍 parseVariations chamada com:', classificacaoAdicional);
             
-            // If it doesn't start with #Var: or Var:, it's just informative text
-            if (!isRequiredVariation && !isOptionalVariation) {
+            // Detectar se é o novo formato (múltiplas linhas com # ou Var:)
+            const lines = classificacaoAdicional.split('\n').map(line => line.trim()).filter(line => line);
+            console.log('📝 Linhas detectadas:', lines);
+            
+            // Verificar se alguma linha tem o padrão do novo formato
+            const hasNewFormatPattern = lines.some(line => 
+                /^(#[^:]+:|~Var:\s*[^:]+:|Var:\s*[^:]+:)(radio|checkbox):/.test(line) ||
+                /maxselect=\d+:/.test(line)
+            );
+            
+            console.log('🆕 Tem padrão novo formato?', hasNewFormatPattern);
+            
+            if (hasNewFormatPattern) {
+                // Novo formato - múltiplas variações
+                const variations = [];
+                
+                lines.forEach((line, lineIndex) => {
+                    console.log(`📋 Processando linha ${lineIndex}:`, line);
+                    
+                    // Padrão: [#|~Var:|Var:]Nome:tipo:opção1 valor/opção2 valor/... [limites]
+                    // Novo padrão com limites: Nome:tipo:opções [min-max] ou [max]
+                    const match = line.match(/^(#?)(?:(~)Var:\s*|Var:\s*)?([^:]+):(radio|checkbox):(.+?)(?:\s*\[(\d+)(?:-(\d+))?\])?$/);
+                    
+                    if (match) {
+                        const [, isRequired, isRemoval, name, type, optionsStr, minSelect, maxSelect] = match;
+                        console.log('✅ Match encontrado:', { 
+                            isRequired: !!isRequired, 
+                            isRemoval: !!isRemoval, 
+                            name, 
+                            type, 
+                            optionsStr,
+                            minSelect: minSelect ? parseInt(minSelect) : undefined,
+                            maxSelect: maxSelect ? parseInt(maxSelect) : (minSelect ? parseInt(minSelect) : undefined)
+                        });
+                        
+                        // Parse das opções
+                        const options = optionsStr.split('/').map(optionStr => {
+                            const trimmed = optionStr.trim();
+                            
+                            // Verificar se a primeira opção contém maxselect=X (formato da planilha)
+                            let maxSelectFromOption = null;
+                            let cleanedOption = trimmed;
+                            
+                            const maxSelectMatch = trimmed.match(/maxselect=(\d+):(.+)/);
+                            if (maxSelectMatch) {
+                                maxSelectFromOption = parseInt(maxSelectMatch[1]);
+                                cleanedOption = maxSelectMatch[2];
+                                console.log('🎨 Detectado maxselect na opção:', maxSelectFromOption, 'para:', cleanedOption);
+                            }
+                            
+                            // Padrão para preços: +X,XX, -X,XX, +0,00
+                            const priceMatch = cleanedOption.match(/([+-])(\d+(?:[,.]\d{2})?)/);
+                            
+                            let name = cleanedOption;
+                            let price = 0;
+                            
+                            if (priceMatch) {
+                                const [fullMatch, sign, valueStr] = priceMatch;
+                                name = cleanedOption.replace(fullMatch, '').trim();
+                                price = parseFloat(valueStr.replace(',', '.'));
+                                if (sign === '-') price = -price;
+                            }
+                            
+                            return { name, price, maxSelectFromOption };
+                        }).filter(option => option.name);
+                        
+                        // Limpar as opções finais (remover maxSelectFromOption do objeto final)
+                        const cleanOptions = options.map(opt => ({ name: opt.name, price: opt.price }));
+                        
+                        console.log('🎯 Opções parseadas:', options);
+                        
+                        // Processar limites de seleção
+                        let finalMinSelect = minSelect ? parseInt(minSelect) : undefined;
+                        let finalMaxSelect = maxSelect ? parseInt(maxSelect) : (minSelect ? parseInt(minSelect) : undefined);
+                        
+                        // Verificar se alguma opção tem maxselect definido (formato da planilha)
+                        const optionWithMaxSelect = options.find(opt => opt.maxSelectFromOption);
+                        if (optionWithMaxSelect && !finalMaxSelect) {
+                            finalMaxSelect = optionWithMaxSelect.maxSelectFromOption;
+                            console.log('🎨 Usando maxSelect da opção:', finalMaxSelect, 'para variação:', name);
+                        }
+                        
+                        // Validação: checkbox deve ter limite mínimo de pelo menos 2 se especificado
+                        if (type === 'checkbox' && finalMinSelect && finalMinSelect < 2) {
+                            console.warn(`⚠️ Limite mínimo para checkbox "${name}" ajustado de ${finalMinSelect} para 2`);
+                            finalMinSelect = 2;
+                        }
+                        
+                        variations.push({
+                            name: name.trim(),
+                            type: type,
+                            required: !!isRequired,
+                            isRemoval: !!isRemoval,
+                            minSelect: finalMinSelect,
+                            maxSelect: finalMaxSelect,
+                            options: cleanOptions
+                        });
+                    } else {
+                        console.log('❌ Linha não corresponde ao padrão:', line);
+                    }
+                });
+                
+                console.log('🎉 Variações finais:', variations);
+                
                 return {
-                    type: 'info',
-                    text: classificacaoAdicional.trim()
+                    type: 'multiple_variations',
+                    variations: variations
                 };
             }
             
-            // Extract variations text
-            const variationsText = classificacaoAdicional.replace(/^#?Var:\s*/, '');
+            // Verificar formato legado
+            const isRequiredVariation = classificacaoAdicional.startsWith('#Var:');
+            const isOptionalVariation = classificacaoAdicional.startsWith('Var:') && !isRequiredVariation;
             
-            // Parse individual variations separated by /
-            const variations = variationsText.split('/').map(variation => {
-                const trimmed = variation.trim();
+            if (isRequiredVariation || isOptionalVariation) {
+                console.log('📜 Formato legado detectado');
                 
-                // Match price pattern +X,XX or +X.XX (without currency symbol)
-                const priceMatch = trimmed.match(/\+(\d+(?:[,.]\d{2})?)/);
+                const variationsText = classificacaoAdicional.replace(/^#?Var:\s*/, '');
                 
-                let name = trimmed;
-                let price = 0;
+                const variations = variationsText.split('/').map(variation => {
+                    const trimmed = variation.trim();
+                    const priceMatch = trimmed.match(/\+(\d+(?:[,.]\d{2})?)/);
+                    
+                    let name = trimmed;
+                    let price = 0;
+                    
+                    if (priceMatch) {
+                        name = trimmed.replace(/\s*\+\d+(?:[,.]\d{2})?/, '').trim();
+                        price = parseFloat(priceMatch[1].replace(',', '.'));
+                    }
+                    
+                    return { name, price };
+                }).filter(variation => variation.name);
                 
-                if (priceMatch) {
-                    // Remove price from name
-                    name = trimmed.replace(/\s*\+\d+(?:[,.]\d{2})?/, '').trim();
-                    // Convert price to float (handle both comma and dot)
-                    price = parseFloat(priceMatch[1].replace(',', '.'));
-                }
-                
-                return { name, price };
-            }).filter(variation => variation.name); // Remove empty variations
+                return {
+                    type: 'variation',
+                    required: isRequiredVariation,
+                    options: variations
+                };
+            }
             
+            // Texto informativo
+            console.log('ℹ️ Texto informativo detectado');
             return {
-                type: 'variation',
-                required: isRequiredVariation,
-                options: variations
+                type: 'info',
+                text: classificacaoAdicional.trim()
             };
         }
 
@@ -2319,21 +2526,34 @@
                             </button>
                         </div>
                         <div class="space-y-3">
-                            ${items.map(item => `
-                                <div class="food-card bg-white rounded-lg p-4 shadow-sm border border-gray-100" onclick="openProductModal(${item.id})">
+                            ${items.map(item => {
+                                // Verificar se o item tem variações
+                                const hasVariations = item.classificacaoAdicional && 
+                                    (item.classificacaoAdicional.startsWith('#Var:') || 
+                                     item.classificacaoAdicional.startsWith('Var:') ||
+                                     item.classificacaoAdicional.startsWith('#'));
+                                
+                                return `
+                                <div class="food-card bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300" onclick="openProductModal(${item.id})">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-shrink-0">
                                             <img src="${processImageUrl(item.imagem)}" alt="${item.nome}" class="w-20 h-20 object-cover rounded-lg lazy-image" loading="lazy" onerror="console.error('Erro ao carregar imagem do item:', this.src, 'Item:', '${item.nome}'); this.src='${getPlaceholderImage()}'" onload="this.classList.add('loaded'); console.log('Imagem do item carregada:', this.src)" style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;">
-                                            
+                                            <div class="text-xs text-gray-500 text-center mt-1 font-mono">${item.sku}</div>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <h3 class="font-semibold text-gray-900 truncate">${item.nome}</h3>
+                                            <div class="flex items-start justify-between">
+                                                <h3 class="font-semibold text-gray-900 truncate pr-2">${item.nome}</h3>
+                                                ${hasVariations ? `<span class="text-xs font-medium whitespace-nowrap px-2 py-1 rounded-full inline-flex items-center" style="background-color: var(--cor-secundaria); color: white;">Opções</span>` : ''}
+                                            </div>
                                             <p class="text-sm text-gray-600 line-clamp-2 mt-1">${item.descricao}</p>
                                             ${item.observacoes ? `<p class="text-xs text-gray-500 mt-1">${item.observacoes}</p>` : ''}
                                             <div class="flex items-center justify-between mt-3">
                                                 <span class="text-lg font-bold" style="color: var(--cor-primaria)">${formatCurrency(item.preco)}</span>
-                                                <button class="add-to-cart-btn text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors" style="background-color: var(--cor-primaria)" onmouseenter="this.style.backgroundColor='var(--cor-primaria-hover)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'" onclick="event.stopPropagation(); addToCart(${item.id})">
-                                                    <div class="flex items-center space-x-1">
+                                                <button class="add-to-cart-btn text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300" 
+                                                    style="background-color: var(--cor-primaria)"
+                                                    onmouseenter="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'"
+                                                    onclick="event.stopPropagation(); ${hasVariations ? 'openProductModal(' + item.id + ')' : 'addToCart(' + item.id + ')'}">
+                                                    <div class="flex items-center space-x-1.5">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L6 5H3m4 8a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
                                                         </svg>
@@ -2344,7 +2564,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            `).join('')}
+                                `;
+                            }).join('')}
                         </div>
                     </section>
                 `;
@@ -2370,8 +2591,65 @@
             let variationsHtml = '';
             
             if (variations) {
-                if (variations.type === 'variation') {
-                    // Handle variations (required or optional)
+                if (variations.type === 'multiple_variations') {
+                    // Novo formato - múltiplas variações
+                    console.log('🎯 Renderizando múltiplas variações:', variations.variations);
+                    
+                    variationsHtml = variations.variations.map((variation, variationIndex) => {
+                        const inputType = variation.type;
+                        const requiredText = variation.required ? ' *' : '';
+                        const removalBadge = variation.isRemoval ? ' <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded ml-2">🚫 Remoção</span>' : '';
+                        const inputName = variation.type === 'radio' ? `variation-${variationIndex}` : `variation-${variationIndex}`;
+                        
+                        // Criar texto de limites de seleção
+                        let limitsText = '';
+                        if (variation.type === 'checkbox') {
+                            if (variation.minSelect && variation.maxSelect) {
+                                if (variation.minSelect === variation.maxSelect) {
+                                    limitsText = ` <span class="text-xs text-gray-500">(Selecione exatamente ${variation.minSelect})</span>`;
+                                } else {
+                                    limitsText = ` <span class="text-xs text-gray-500">(Selecione ${variation.minSelect}-${variation.maxSelect})</span>`;
+                                }
+                            } else if (variation.maxSelect) {
+                                limitsText = ` <span class="text-xs text-gray-500">(Máximo ${variation.maxSelect})</span>`;
+                            } else if (variation.minSelect) {
+                                limitsText = ` <span class="text-xs text-gray-500">(Mínimo ${variation.minSelect})</span>`;
+                            }
+                        }
+                        
+                        return `
+                            <div class="mb-6 border-t pt-4 variation-container" data-variation-index="${variationIndex}" data-variation-type="${variation.type}" data-min-select="${variation.minSelect || 0}" data-max-select="${variation.maxSelect || 0}">
+                                <h4 class="font-medium text-gray-900 mb-3">${variation.name}${requiredText}${removalBadge}${limitsText}</h4>
+                                <div class="space-y-2">
+                                    ${variation.options.map((option, optionIndex) => {
+                                        const uniqueId = `${variationIndex}-${optionIndex}`;
+                                        const priceDisplay = option.price > 0 ? 
+                                            `<span class="text-green-600 font-medium">+${formatCurrency(option.price)}</span>` : 
+                                            option.price < 0 ? 
+                                                `<span class="text-red-600 font-medium">${formatCurrency(option.price)}</span>` : 
+                                                '';
+                                        
+                                        return `
+                                            <label class="flex items-center justify-between p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                                <div class="flex items-center">
+                                                    <input type="${inputType}" 
+                                                           name="${inputName}" 
+                                                           value="${uniqueId}" 
+                                                           onchange="handleMultipleVariationChange('${variationIndex}', '${optionIndex}', '${option.name}', ${option.price}, '${variation.type}', ${variation.required}, ${variation.isRemoval || false})" 
+                                                           class="mr-3">
+                                                    <span>${option.name}</span>
+                                                </div>
+                                                ${priceDisplay}
+                                            </label>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                } else if (variations.type === 'variation') {
+                    // Formato legado - variação única
                     const inputType = variations.required ? 'radio' : 'checkbox';
                     const requiredText = variations.required ? ' *' : '';
                     
@@ -2394,7 +2672,7 @@
                         </div>
                     `;
                 } else if (variations.type === 'info') {
-                    // Handle informative text
+                    // Texto informativo
                     variationsHtml = `
                         <div class="mb-6 border-t pt-4">
                             <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
@@ -2471,25 +2749,103 @@
             updateAddToCartButton();
         }
 
-        // Handle variation change
+        // Handle variation change (formato legado)
         function handleVariationChange(index, name, price, isRequired) {
+            console.log('🔧 handleVariationChange chamada:', { index, name, price, isRequired });
+            
             const variations = parseVariations(currentProduct.classificacaoAdicional);
             
             if (isRequired) {
                 // Radio button - single selection
                 selectedVariations = { [index]: { name, price } };
+                console.log('🔘 Variação obrigatória selecionada:', selectedVariations);
             } else {
                 // Checkbox - multiple selection
                 const checkbox = event.target;
                 if (checkbox.checked) {
                     selectedVariations[index] = { name, price };
+                    console.log('✅ Variação opcional marcada:', selectedVariations);
                 } else {
                     delete selectedVariations[index];
+                    console.log('❌ Variação opcional desmarcada:', selectedVariations);
                 }
             }
             
             updateModalPricing();
             updateAddToCartButton();
+        }
+
+        // Handle multiple variation change (novo formato)
+        function handleMultipleVariationChange(variationIndex, optionIndex, name, price, type, isRequired, isRemoval) {
+            console.log('🎯 handleMultipleVariationChange chamada:', { 
+                variationIndex, optionIndex, name, price, type, isRequired, isRemoval 
+            });
+            
+            const uniqueKey = `${variationIndex}-${optionIndex}`;
+            const variations = parseVariations(currentProduct.classificacaoAdicional);
+            
+            if (type === 'radio') {
+                // Radio button - limpar outras seleções da mesma variação
+                Object.keys(selectedVariations).forEach(key => {
+                    if (key.startsWith(`${variationIndex}-`)) {
+                        delete selectedVariations[key];
+                    }
+                });
+                selectedVariations[uniqueKey] = { 
+                    name, 
+                    price, 
+                    variationIndex: parseInt(variationIndex),
+                    optionIndex: parseInt(optionIndex),
+                    variationName: getCurrentVariationName(variationIndex),
+                    isRemoval: isRemoval || false
+                };
+                console.log('🔘 Radio selecionado:', selectedVariations);
+            } else if (type === 'checkbox') {
+                // Checkbox - validar limites antes de processar
+                const checkbox = event.target;
+                
+                if (checkbox.checked) {
+                    // Verificar limite máximo antes de adicionar
+                    const currentVariation = variations?.variations?.[variationIndex];
+                    if (currentVariation && currentVariation.maxSelect > 0) {
+                        const currentSelections = Object.keys(selectedVariations).filter(key => 
+                            key.startsWith(`${variationIndex}-`)
+                        ).length;
+                        
+                        if (currentSelections >= currentVariation.maxSelect) {
+                            checkbox.checked = false;
+                            showNotification(`Máximo de ${currentVariation.maxSelect} opções permitidas em "${currentVariation.name}"!`, 'warning', 3000);
+                            return; // Parar execução aqui
+                        }
+                    }
+                    
+                    // Se passou na validação, adicionar seleção
+                    selectedVariations[uniqueKey] = { 
+                        name, 
+                        price, 
+                        variationIndex: parseInt(variationIndex),
+                        optionIndex: parseInt(optionIndex),
+                        variationName: getCurrentVariationName(variationIndex),
+                        isRemoval: isRemoval || false
+                    };
+                    console.log('✅ Checkbox marcado:', selectedVariations);
+                } else {
+                    delete selectedVariations[uniqueKey];
+                    console.log('❌ Checkbox desmarcado:', selectedVariations);
+                }
+            }
+            
+            updateModalPricing();
+            updateAddToCartButton();
+        }
+
+        // Função auxiliar para obter o nome da variação
+        function getCurrentVariationName(variationIndex) {
+            const variations = parseVariations(currentProduct.classificacaoAdicional);
+            if (variations && variations.type === 'multiple_variations') {
+                return variations.variations[variationIndex]?.name || '';
+            }
+            return '';
         }
 
         // Update modal pricing
@@ -2507,12 +2863,46 @@
             const variations = parseVariations(currentProduct.classificacaoAdicional);
             const button = document.getElementById('add-to-cart-btn');
             
-            if (variations && variations.type === 'variation' && variations.required) {
-                const hasSelection = Object.keys(selectedVariations).length > 0;
-                button.disabled = !hasSelection;
-                button.classList.toggle('opacity-50', !hasSelection);
-                button.classList.toggle('cursor-not-allowed', !hasSelection);
+            if (variations) {
+                if (variations.type === 'multiple_variations') {
+                    // Novo formato - verificar variações obrigatórias
+                    const requiredVariations = variations.variations.filter(v => v.required);
+                    let allRequiredSelected = true;
+                    
+                    for (const requiredVar of requiredVariations) {
+                        const variationIndex = variations.variations.indexOf(requiredVar);
+                        const hasSelectionForThisVariation = Object.keys(selectedVariations)
+                            .some(key => key.startsWith(`${variationIndex}-`));
+                        
+                        if (!hasSelectionForThisVariation) {
+                            allRequiredSelected = false;
+                            break;
+                        }
+                    }
+                    
+                    button.disabled = !allRequiredSelected;
+                    button.classList.toggle('opacity-50', !allRequiredSelected);
+                    button.classList.toggle('cursor-not-allowed', !allRequiredSelected);
+                    
+                    console.log('🔍 Verificação múltiplas variações:', {
+                        requiredVariations: requiredVariations.length,
+                        allRequiredSelected,
+                        selectedVariations
+                    });
+                    
+                } else if (variations.type === 'variation' && variations.required) {
+                    // Formato legado - variação única obrigatória
+                    const hasSelection = Object.keys(selectedVariations).length > 0;
+                    button.disabled = !hasSelection;
+                    button.classList.toggle('opacity-50', !hasSelection);
+                    button.classList.toggle('cursor-not-allowed', !hasSelection);
+                } else {
+                    // Sem variações obrigatórias
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
             } else {
+                // Sem variações
                 button.disabled = false;
                 button.classList.remove('opacity-50', 'cursor-not-allowed');
             }
@@ -2551,35 +2941,83 @@
 
         // Add to cart from modal
         function addToCartFromModal() {
-            const variations = parseVariations(currentProduct.classificacaoAdicional);
+            console.log('=== INÍCIO addToCartFromModal ===');
             
-            // Check if required variations are selected
-            if (variations && variations.required && Object.keys(selectedVariations).length === 0) {
-                showCustomAlert('Por favor, selecione uma opção obrigatória');
+            // Verificar estado do botão
+            const button = document.getElementById('add-to-cart-btn');
+            console.log('🔘 Estado do botão:', {
+                disabled: button.disabled,
+                classList: Array.from(button.classList),
+                style: button.style.cssText
+            });
+            
+            console.log('🛒 addToCartFromModal chamada');
+            console.log('📦 Produto atual:', currentProduct);
+            console.log('🔧 Variações selecionadas:', selectedVariations);
+            
+            const variations = parseVariations(currentProduct.classificacaoAdicional);
+            console.log('📋 Variações parseadas:', variations);
+            
+            // Validar todas as variações usando a nova função de validação
+            console.log('🔍 Validando todas as variações...');
+            
+            if (!validateAllVariations()) {
+                console.log('❌ Validação de variações falhou - BLOQUEANDO!');
                 return;
             }
+            
+            console.log('✅ Validação de variações passou!');
+            
+            // Fallback para formato legado
+            if (variations && variations.type === 'variation' && variations.required && Object.keys(selectedVariations).length === 0) {
+                console.log('❌ Variação obrigatória (formato legado) não selecionada - BLOQUEANDO!');
+                showNotification('Por favor, selecione uma opção obrigatória', 'warning', 4000);
+                return;
+            }
+            
+            console.log('✅ Verificação de variações obrigatórias passou!');
             
             const quantity = parseInt(document.getElementById('modal-quantity').textContent);
             const notesElement = document.getElementById('product-notes');
             const notes = notesElement ? notesElement.value.trim() : '';
-            addToCart(currentProduct.id, quantity, selectedVariations, notes);
+            
+            console.log('📊 Quantidade:', quantity);
+            console.log('📝 Observações:', notes);
+            console.log('✅ Chamando addToCart...');
+            
+            addToCart(currentProduct.id, quantity, selectedVariations, notes, true); // true = chamada do modal
             closeModal();
         }
 
         // Add to cart
-        function addToCart(productId, quantity = 1, variations = {}, notes = '') {
+        function addToCart(productId, quantity = 1, variations = {}, notes = '', fromModal = false) {
+            console.log('🛒 addToCart chamada com:', { productId, quantity, variations, notes, fromModal });
+            
             const product = findProductById(productId);
-            if (!product) return;
+            if (!product) {
+                console.log('❌ Produto não encontrado:', productId);
+                return;
+            }
+            
+            console.log('📦 Produto encontrado:', product);
 
-            // Check if product has required variations and none are provided
+            // Check if product has ANY variations (required or optional) and none are provided
             const productVariations = parseVariations(product.classificacaoAdicional);
-            if (productVariations && productVariations.type === 'variation' && productVariations.required) {
-                // If no variations provided for a product with required variations, open modal instead
-                if (Object.keys(variations).length === 0) {
+            console.log('🔍 Variações do produto:', productVariations);
+            
+            if (productVariations && (productVariations.type === 'variation' || productVariations.type === 'multiple_variations')) {
+                // If no variations provided for a product with variations, open modal to show options
+                // BUT only if the call is NOT from the modal itself
+                if (Object.keys(variations).length === 0 && !fromModal) {
+                    console.log('🔄 Abrindo modal - produto tem variações mas nenhuma foi fornecida');
                     openProductModal(productId);
                     return;
+                } else if (fromModal) {
+                    console.log('📝 Chamada do modal - prosseguindo mesmo sem variações selecionadas');
                 }
             }
+            
+            console.log('✅ Prosseguindo para adicionar ao carrinho...');
 
             // Calculate variation price
             const variationPrice = Object.values(variations).reduce((sum, variation) => sum + variation.price, 0);
@@ -2595,17 +3033,66 @@
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
-                const variationNames = Object.values(variations).map(v => v.name);
+                // Criar texto das variações baseado no formato
+                let variationText = '';
+                let removalText = '';
+                if (Object.keys(variations).length > 0) {
+                    if (productVariations && productVariations.type === 'multiple_variations') {
+                        // Novo formato - separar adições e remoções
+                        const additionGroups = {};
+                        const removalGroups = {};
+                        
+                        Object.values(variations).forEach(variation => {
+                            const groupName = variation.variationName || 'Opções';
+                            const isRemoval = variation.isRemoval || false;
+                            
+                            if (isRemoval) {
+                                if (!removalGroups[groupName]) {
+                                    removalGroups[groupName] = [];
+                                }
+                                removalGroups[groupName].push(variation.name);
+                            } else {
+                                if (!additionGroups[groupName]) {
+                                    additionGroups[groupName] = [];
+                                }
+                                additionGroups[groupName].push(variation.name);
+                            }
+                        });
+                        
+                        // Criar texto das adições
+                        if (Object.keys(additionGroups).length > 0) {
+                            variationText = Object.entries(additionGroups)
+                                .map(([groupName, options]) => `${groupName}: ${options.join(', ')}`)
+                                .join(' | ');
+                        }
+                        
+                        // Criar texto das remoções
+                        if (Object.keys(removalGroups).length > 0) {
+                            removalText = Object.entries(removalGroups)
+                                .map(([groupName, options]) => `${groupName}: ${options.join(', ')}`)
+                                .join(' | ');
+                        }
+                    } else {
+                        // Formato legado
+                        const variationNames = Object.values(variations).map(v => v.name);
+                        variationText = variationNames.join(', ');
+                    }
+                }
+                
                 cart.push({
                     ...product,
                     itemKey: itemKey,
                     quantity: quantity,
                     preco: totalPrice,
                     variations: variations,
-                    variationText: variationNames.length > 0 ? variationNames.join(', ') : '',
+                    variationText: variationText,
+                    removalText: removalText,
                     notes: notes
                 });
             }
+            
+            console.log('🎉 Produto adicionado ao carrinho!');
+            console.log('🛒 Carrinho atual:', cart);
 
             updateCartUI();
             showAddedToCartAnimation();
@@ -2676,7 +3163,8 @@
                             <div class="flex-1 min-w-0">
                                 <div class="text-xs text-gray-400 font-mono" style="font-size: 10px; margin-bottom: 2px;">${item.sku}</div>
                                 <h4 class="font-medium text-sm">${item.nome}</h4>
-                                ${item.variationText ? `<p class="text-xs text-gray-600">${item.variationText}</p>` : ''}
+                                ${item.variationText ? `<p class="text-xs text-gray-600">Adições: ${item.variationText}</p>` : ''}
+                                ${item.removalText ? `<p class="text-xs text-red-600">🚫 Remoções: ${item.removalText}</p>` : ''}
                                 ${item.notes ? `<p class="text-xs italic" style="color: var(--cor-terciaria)">Obs: ${item.notes}</p>` : ''}
                                 <div class="flex items-center justify-between mt-1">
                                     <p class="text-gray-600 text-xs">${formatCurrency(item.preco)} cada</p>
@@ -2786,6 +3274,13 @@
             // Setup delivery options based on configuration
             setupDeliveryOptions();
             
+            // ===== AUTOMAÇÃO MESA URL =====
+            // Verificar se há parâmetro mesa na URL e automatizar
+            const mesaAutomatizada = autoMesaCheckout();
+            if (mesaAutomatizada) {
+                console.log('🪑 Checkout automatizado para mesa URL');
+            }
+            
             // Setup payment methods based on configuration
             setupPaymentMethods();
             
@@ -2798,27 +3293,39 @@
             const checkoutConfig = getCheckoutConfig();
             const paymentContainer = document.querySelector('#payment-method').parentElement;
             
+            console.log('🔍 DEBUG setupPaymentMethods:', {
+                step3_show_formas_pag: checkoutConfig.step3_show_formas_pag,
+                deliveryType: orderData.deliveryType
+            });
+            
             // Check if payment methods should be shown
             if (checkoutConfig.step3_show_formas_pag !== 'Sim') {
+                console.log('❌ Payment field HIDDEN - step3_show_formas_pag !== Sim');
                 paymentContainer.style.display = 'none';
                 return;
             }
             
-            // Hide payment methods for "Consumo no Local" - doesn't make sense to show payment options
-            if (orderData.deliveryType === 'local') {
+            // Define delivery types that should show payment methods
+            const deliveryTypesWithPayment = ['pickup', 'delivery', 'default'];
+            
+            // Show payment field only for specific delivery types (pickup, delivery, default)
+            if (deliveryTypesWithPayment.includes(orderData.deliveryType)) {
+                console.log('✅ Payment field SHOWN - deliveryType:', orderData.deliveryType);
+                paymentContainer.style.display = 'block';
+            } else {
+                console.log('❌ Payment field HIDDEN - deliveryType not allowed:', orderData.deliveryType);
                 paymentContainer.style.display = 'none';
                 return;
             }
-            
-            // Show payment container for other delivery types
-            paymentContainer.style.display = 'block';
             
             // Get payment methods from configuration
             const paymentMethods = checkoutConfig.step3_formas_pag;
+            console.log('📝 Payment methods from config:', paymentMethods);
             
             if (paymentMethods && paymentMethods.trim() !== '') {
                 // Parse payment methods from configuration
                 const methodsList = paymentMethods.split(',').map(method => method.trim());
+                console.log('📋 Methods list:', methodsList);
                 const paymentSelect = document.getElementById('payment-method');
                 
                 // Clear existing options except the first one ("Selecione...")
@@ -2830,7 +3337,21 @@
                     
                     // Use payment method name as is from spreadsheet
                     option.value = method.toLowerCase().replace(/\s+/g, '-');
-                    option.textContent = method;
+                    
+                    // Add emoji based on method name
+                    let emoji = '💳'; // Default credit card emoji
+                    if (method.toLowerCase().includes('dinheiro')) {
+                        emoji = '💵';
+                    } else if (method.toLowerCase().includes('pix')) {
+                        emoji = '📱';
+                    } else if (method.toLowerCase().includes('cartão') || method.toLowerCase().includes('cartao')) {
+                        emoji = '💳';
+                    } else if (method.toLowerCase().includes('alelo') || method.toLowerCase().includes('vale') || method.toLowerCase().includes('ticket')) {
+                        emoji = '🎫'; // Simpler ticket emoji
+                    }
+                    
+                    option.textContent = `${emoji} ${method}`;
+                    console.log('✅ Created option:', option.value, '=', option.textContent);
                     
                     paymentSelect.appendChild(option);
                 });
@@ -3092,7 +3613,8 @@
                     <div class="flex-1">
                         <div class="text-xs text-gray-400 font-mono" style="font-size: 10px; margin-bottom: 2px;">${item.sku}</div>
                         <h4 class="font-medium text-sm">${item.nome}</h4>
-                        ${item.variationText ? `<p class="text-xs text-gray-600">${item.variationText}</p>` : ''}
+                        ${item.variationText ? `<p class="text-xs text-gray-600">Adições: ${item.variationText}</p>` : ''}
+                        ${item.removalText ? `<p class="text-xs text-red-600">🚫 Remoções: ${item.removalText}</p>` : ''}
                         <p class="text-xs text-gray-500">Quantidade: ${item.quantity}x</p>
                     </div>
                 </div>
@@ -3216,7 +3738,12 @@
                         setTimeout(() => {
                             const tableNumberField = document.getElementById('table-number');
                             if (tableNumberField) {
-                                tableNumberField.focus();
+                                // Primeiro tenta preencher automaticamente da URL
+                                const preenchido = preencheMesaAutomatica();
+                                // Se não preencheu automaticamente, foca no campo
+                                if (!preenchido) {
+                                    tableNumberField.focus();
+                                }
                             }
                         }, 100);
                     } else {
@@ -3774,6 +4301,12 @@
             // Check if payment methods are enabled
             if (checkoutConfig.step3_show_formas_pag !== 'Sim') {
                 return true; // Skip validation if payment methods are disabled
+            }
+            
+            // Define delivery types that should validate payment methods
+            const deliveryTypesWithPayment = ['pickup', 'delivery', 'default'];
+            if (!deliveryTypesWithPayment.includes(orderData.deliveryType)) {
+                return true; // Skip validation for delivery types without payment
             }
             
             const paymentMethod = document.getElementById('payment-method')?.value;
@@ -4773,6 +5306,9 @@
                 if (!isNaN(fee) && fee > 0) {
                     console.log('✅ Taxa válida encontrada:', fee);
                     
+                    // CORREÇÃO: Definir taxa global (necessário para cálculo do total)
+                    currentDeliveryFee = fee;
+                    
                     // Definir taxa no orderData
                     if (orderData && orderData.address) {
                         orderData.address.deliveryFee = fee;
@@ -4781,6 +5317,10 @@
                     
                     // Exibir taxa
                     displayDeliveryFee(fee, neighborhood);
+                    
+                    // CORREÇÃO: Atualizar total do checkout
+                    updateCheckoutOrderTotal();
+                    
                     return;
                 }
             }
@@ -5422,12 +5962,15 @@
                 const itemSubtotal = item.preco * item.quantity;
                 message += `• *${item.nome}* (${item.sku})\n`;
                 if (item.variationText) {
-                    message += `  └ Opções: ${item.variationText}\n`;
+                    message += `  └ Adições: ${item.variationText}\n`;
+                }
+                if (item.removalText) {
+                    message += `  └ 🚫 ${item.removalText}\n`;
                 }
                 if (item.notes) {
                     message += `  └ Obs: ${item.notes}\n`;
                 }
-                message += `  └ Qtd: ${item.quantity}x | Unitário: ${formatCurrency(item.preco)} | Subtotal: ${formatCurrency(itemSubtotal)}\n\n`;
+                message += `  └ Qtd: ${item.quantity}x | Unitário: ${formatCurrency(item.preco)} | Subtotal: ${formatCurrency(itemSubtotal)}\n\n\n`;
             });
             
             // Total com breakdown detalhado
@@ -5482,31 +6025,59 @@
             }
             
             message += `\n💰 *TOTAL FINAL: ${formatCurrency(total)}*\n`;
-            message += `━━━━━━━━━━━━━━\n\n`;
+            message += `━━━━━━━━━━━━━━\n`;
             
-            // Payment info (only for delivery and takeout)
-            if (orderData.deliveryType !== 'local') {
-                const paymentMethods = {
-                    'dinheiro': '💵 Dinheiro',
-                    'pix': '📱 PIX',
-                    'cartao-debito': '💳 Cartão de Débito',
-                    'cartao-credito': '💳 Cartão de Crédito'
-                };
-                message += `💳 *Pagamento:* ${paymentMethods[orderData.paymentMethod]}\n`;
+            // Payment info (only for pickup, delivery, default AND if payment field is enabled)
+            const checkoutConfig = getCheckoutConfig();
+            const deliveryTypesWithPayment = ['pickup', 'delivery', 'default'];
+            if (deliveryTypesWithPayment.includes(orderData.deliveryType) && checkoutConfig.step3_show_formas_pag === 'Sim') {
+                // Get payment methods from spreadsheet configuration
+                const configuredMethods = checkoutConfig.step3_formas_pag;
+                const paymentMethods = {};
                 
-                if (orderData.paymentMethod === 'dinheiro' && orderData.changeAmount) {
-                    const changeValue = getNumericValue(orderData.changeAmount);
-                    message += `💸 *Troco para:* ${formatCurrency(changeValue)}\n`;
+                if (configuredMethods && configuredMethods.trim() !== '') {
+                    // Parse configured payment methods
+                    const methodsList = configuredMethods.split(',').map(method => method.trim());
+                    
+                    // Create dynamic mapping with emojis
+                    methodsList.forEach(method => {
+                        const methodKey = method.toLowerCase().replace(/\s+/g, '-');
+                        let emoji = '💳'; // Default credit card emoji
+                        
+                        // Assign specific emojis based on method name
+                        if (method.toLowerCase().includes('dinheiro')) {
+                            emoji = '💵';
+                        } else if (method.toLowerCase().includes('pix')) {
+                            emoji = '📱';
+                        } else if (method.toLowerCase().includes('cartão') || method.toLowerCase().includes('cartao')) {
+                            emoji = '💳';
+                        } else if (method.toLowerCase().includes('alelo') || method.toLowerCase().includes('vale') || method.toLowerCase().includes('ticket')) {
+                            emoji = '🎫'; // Simpler ticket emoji
+                        }
+                        
+                        paymentMethods[methodKey] = `${emoji} ${method}`;
+                    });
+                }
+                
+                // Só incluir se paymentMethod estiver definido
+                if (orderData.paymentMethod && paymentMethods[orderData.paymentMethod]) {
+                    message += `\n💳 *Pagamento:* ${paymentMethods[orderData.paymentMethod]}\n`;
+                    
+                    if (orderData.paymentMethod === 'dinheiro' && orderData.changeAmount) {
+                        const changeValue = getNumericValue(orderData.changeAmount);
+                        message += `💸 *Troco para:* ${formatCurrency(changeValue)}\n`;
+                    }
+                    message += `━━━━━━━━━━━━━━\n`;
                 }
             }
             
             // Notes
             if (orderData.notes) {
                 message += `\n📝 *Observações:*\n${orderData.notes}\n`;
+                message += `━━━━━━━━━━━━━━\n`;
             }
             
-            message += `\n━━━━━━━━━━━━━━\n`;
-            message += `⏰ *Pedido realizado em:* ${new Date().toLocaleString('pt-BR')}\n`;
+            message += `\n⏰ *Pedido realizado em:* ${new Date().toLocaleString('pt-BR')}\n`;
             message += `\n✅ *Aguardando confirmação do restaurante*`;
             
             return message;
@@ -6639,6 +7210,664 @@
 
         // Update hours every minute
         setInterval(updateOperatingHours, 60000);
+
+        // ===== FUNÇÕES QR CODE =====
+        
+        // Variável global para armazenar o QR Code gerado
+        let generatedQRCode = null;
+        
+        /**
+         * Habilita o botão de download após QR Code estar pronto
+         */
+        function enableDownloadButton() {
+            const downloadButton = document.getElementById('download-qr-button');
+            if (downloadButton) {
+                downloadButton.disabled = false;
+                downloadButton.textContent = '💾 Baixar QR Code PNG';
+                downloadButton.style.background = 'linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))';
+                downloadButton.style.color = 'white';
+                downloadButton.style.cursor = 'pointer';
+                downloadButton.onmouseover = function() {
+                    this.style.background = 'linear-gradient(135deg, var(--cor-secundaria), var(--cor-terciaria))';
+                };
+                downloadButton.onmouseout = function() {
+                    this.style.background = 'linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))';
+                };
+            }
+        }
+        
+        /**
+         * Desabilita o botão de download
+         */
+        function disableDownloadButton() {
+            const downloadButton = document.getElementById('download-qr-button');
+            if (downloadButton) {
+                downloadButton.disabled = true;
+                downloadButton.textContent = '⏳ Aguarde o QR Code...';
+                downloadButton.style.background = 'linear-gradient(135deg, #ccc, #999)';
+                downloadButton.style.color = '#666';
+                downloadButton.style.cursor = 'not-allowed';
+                downloadButton.onmouseover = null;
+                downloadButton.onmouseout = null;
+            }
+        }
+        
+        /**
+         * Abre o modal do QR Code e gera o código (versão simplificada)
+         */
+        async function openQRCodeModal() {
+            const modal = document.getElementById('qrcode-modal');
+            const qrcodeDisplay = document.getElementById('qrcode-display');
+            const urlInput = document.getElementById('qrcode-url');
+            const currentURL = window.location.href;
+            
+            // Configurar URL no input
+            urlInput.value = currentURL;
+            
+            // Desabilitar botão de download inicialmente
+            disableDownloadButton();
+            
+            // Mostrar modal
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Mostrar loading
+            qrcodeDisplay.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #666;">
+                    <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
+                    <p>Gerando QR Code...</p>
+                </div>
+            `;
+            
+            try {
+                console.log('🌐 Gerando QR Code via API online...');
+                
+                // Usar sempre API online para simplicidade e confiabilidade
+                const encodedURL = encodeURIComponent(currentURL);
+                const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedURL}&format=png&margin=20&bgcolor=FFFFFF&color=000000`;
+                
+                // Armazenar URL da API para download direto
+                window.currentQRCodeURL = qrApiUrl;
+                
+                // Criar imagem para exibição
+                const img = document.createElement('img');
+                img.src = qrApiUrl;
+                img.alt = 'QR Code do Cardápio';
+                img.style.width = '200px';
+                img.style.height = '200px';
+                img.style.border = '2px solid #ddd';
+                img.style.borderRadius = '8px';
+                img.style.display = 'block';
+                img.style.margin = '0 auto';
+                
+                // Aguardar carregamento
+                await new Promise((resolve, reject) => {
+                    img.onload = () => {
+                        console.log('✅ QR Code carregado via API!');
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        console.error('❌ Erro ao carregar QR Code');
+                        reject(new Error('Falha ao carregar QR Code'));
+                    };
+                    
+                    // Timeout de 15 segundos
+                    setTimeout(() => {
+                        reject(new Error('Timeout ao carregar QR Code'));
+                    }, 15000);
+                });
+                
+                // Limpar e mostrar QR Code
+                qrcodeDisplay.innerHTML = '';
+                qrcodeDisplay.appendChild(img);
+                
+                // Habilitar botão de download
+                enableDownloadButton();
+                
+                console.log('✅ QR Code gerado e pronto para download!');
+                console.log('🔗 URL da API:', qrApiUrl);
+                
+            } catch (error) {
+                console.error('❌ Erro ao gerar QR Code:', error);
+                
+                // Manter botão desabilitado
+                disableDownloadButton();
+                
+                // Mostrar erro com fallback
+                qrcodeDisplay.innerHTML = `
+                    <div style="color: #e74c3c; font-size: 14px; text-align: center; padding: 20px;">
+                        <p style="margin-bottom: 10px;">❌ Erro ao gerar QR Code</p>
+                        <p style="font-size: 12px; opacity: 0.8; margin-bottom: 15px;">Verifique sua conexão com a internet</p>
+                        <div style="background: #f8f9fa; padding: 10px; border-radius: 6px; word-break: break-all; font-size: 11px; color: #333;">
+                            ${currentURL}
+                        </div>
+                        <p style="font-size: 11px; margin-top: 10px; opacity: 0.6;">Copie o link acima para acessar o cardápio</p>
+                    </div>
+                `;
+            }
+        }
+        
+        /**
+         * Fecha o modal do QR Code
+         */
+        function closeQRCodeModal() {
+            console.log('🔗 Fechando modal QR Code...');
+            
+            const modal = document.getElementById('qrcode-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            
+            // Limpar QR Code gerado
+            generatedQRCode = null;
+        }
+        
+        /**
+         * Copia a URL do cardápio para a área de transferência
+         */
+        async function copyQRCodeURL(event) {
+            const urlInput = document.getElementById('qrcode-url');
+            const url = urlInput.value;
+            
+            try {
+                await navigator.clipboard.writeText(url);
+                
+                // Feedback visual
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✅ Copiado!';
+                button.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))';
+                }, 2000);
+                
+                console.log('✅ URL copiada para área de transferência');
+                
+            } catch (error) {
+                console.error('❌ Erro ao copiar URL:', error);
+                
+                // Fallback para navegadores mais antigos
+                urlInput.select();
+                urlInput.setSelectionRange(0, 99999);
+                document.execCommand('copy');
+                
+                // Feedback visual
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✅ Copiado!';
+                button.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))';
+                }, 2000);
+            }
+        }
+        
+        /**
+         * Faz download do QR Code (versão simplificada)
+         */
+        function downloadQRCode(event) {
+            const button = event.target;
+            
+            // Verificar se o botão está habilitado
+            if (button.disabled) {
+                console.log('⚠️ Botão ainda desabilitado');
+                return;
+            }
+            
+            const originalText = button.textContent;
+            
+            try {
+                // Feedback visual
+                button.textContent = '💾 Baixando...';
+                button.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                
+                // Verificar se temos a URL da API
+                if (!window.currentQRCodeURL) {
+                    throw new Error('URL do QR Code não encontrada');
+                }
+                
+                // Método 1: Download direto via link
+                const filename = 'qrcode-cardapio.png';
+                
+                // Método mais robusto para forçar download
+                try {
+                    // Tentar fetch para forçar download
+                    fetch(window.currentQRCodeURL)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            // Criar URL do blob
+                            const blobUrl = window.URL.createObjectURL(blob);
+                            
+                            // Criar link para download
+                            const link = document.createElement('a');
+                            link.href = blobUrl;
+                            link.download = filename;
+                            link.style.display = 'none';
+                            
+                            // Adicionar, clicar e remover
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
+                            // Limpar URL do blob após delay
+                            setTimeout(() => {
+                                window.URL.revokeObjectURL(blobUrl);
+                            }, 1000);
+                        })
+                        .catch(() => {
+                            // Fallback: método tradicional
+                            const link = document.createElement('a');
+                            link.href = window.currentQRCodeURL;
+                            link.download = filename;
+                            link.style.display = 'none';
+                            
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        });
+                } catch (fetchError) {
+                    // Fallback final: método simples
+                    const link = document.createElement('a');
+                    link.href = window.currentQRCodeURL;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+                
+                // Feedback de sucesso
+                button.textContent = '✅ Baixado!';
+                button.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))';
+                }, 2000);
+                
+                console.log('✅ Download iniciado!');
+                console.log('📁 Arquivo:', filename);
+                console.log('🔗 URL:', window.currentQRCodeURL);
+                
+            } catch (error) {
+                console.error('❌ Erro ao baixar QR Code:', error);
+                
+                // Feedback visual de erro
+                button.textContent = '❌ Erro no download';
+                button.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))';
+                }, 2000);
+            }
+        }
+
+        // ===== SISTEMA DE MESA VIA URL =====
+        
+        function getURLParameter(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function getMesaFromURL() {
+            const mesa = getURLParameter('mesa');
+            if (mesa && mesa.trim()) {
+                console.log('🪑 Mesa detectada na URL:', mesa);
+                return mesa.trim();
+            }
+            return null;
+        }
+
+        function preencheMesaAutomatica() {
+            const mesaURL = getMesaFromURL();
+            const campoMesa = document.getElementById('table-number');
+            
+            if (mesaURL && campoMesa) {
+                campoMesa.value = mesaURL;
+                
+                // Focar no campo para habilitar o botão continuar
+                campoMesa.focus();
+                campoMesa.blur(); // Simular saída do foco para disparar validação
+                
+                campoMesa.style.background = 'linear-gradient(135deg, #e8f5e9, #f1f8e9)';
+                campoMesa.style.borderColor = 'var(--cor-sucesso)';
+                
+                const parent = campoMesa.parentNode;
+                const successIcon = document.createElement('div');
+                successIcon.className = 'mesa-auto-success';
+                successIcon.innerHTML = '<div style="display: flex; align-items: center; margin-top: 4px; color: var(--cor-sucesso); font-size: 12px;"><svg style="width: 14px; height: 14px; margin-right: 4px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>Mesa preenchida automaticamente</div>';
+                parent.appendChild(successIcon);
+                
+                setTimeout(() => {
+                    campoMesa.style.background = '';
+                    campoMesa.style.borderColor = '';
+                    const successEl = parent.querySelector('.mesa-auto-success');
+                    if (successEl) successEl.remove();
+                }, 3000);
+                
+                console.log('✅ Campo mesa preenchido automaticamente:', mesaURL);
+                return true;
+            }
+            return false;
+        }
+
+        function mostrarIndicadorMesaURL() {
+            const mesaURL = getMesaFromURL();
+            if (mesaURL) {
+                showToastMesa(mesaURL);
+            }
+        }
+
+        function showToastMesa(numeroMesa) {
+            // Remove existing toasts
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => {
+                toast.classList.add('toast-exit');
+                setTimeout(() => toast.remove(), 300);
+            });
+            
+            const toastDiv = document.createElement('div');
+            toastDiv.className = 'toast toast-success';
+            toastDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="font-semibold text-sm text-white">Mesa ${numeroMesa} detectada</div>
+                    <button onclick="this.parentElement.parentElement.classList.add('toast-exit'); setTimeout(() => this.parentElement.parentElement.remove(), 300)" class="text-white/80 hover:text-white ml-4 flex-shrink-0">
+                        <span class="text-lg">×</span>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(toastDiv);
+            
+            // Auto remove
+            setTimeout(() => {
+                if (toastDiv.parentNode) {
+                    toastDiv.classList.add('toast-exit');
+                    setTimeout(() => toastDiv.remove(), 300);
+                }
+            }, 3500);
+        }
+
+        // ===== AUTOMAÇÃO MESA URL - CHECKOUT DIRETO =====
+        function autoMesaCheckout() {
+            const mesaURL = getMesaFromURL();
+            if (!mesaURL) return false;
+            
+            console.log('🪑 Automação Mesa URL ativada:', mesaURL);
+            
+            // 1. Ocultar todas as opções de entrega
+            const deliveryOptions = document.getElementById('delivery-options');
+            if (deliveryOptions) {
+                const allOptions = deliveryOptions.querySelectorAll('label');
+                allOptions.forEach(option => {
+                    option.style.display = 'none';
+                });
+            }
+            
+            // 2. Mostrar apenas a opção "Consumo no Local"
+            const localOption = deliveryOptions?.querySelector('input[value="local"]')?.closest('label');
+            if (localOption) {
+                localOption.style.display = 'flex';
+                
+                // 3. Selecionar automaticamente "Consumo no Local"
+                const localRadio = localOption.querySelector('input[value="local"]');
+                if (localRadio) {
+                    localRadio.checked = true;
+                    localRadio.dispatchEvent(new Event('change'));
+                    console.log('✅ "Consumo no Local" selecionado automaticamente');
+                }
+            }
+            
+            // 4. Aguardar um pouco para os campos aparecerem
+            setTimeout(() => {
+                // 5. Preencher campo da mesa
+                const campoMesa = document.getElementById('table-number');
+                if (campoMesa) {
+                    campoMesa.value = mesaURL;
+                    
+                    // 6. Focar no campo (cursor piscando + teclado mobile)
+                    campoMesa.focus();
+                    
+                    // 7. Disparar eventos para validação
+                    campoMesa.dispatchEvent(new Event('input'));
+                    campoMesa.dispatchEvent(new Event('change'));
+                    
+                    console.log('✅ Campo mesa preenchido e focado:', mesaURL);
+                }
+            }, 100);
+            
+            return true;
+        }
+
+        // Toast da mesa será mostrado após o carregamento completo do cardápio
+
     </script>
+
+    <!-- Notification Element -->
+    <div id="notification" class="notification hidden">
+        <span></span>
+        <button class="notification-close" onclick="closeNotification()">×</button>
+    </div>
+
+    <style>
+        /* Estilos para notificações */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 400px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.4;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.success {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .notification.error {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .notification.warning {
+            background-color: #f59e0b;
+            color: white;
+        }
+
+        .notification.info {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .notification-close:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsividade para mobile */
+        @media (max-width: 640px) {
+            .notification {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+                transform: translateY(-100%);
+            }
+
+            .notification.show {
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <script>
+        // Função para mostrar notificações
+        function showNotification(message, type = 'info', duration = 4000) {
+            const notification = document.getElementById('notification');
+            
+            // Escapar HTML para evitar XSS
+            const escapedMessage = message.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+            
+            notification.innerHTML = `
+                <span>${escapedMessage}</span>
+                <button class="notification-close" onclick="closeNotification()">×</button>
+            `;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            // Limpar timeout anterior se existir
+            if (notification.timeoutId) {
+                clearTimeout(notification.timeoutId);
+            }
+            
+            // Definir novo timeout
+            notification.timeoutId = setTimeout(() => {
+                notification.classList.remove('show');
+            }, duration);
+        }
+        
+        // Função para fechar notificação
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('show');
+        }
+        
+        // Função para verificar limites de seleção
+        function checkSelectionLimit(input, variationData) {
+            if (!variationData || variationData.type !== 'checkbox') {
+                return true;
+            }
+            
+            const maxSelect = variationData.maxSelect;
+            if (!maxSelect || maxSelect <= 0) {
+                return true;
+            }
+            
+            // Encontrar o container da variação
+            const variationContainer = input.closest('.variation-container');
+            if (!variationContainer) {
+                return true;
+            }
+            
+            const checkedInputs = variationContainer.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (input.checked && checkedInputs.length > maxSelect) {
+                input.checked = false;
+                showNotification(`Máximo de ${maxSelect} opções permitidas!`, 'warning', 3000);
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Função para verificar seleções mínimas obrigatórias
+        function checkMinimumSelections(variationData) {
+            if (!variationData || variationData.type !== 'checkbox') {
+                return true;
+            }
+            
+            const minSelect = variationData.minSelect;
+            if (!minSelect || minSelect <= 0) {
+                return true;
+            }
+            
+            // Contar seleções atuais para esta variação
+            const variationIndex = variationData.index;
+            const selectedCount = Object.keys(selectedVariations).filter(key => 
+                key.startsWith(`${variationIndex}-`)
+            ).length;
+            
+            if (selectedCount < minSelect) {
+                showNotification(`Selecione pelo menos ${minSelect} opções em "${variationData.name}"!`, 'warning', 4000);
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Função para validar todas as variações antes de adicionar ao carrinho
+        function validateAllVariations() {
+            const variations = parseVariations(currentProduct.classificacaoAdicional);
+            if (!variations || variations.type !== 'multiple_variations') {
+                return true;
+            }
+            
+            let isValid = true;
+            
+            // Verificar variações obrigatórias
+            const requiredVariations = variations.variations.filter(v => v.required);
+            for (const requiredVar of requiredVariations) {
+                const variationIndex = variations.variations.indexOf(requiredVar);
+                const hasSelectionForThisVariation = Object.keys(selectedVariations)
+                    .some(key => key.startsWith(`${variationIndex}-`));
+                
+                if (!hasSelectionForThisVariation) {
+                    showNotification(`Selecione uma opção em "${requiredVar.name}"!`, 'warning', 4000);
+                    isValid = false;
+                    break;
+                }
+            }
+            
+            // Verificar seleções mínimas para checkboxes
+            if (isValid) {
+                for (let i = 0; i < variations.variations.length; i++) {
+                    const variation = variations.variations[i];
+                    if (variation.type === 'checkbox' && variation.minSelect > 0) {
+                        const selectedCount = Object.keys(selectedVariations).filter(key => 
+                            key.startsWith(`${i}-`)
+                        ).length;
+                        
+                        if (selectedCount > 0 && selectedCount < variation.minSelect) {
+                            showNotification(`Selecione pelo menos ${variation.minSelect} opções em "${variation.name}"!`, 'warning', 4000);
+                            isValid = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            return isValid;
+        }
+    </script>
+
 </body>
 </html>
