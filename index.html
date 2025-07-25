@@ -1,7 +1,7 @@
 <!--
 //====================================================================\\
 ||                                                                    ||
-||   CARDÁPIO SHEETS - V3.7 - 24/07/2025 - 16h15                      ||
+||   CARDÁPIO SHEETS - V3.8 - 25/07/2025 - 15h07                     ||
 ||                                                                    ||
 ||    Desenvolvido com ❤️ por Dante Testa                             ||
 ||    www.dantetesta.com.br | WhatsApp: (19) 99802-9156              ||
@@ -294,6 +294,10 @@
         }
         
         .shake {
+            animation: shake 0.6s ease-in-out;
+        }
+        
+        .shake-animation {
             animation: shake 0.6s ease-in-out;
         }
         
@@ -696,9 +700,10 @@
             </div>
             
             <!-- Developer Credits -->
-            <div class="border-t pt-6 text-center" style="border-color: rgba(200, 200, 200, 0.3) !important; margin-top: 2rem; padding-top: 1.5rem;">
-                <p class="text-xs" style="color: var(--cor-texto-secundario) !important; font-weight: 300; opacity: 0.7; font-size: 0.75rem;">
-                    Desenvolvido com <span style="color: #e74c3c; font-size: 0.8rem;">♥</span> por <a href="https://www.dantetesta.com.br" target="_blank" class="transition-all duration-300" style="color: var(--cor-primaria) !important; text-decoration: none; font-weight: 400; position: relative; font-size: 0.75rem;" onmouseover="this.style.color='var(--cor-secundaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.color='var(--cor-primaria)'; this.style.transform='translateY(0)'">Dante Testa</a> <span style="color: var(--cor-texto-secundario); opacity: 0.5; font-size: 0.7rem;">👨‍💻</span>
+            <div id="footer-credits-container" class="border-t pt-6 text-center" style="border-color: rgba(200, 200, 200, 0.3) !important; margin-top: 2rem; padding-top: 1.5rem;">
+                <p id="footer-credits" class="text-xs" style="color: var(--cor-texto-secundario) !important; font-weight: 300; opacity: 0.7; font-size: 0.75rem;">
+                    <!-- Créditos serão preenchidos dinamicamente via CSV -->
+                    Desenvolvido com <span style="color: #e74c3c; font-size: 0.8rem;">♥</span> por <a href="#" target="_blank" class="transition-all duration-300" style="color: var(--cor-primaria) !important; text-decoration: none; font-weight: 400; position: relative; font-size: 0.75rem;" onmouseover="this.style.color='var(--cor-secundaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.color='var(--cor-primaria)'; this.style.transform='translateY(0)'">Carregando...</a> <span style="color: var(--cor-texto-secundario); opacity: 0.5; font-size: 0.7rem;">👨‍💻</span>
                 </p>
             </div>
         </div>
@@ -1146,6 +1151,141 @@
         </div>
     </div>
 
+    <!-- Modal de Ajuda com Atalhos -->
+    <div id="help-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto" style="background-color: var(--cor-fundo) !important; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                <div class="p-6">
+                    <!-- Header -->
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 rounded-full" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M11,16H13V18H11V16M12.61,6.04C10.55,6.04 8.99,7.59 8.99,9.65H10.96C10.96,8.65 11.7,7.96 12.61,7.96C13.52,7.96 14.26,8.65 14.26,9.65C14.26,10.1 14.05,10.5 13.75,10.79L12.79,11.75C12.35,12.19 12.14,12.63 12.14,13.54H14.11C14.11,13.04 14.32,12.6 14.76,12.16L15.72,11.2C16.23,10.69 16.69,10.04 16.69,9.65C16.69,7.59 15.13,6.04 12.61,6.04Z"/>
+                                </svg>
+                            </div>
+                            <h2 class="text-2xl font-bold" style="color: var(--cor-texto) !important;">⌨️ Atalhos do Sistema</h2>
+                        </div>
+                        <button onclick="closeHelpModal()" class="p-2 rounded-full transition-all duration-300" style="color: var(--cor-texto-secundario) !important;" onmouseover="this.style.backgroundColor='var(--cor-fundo-secundario)'; this.style.color='var(--cor-texto)'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--cor-texto-secundario)'">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Descrição -->
+                    <div class="mb-6 p-4 rounded-lg" style="background-color: var(--cor-fundo-secundario); border-left: 4px solid var(--cor-primaria);">
+                        <p class="text-sm" style="color: var(--cor-texto-secundario) !important;">Use os atalhos abaixo para acessar rapidamente as ferramentas de desenvolvimento do sistema.</p>
+                    </div>
+                    
+                    <!-- Lista de Atalhos -->
+                    <div class="space-y-4">
+                        <!-- Atalho F1 -->
+                        <div class="flex items-center justify-between p-4 rounded-lg transition-all duration-300" style="background-color: var(--cor-fundo-secundario); border: 1px solid var(--cor-primaria-clara);" onmouseover="this.style.backgroundColor='var(--cor-primaria-clara)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'; this.style.transform='translateY(0)'">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center justify-center w-12 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold; font-size: 0.8rem;">
+                                    F1
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--cor-texto) !important;">💡 Ajuda e Atalhos</h3>
+                                    <p class="text-sm" style="color: var(--cor-texto-secundario) !important;">Abre este modal de ajuda</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Atalho Shift + V -->
+                        <div class="flex items-center justify-between p-4 rounded-lg transition-all duration-300" style="background-color: var(--cor-fundo-secundario); border: 1px solid var(--cor-primaria-clara);" onmouseover="this.style.backgroundColor='var(--cor-primaria-clara)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'; this.style.transform='translateY(0)'">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-1">
+                                    <div class="flex items-center justify-center w-12 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold; font-size: 0.7rem;">
+                                        Shift
+                                    </div>
+                                    <span style="color: var(--cor-texto-secundario);">+</span>
+                                    <div class="flex items-center justify-center w-8 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold;">
+                                        V
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--cor-texto) !important;">🔧 Gerador de Variações</h3>
+                                    <p class="text-sm" style="color: var(--cor-texto-secundario) !important;">Ferramenta para criar variações de produtos</p>
+                                </div>
+                            </div>
+                            <button onclick="openVariationGenerator()" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white;" onmouseover="this.style.background='linear-gradient(135deg, var(--cor-secundaria), var(--cor-terciaria))'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))'; this.style.transform='scale(1)'">
+                                🚀 Abrir
+                            </button>
+                        </div>
+                        
+                        <!-- Atalho Shift + Q -->
+                        <div class="flex items-center justify-between p-4 rounded-lg transition-all duration-300" style="background-color: var(--cor-fundo-secundario); border: 1px solid var(--cor-primaria-clara);" onmouseover="this.style.backgroundColor='var(--cor-primaria-clara)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'; this.style.transform='translateY(0)'">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-1">
+                                    <div class="flex items-center justify-center w-12 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold; font-size: 0.7rem;">
+                                        Shift
+                                    </div>
+                                    <span style="color: var(--cor-texto-secundario);">+</span>
+                                    <div class="flex items-center justify-center w-8 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold;">
+                                        Q
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--cor-texto) !important;">📱 Gerador de QR Code</h3>
+                                    <p class="text-sm" style="color: var(--cor-texto-secundario) !important;">Ferramenta para criar QR Codes personalizados</p>
+                                </div>
+                            </div>
+                            <button onclick="openQRCodeGenerator()" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white;" onmouseover="this.style.background='linear-gradient(135deg, var(--cor-secundaria), var(--cor-terciaria))'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))'; this.style.transform='scale(1)'">
+                                🚀 Abrir
+                            </button>
+                        </div>
+                        
+                        <!-- Atalho Shift + C -->
+                        <div class="flex items-center justify-between p-4 rounded-lg transition-all duration-300" style="background-color: var(--cor-fundo-secundario); border: 1px solid var(--cor-primaria-clara);" onmouseover="this.style.backgroundColor='var(--cor-primaria-clara)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'; this.style.transform='translateY(0)'">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center space-x-1">
+                                    <div class="flex items-center justify-center w-12 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold; font-size: 0.7rem;">
+                                        Shift
+                                    </div>
+                                    <span style="color: var(--cor-texto-secundario);">+</span>
+                                    <div class="flex items-center justify-center w-8 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold;">
+                                        C
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--cor-texto) !important;">🎨 Gerador de Cores</h3>
+                                    <p class="text-sm" style="color: var(--cor-texto-secundario) !important;">Ferramenta para criar paletas de cores</p>
+                                </div>
+                            </div>
+                            <button onclick="openColorGenerator()" class="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white;" onmouseover="this.style.background='linear-gradient(135deg, var(--cor-secundaria), var(--cor-terciaria))'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))'; this.style.transform='scale(1)'">
+                                🚀 Abrir
+                            </button>
+                        </div>
+                        
+                        <!-- Atalho Escape -->
+                        <div class="flex items-center justify-between p-4 rounded-lg transition-all duration-300" style="background-color: var(--cor-fundo-secundario); border: 1px solid var(--cor-primaria-clara);" onmouseover="this.style.backgroundColor='var(--cor-primaria-clara)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.backgroundColor='var(--cor-fundo-secundario)'; this.style.transform='translateY(0)'">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex items-center justify-center w-16 h-8 rounded" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)); color: white; font-weight: bold; font-size: 0.7rem;">
+                                    Escape
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--cor-texto) !important;">❌ Fechar Lightbox</h3>
+                                    <p class="text-sm" style="color: var(--cor-texto-secundario) !important;">Fecha a visualização ampliada de imagens</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div class="mt-6 pt-4 border-t text-center" style="border-color: var(--cor-primaria-clara);">
+                        <p class="text-xs" style="color: var(--cor-texto-secundario) !important; opacity: 0.8;">💡 Pressione <strong>F1</strong> a qualquer momento para ver esta ajuda</p>
+                        <p id="help-modal-credits" class="text-xs mt-1" style="color: var(--cor-texto-secundario) !important; opacity: 0.6;">
+                            <!-- Créditos serão preenchidos dinamicamente via CSV -->
+                            Desenvolvido por <a href="#" target="_blank" style="color: var(--cor-primaria); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Carregando...</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Global variables for menu data
         let menuData = {};
@@ -1362,7 +1502,8 @@
                 redes_sociais: {},
                 seo: {},
                 checkout: {},
-                envio: {}
+                envio: {},
+                setup: {}
             };
 
             configItems.forEach(item => {
@@ -1852,6 +1993,9 @@
             } else if (googleReviewsSection) {
                 googleReviewsSection.style.display = 'none';
             }
+            
+            // Update author credits dynamically
+            updateAuthorCredits();
         }
 
         // Helper functions to access configuration data
@@ -1914,6 +2058,65 @@
                 webhook_url: getConfig('envio', 'webhook_url', '')
             };
         }
+        
+        function getAuthorInfo() {
+            return {
+                name: getConfig('setup', 'autor_name', ''),
+                link: getConfig('setup', 'autor_link', '')
+            };
+        }
+        
+        /**
+         * Atualiza os créditos do autor dinamicamente em todos os locais
+         * Se não configurado no CSV, oculta completamente os créditos
+         */
+        function updateAuthorCredits() {
+            const authorInfo = getAuthorInfo();
+            console.log('🎨 Verificando créditos do autor:', authorInfo);
+            
+            // Verificar se há dados de autor configurados
+            const hasAuthorData = authorInfo.name.trim() !== '' && authorInfo.link.trim() !== '';
+            
+            // 1. Footer - mostrar ou ocultar o container inteiro
+            const footerCreditsContainer = document.getElementById('footer-credits-container');
+            if (footerCreditsContainer) {
+                if (hasAuthorData) {
+                    // Mostrar container e atualizar créditos
+                    footerCreditsContainer.style.display = 'block';
+                    const footerLink = footerCreditsContainer.querySelector('a');
+                    if (footerLink) {
+                        footerLink.textContent = authorInfo.name;
+                        footerLink.href = authorInfo.link;
+                        console.log('✅ Container de créditos do footer exibido:', authorInfo.name);
+                    }
+                } else {
+                    // Ocultar container inteiro (sem borda, padding, etc.)
+                    footerCreditsContainer.style.display = 'none';
+                    console.log('🙈 Container de créditos do footer ocultado - sem linha vazia');
+                }
+            }
+            
+            // 2. Modal de ajuda - mostrar ou ocultar
+            const helpModalCredits = document.getElementById('help-modal-credits');
+            if (helpModalCredits) {
+                if (hasAuthorData) {
+                    // Mostrar e atualizar créditos
+                    helpModalCredits.style.display = 'block';
+                    const helpLink = helpModalCredits.querySelector('a');
+                    if (helpLink) {
+                        helpLink.textContent = authorInfo.name;
+                        helpLink.href = authorInfo.link;
+                        console.log('✅ Créditos do modal exibidos:', authorInfo.name);
+                    }
+                } else {
+                    // Ocultar completamente
+                    helpModalCredits.style.display = 'none';
+                    console.log('🙈 Créditos do modal ocultados - dados não configurados');
+                }
+            }
+            
+            console.log('🎉 Sistema de créditos dinâmicos atualizado! Oculta se vazio.');
+        }
 
         function getAppConfig() {
             return {
@@ -1974,8 +2177,8 @@
                         <div class="mb-4">
                             <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
                         </div>
-                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando Cardápio</h2>
-                        <p class="text-gray-600">Aguarde o carregamento...</p>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando...</h2>
+                        
                         <div class="mt-4">
                             <div class="bg-gray-200 rounded-full h-2 w-64 mx-auto">
                                 <div id="progress-bar" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
@@ -1985,6 +2188,10 @@
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', preloaderHTML);
+            
+            // Desabilitar scroll do body durante o preloader
+            document.body.style.overflow = 'hidden';
+            console.log('🚫 Scroll do body desabilitado durante preloader');
         }
 
         // Function to update progress
@@ -2002,6 +2209,11 @@
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.remove();
+                    
+                    // Reabilitar scroll do body
+                    document.body.style.overflow = '';
+                    console.log('✅ Scroll do body reabilitado após preloader');
+                    
                     // Mostrar toast da mesa após carregamento completo
                     setTimeout(() => {
                         mostrarIndicadorMesaURL();
@@ -2043,7 +2255,7 @@
                         preco: 20.00,
                         imagem: getPlaceholderImage(),
                         disponivel: true,
-                        classificacaoAdicional: '#Var: Café Jacu +R$3.54 / Café Toninho +R$5.20 / Café Java +R$3.93',
+                        classificacaoAdicional: '#Var: Café Espresso +R$3.54 / Café Coado +R$5.20 / Café com Leite +R$3.93',
                         observacoes: '200ml'
                     }
                 ],
@@ -2746,6 +2958,18 @@
             `;
 
             modal.classList.remove('hidden');
+            
+            // Reset scroll do modal para sempre começar do topo
+            const modalScrollContainer = modal.querySelector('.overflow-y-auto');
+            if (modalScrollContainer) {
+                modalScrollContainer.scrollTop = 0;
+                console.log('📜 Scroll do modal resetado para o topo');
+            }
+            
+            // Desabilitar scroll do body quando modal abre
+            document.body.style.overflow = 'hidden';
+            console.log('🚫 Scroll do body desabilitado durante modal');
+            
             updateAddToCartButton();
         }
 
@@ -2926,6 +3150,10 @@
             if (cartCount > 0) {
                 document.getElementById('cart-fab').style.display = 'flex';
             }
+            
+            // Reabilitar scroll do body quando modal fecha
+            document.body.style.overflow = '';
+            console.log('✅ Scroll do body reabilitado após fechar modal');
         }
 
         // Change quantity in modal
@@ -4457,6 +4685,14 @@
                 return false;
             }
             
+            console.log('🎫 Cupom encontrado:', {
+                codigo: coupon.codigo_cupom || coupon.codigo,
+                tipo: coupon.tipo_desconto || coupon.tipo,
+                valor: coupon.valor_desconto || coupon.valor,
+                data_inicio: coupon.data_inicio,
+                data_fim: coupon.data_fim
+            });
+            
             // Validar datas
             if (!validateCouponDates(coupon)) {
                 return false;
@@ -4495,44 +4731,101 @@
             return true;
         }
         
-        // Validar datas do cupom
+        // Obter o timezone configurado na planilha de horários
+        function getConfiguredTimezone() {
+            // Valor padrão caso não seja possível obter da planilha
+            let timezone = 'America/Sao_Paulo';
+            return timezone;
+        }
+        
+        // Validar datas do cupom com timezone correto
         function validateCouponDates(coupon) {
+            // Obter a data atual considerando o timezone configurado
+            const timezone = getConfiguredTimezone();
             const now = new Date();
+            const timezoneDate = new Date(now.toLocaleString("en-US", {timeZone: timezone}));
+            
+            console.log('🔍 Validando cupom:', coupon.codigo_cupom || coupon.codigo);
+            console.log('📅 Data atual:', timezoneDate.toLocaleDateString('pt-BR'));
+            console.log('📅 Período do cupom:', coupon.data_inicio, 'até', coupon.data_fim);
             
             // Validar data de início
             if (coupon.data_inicio && coupon.data_inicio !== '-' && coupon.data_inicio.trim()) {
-                const startDate = parseCouponDate(coupon.data_inicio);
-                if (startDate && now < startDate) {
-                    showCouponFeedback('Cupom ainda não válido', 'error');
+                const startDate = parseCouponDate(coupon.data_inicio, timezone);
+                console.log('📅 Data de início do cupom:', startDate ? startDate.toLocaleString() : 'inválida');
+                
+                if (startDate && timezoneDate < startDate) {
+                    console.log('❌ Cupom ainda não válido. Será válido a partir de:', startDate.toLocaleString());
+                    showCouponFeedback('Cupom ainda não válido. Válido a partir de ' + startDate.toLocaleDateString('pt-BR'), 'error');
                     return false;
                 }
             }
             
             // Validar data de fim
             if (coupon.data_fim && coupon.data_fim !== '-' && coupon.data_fim.trim()) {
-                const endDate = parseCouponDate(coupon.data_fim);
-                if (endDate && now > endDate) {
-                    showCouponFeedback('Cupom expirado', 'error');
+                const endDate = parseCouponDate(coupon.data_fim, timezone);
+                console.log('📅 Data de fim do cupom:', endDate ? endDate.toLocaleString() : 'inválida');
+                
+                if (endDate && timezoneDate > endDate) {
+                    console.log('❌ Cupom expirado. Expirou em:', endDate.toLocaleString());
+                    showCouponFeedback('Cupom expirado em ' + endDate.toLocaleDateString('pt-BR'), 'error');
                     return false;
                 }
             }
             
+            console.log('✅ Cupom válido dentro do período de validade');
             return true;
         }
         
-        // Parsear data do cupom
-        function parseCouponDate(dateStr) {
-            if (!dateStr || dateStr === '-') return null;
+        // Parsear data do cupom considerando o timezone
+        function parseCouponDate(dateStr, timezone) {
+            if (!dateStr || dateStr === '-' || dateStr.trim() === '') {
+                return null;
+            }
             
-            // Formato DD/MM/YYYY ou DD/MM/YYYY HH:MM
-            const parts = dateStr.split(' ');
-            const datePart = parts[0];
-            const timePart = parts[1] || '00:00';
-            
-            const [day, month, year] = datePart.split('/');
-            const [hour, minute] = timePart.split(':');
-            
-            return new Date(year, month - 1, day, hour || 0, minute || 0);
+            try {
+                // Limpar a string da data
+                const cleanDateStr = dateStr.toString().trim();
+                
+                // Formato DD/MM/YYYY ou DD/MM/YYYY HH:MM
+                const parts = cleanDateStr.split(' ');
+                const datePart = parts[0];
+                const timePart = parts[1] || '23:59'; // Se não houver horário, assume fim do dia
+                
+                const dateParts = datePart.split('/');
+                if (dateParts.length !== 3) {
+                    console.error('❌ Formato de data inválido - deve ser DD/MM/YYYY:', dateStr);
+                    return null;
+                }
+                
+                const [day, month, year] = dateParts;
+                const [hour, minute] = timePart.split(':');
+                
+                // Validar se os valores são válidos
+                const dayNum = parseInt(day, 10);
+                const monthNum = parseInt(month, 10);
+                const yearNum = parseInt(year, 10);
+                const hourNum = parseInt(hour, 10);
+                const minuteNum = parseInt(minute, 10);
+                
+                if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum) || 
+                    dayNum < 1 || dayNum > 31 || 
+                    monthNum < 1 || monthNum > 12 || 
+                    yearNum < 2000) {
+                    console.error('❌ Valores de data inválidos:', { day: dayNum, month: monthNum, year: yearNum });
+                    return null;
+                }
+                
+                // Criar objeto Date usando o construtor padrão (ano, mês-1, dia, hora, minuto)
+                // Nota: mês no JavaScript é 0-indexado (0 = Janeiro, 11 = Dezembro)
+                const date = new Date(yearNum, monthNum - 1, dayNum, hourNum || 23, minuteNum || 59);
+                
+                console.log(`🔄 Convertendo data: ${dateStr} → ${date.toLocaleString('pt-BR')} (${timezone || 'local'})`);
+                return date;
+            } catch (e) {
+                console.error('❌ Erro ao parsear data do cupom:', dateStr, e);
+                return null;
+            }
         }
         
         // Calcular desconto do cupom
@@ -4602,6 +4895,7 @@
         }
         
         // Mostrar feedback do cupom
+        // Melhorar o feedback visual para cupons
         function showCouponFeedback(message, type) {
             const feedback = document.getElementById('coupon-feedback');
             if (!feedback) return;
@@ -4610,11 +4904,24 @@
             feedback.textContent = message;
             feedback.classList.remove('hidden');
             
-            // Ocultar após 3 segundos se for erro
+            // Adicionar animação para chamar atenção
+            if (type === 'error') {
+                feedback.classList.add('shake-animation');
+                setTimeout(() => {
+                    feedback.classList.remove('shake-animation');
+                }, 500);
+            }
+            
+            // Para erros de data, mostrar também um toast
+            if (message.includes('expirado') || message.includes('não válido')) {
+                showToast(message, 'error');
+            }
+            
+            // Ocultar após 4 segundos se for erro
             if (type === 'error') {
                 setTimeout(() => {
                     feedback.classList.add('hidden');
-                }, 3000);
+                }, 4000);
             }
         }
         
@@ -4878,6 +5185,8 @@
         
         // Setup keyboard shortcuts
         function setupKeyboardShortcuts() {
+            console.log('🎹 Configurando atalhos de teclado...');
+            
             document.addEventListener('keydown', function(e) {
                 // Close lightbox with Escape key
                 if (e.key === 'Escape') {
@@ -4886,7 +5195,114 @@
                         closeLightbox();
                     }
                 }
+                
+                // Atalho F1 para ajuda
+                if (e.key === 'F1') {
+                    e.preventDefault();
+                    openHelpModal();
+                    return;
+                }
+                
+                // Atalhos com Shift
+                if (e.shiftKey) {
+                    switch(e.key.toLowerCase()) {
+                        case 'v':
+                            e.preventDefault();
+                            openVariationGenerator();
+                            break;
+                            
+                        case 'q':
+                            e.preventDefault();
+                            openQRCodeGenerator();
+                            break;
+                            
+                        case 'c':
+                            e.preventDefault();
+                            openColorGenerator();
+                            break;
+                    }
+                }
             });
+            
+            console.log('✅ Atalhos configurados: F1, Escape, Shift+V, Shift+Q, Shift+C');
+        }
+        
+        /**
+         * Abre o Gerador de Variações (Shift + V)
+         */
+        function openVariationGenerator() {
+            console.log('🔧 Abrindo Gerador de Variações...');
+            
+            // Mostrar toast informativo
+            showToast('🔧 Abrindo Gerador de Variações', 'info', 2000);
+            
+            // Abrir em nova aba após pequeno delay para mostrar o toast
+            setTimeout(() => {
+                window.open('https://dantetesta.com.br/gerador-de-variacoes/', '_blank');
+                console.log('✅ Gerador de Variações aberto em nova aba');
+            }, 500);
+        }
+        
+        /**
+         * Abre o Gerador de QR Code (Shift + Q)
+         */
+        function openQRCodeGenerator() {
+            console.log('📱 Abrindo Gerador de QR Code...');
+            
+            // Mostrar toast informativo
+            showToast('📱 Abrindo Gerador de QR Code', 'info', 2000);
+            
+            // Abrir em nova aba após pequeno delay para mostrar o toast
+            setTimeout(() => {
+                window.open('https://dantetesta.com.br/qrcode-generator/', '_blank');
+                console.log('✅ Gerador de QR Code aberto em nova aba');
+            }, 500);
+        }
+        
+        /**
+         * Abre o Gerador de Cores (Shift + C)
+         */
+        function openColorGenerator() {
+            console.log('🎨 Abrindo Gerador de Cores...');
+            
+            // Mostrar toast informativo
+            showToast('🎨 Abrindo Gerador de Cores', 'info', 2000);
+            
+            // Abrir em nova aba após pequeno delay para mostrar o toast
+            setTimeout(() => {
+                window.open('https://dantetesta.com.br/color-generator/', '_blank');
+                console.log('✅ Gerador de Cores aberto em nova aba');
+            }, 500);
+        }
+        
+        /**
+         * Abre o Modal de Ajuda com Atalhos (F1)
+         */
+        function openHelpModal() {
+            console.log('💡 Abrindo Modal de Ajuda...');
+            
+            const modal = document.getElementById('help-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                console.log('✅ Modal de Ajuda aberto');
+            } else {
+                console.error('❌ Modal de ajuda não encontrado');
+            }
+        }
+        
+        /**
+         * Fecha o Modal de Ajuda
+         */
+        function closeHelpModal() {
+            console.log('❌ Fechando Modal de Ajuda...');
+            
+            const modal = document.getElementById('help-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+                console.log('✅ Modal de Ajuda fechado');
+            }
         }
 
         // ====================================================================
@@ -5677,6 +6093,19 @@
                 return;
             }
             
+            // 🎫 VERIFICAÇÃO FINAL DO CUPOM ANTES DE FINALIZAR O PEDIDO
+            if (appliedCoupon) {
+                console.log('🎫 Verificando validade do cupom antes de finalizar o pedido...');
+                if (!validateCouponDates(appliedCoupon)) {
+                    console.log('❌ Cupom expirou durante o processo de checkout');
+                    showToast('O cupom aplicado expirou. O desconto foi removido.', 'error');
+                    clearCoupon();
+                    updateCheckoutOrderTotal();
+                    return; // Impede a finalização do pedido até que o usuário confirme
+                }
+                console.log('✅ Cupom ainda válido no momento da finalização');
+            }
+            
             // Update order data only after validation passes
             orderData.customerName = customerName;
             orderData.paymentMethod = paymentMethod;
@@ -6213,6 +6642,27 @@
             console.log('Dados do pedido:', orderData);
             console.log('Carrinho:', cart);
             
+            // ✅ EXTRAIR PARÂMETROS DA URL DO WEBHOOK
+            let webhookParams = {};
+            let cleanWebhookUrl = webhookUrl;
+            
+            try {
+                const url = new URL(webhookUrl);
+                cleanWebhookUrl = `${url.protocol}//${url.host}${url.pathname}`; // URL sem parâmetros
+                
+                // Extrair todos os parâmetros da query string
+                url.searchParams.forEach((value, key) => {
+                    webhookParams[key] = value;
+                });
+                
+                console.log('🔗 URL limpa do webhook:', cleanWebhookUrl);
+                console.log('📝 Parâmetros extraídos:', webhookParams);
+            } catch (error) {
+                console.warn('⚠️ Erro ao extrair parâmetros da URL:', error);
+                // Se der erro, usa a URL original
+                cleanWebhookUrl = webhookUrl;
+            }
+            
             // Get admin WhatsApp from configuration
             const contactInfo = getContactInfo();
             const adminWhatsApp = contactInfo.whatsapp || '';
@@ -6231,6 +6681,14 @@
                 whatsapp_message: message,
                 formatted_message: message,
                 
+                // ✅ PARÂMETROS EXTRAÍDOS DA URL DO WEBHOOK
+                webhook_params: webhookParams,
+                
+                // ✅ RESUMO DAS VARIAÇÕES
+                has_variations: cart.some(item => item.variationText || item.removalText),
+                has_removals: cart.some(item => item.removalText),
+                total_items_with_variations: cart.filter(item => item.variationText || item.removalText).length,
+                
                 // Additional order details
                 customer: {
                     name: orderData.customerName,
@@ -6248,7 +6706,15 @@
                     price: item.preco,
                     quantity: item.quantity,
                     subtotal: item.preco * item.quantity,
-                    variations: item.variationText || null,
+                    
+                    // ✅ VARIAÇÕES COMPLETAS - NOVO FORMATO
+                    variations_text: item.variationText || null,        // Texto das adições
+                    removal_text: item.removalText || null,             // Texto das remoções
+                    variations_detailed: item.variations || null,       // Objeto completo das variações
+                    
+                    // ✅ COMPATIBILIDADE COM FORMATO ANTIGO
+                    variations: item.variationText || null,             // Mantido para compatibilidade
+                    
                     notes: item.notes || null
                 })),
                 currency: getCurrentCurrency()
@@ -6256,81 +6722,124 @@
             
             console.log('Payload do webhook:', JSON.stringify(orderPayload, null, 2));
             
+            // Log específico para verificar se webhook_params está presente no payload
+            console.log('🔍 Verificação webhook_params:', {
+                presente: 'webhook_params' in orderPayload,
+                tipo: typeof orderPayload.webhook_params,
+                conteúdo: orderPayload.webhook_params,
+                json: JSON.stringify(orderPayload.webhook_params)
+            });
+            
+            // ✅ LOGS ESPECÍFICOS DOS PARÂMETROS
+            if (Object.keys(webhookParams).length > 0) {
+                console.log('=== PARÂMETROS DA URL ===');
+                Object.entries(webhookParams).forEach(([key, value]) => {
+                    console.log(`🔑 ${key}: ${value}`);
+                });
+                console.log('========================');
+            } else {
+                console.log('📝 Nenhum parâmetro encontrado na URL do webhook');
+            }
+            
+            // ✅ LOGS ESPECÍFICOS DAS VARIAÇÕES
+            console.log('=== RESUMO DAS VARIAÇÕES ===');
+            console.log('📊 Tem variações:', orderPayload.has_variations);
+            console.log('🚫 Tem remoções:', orderPayload.has_removals);
+            console.log('📝 Itens com variações:', orderPayload.total_items_with_variations);
+            
+            orderPayload.items.forEach((item, index) => {
+                if (item.variations_text || item.removal_text) {
+                    console.log(`🍽️ Item ${index + 1}: ${item.name}`);
+                    if (item.variations_text) console.log('  ➕ Adições:', item.variations_text);
+                    if (item.removal_text) console.log('  🚫 Remoções:', item.removal_text);
+                    if (item.variations_detailed) console.log('  🔍 Detalhado:', item.variations_detailed);
+                }
+            });
+            console.log('================================');
+            
             // Show loading message
             showCustomAlert('Enviando pedido...', 'info');
             
-            // Try POST first, fallback to GET if CORS issues
-            function tryPostRequest() {
-                return fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(orderPayload)
-                });
-            }
+            // Baseado na resposta do servidor, vamos usar diretamente o método GET
+            // já que o servidor está configurado apenas para aceitar requisições GET
             
-            function tryGetRequest() {
-                console.log('Tentando envio via GET como fallback...');
+            function sendGetRequest() {
+                console.log('📤 ENVIANDO REQUISIÇÃO GET DIRETAMENTE:');
+                
                 // Encode payload as URL parameters for GET request
                 const params = new URLSearchParams();
                 params.append('data', JSON.stringify(orderPayload));
+                
+                // Adicionar parâmetros principais diretamente na URL para facilitar acesso no servidor
                 params.append('whatsapp_admin', adminWhatsApp);
                 params.append('whatsapp_customer', orderData.customerWhatsApp || '');
                 params.append('customer_name', orderData.customerName);
                 params.append('timestamp', new Date().toISOString());
                 params.append('total', orderTotal);
-                params.append('whatsapp_message', message);
                 
-                const getUrl = `${webhookUrl}?${params.toString()}`;
-                console.log('URL GET:', getUrl);
+                // Adicionar parâmetros da URL do webhook diretamente na query string
+                // para garantir que eles sejam acessíveis mesmo se o servidor não processar o campo webhook_params
+                if (Object.keys(webhookParams).length > 0) {
+                    console.log('🔑 Adicionando parâmetros da URL diretamente na query string:');
+                    Object.entries(webhookParams).forEach(([key, value]) => {
+                        params.append(key, value);
+                        console.log(`  ✔️ ${key}: ${value}`);
+                    });
+                }
+                
+                const getUrl = `${cleanWebhookUrl}?${params.toString()}`;
+                console.log('📍 URL GET completa:', getUrl);
+                
+                // Verificar se webhook_params está no JSON da URL
+                try {
+                    const dataParam = params.get('data');
+                    const parsedData = JSON.parse(dataParam);
+                    console.log('  ✔️ Payload em data:', parsedData);
+                    console.log('  ✔️ webhook_params presente:', 'webhook_params' in parsedData);
+                    console.log('  ✔️ Conteúdo de webhook_params:', parsedData.webhook_params);
+                } catch (e) {
+                    console.error('  ❌ Erro ao analisar JSON em data:', e);
+                }
                 
                 return fetch(getUrl, {
                     method: 'GET',
-                    mode: 'no-cors' // This helps with CORS issues
+                    mode: 'no-cors' // Isso ajuda com problemas de CORS
                 });
             }
             
-            // Try POST first
-            tryPostRequest()
+            // Enviar diretamente via GET
+            sendGetRequest()
             .then(response => {
-                console.log('Resposta do webhook POST:', response.status, response.statusText);
-                if (response.ok) {
-                    showCustomAlert('Pedido enviado com sucesso!', 'success');
-                    // Reset completo do sistema após webhook bem-sucedido
-                    resetSystemAfterOrder();
-                } else {
-                    return response.text().then(text => {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}. Resposta: ${text}`);
-                    });
-                }
-            })
-            .catch(postError => {
-                console.error('Erro no POST, tentando GET:', postError);
+                console.log('📬 Resposta do webhook GET:', response);
+                console.log('ℹ️ Modo no-cors: não é possível ler o status da resposta');
                 
-                // Try GET as fallback
-                tryGetRequest()
-                .then(response => {
-                    console.log('Resposta do webhook GET:', response);
-                    
-                    // With no-cors mode, we can't read the response status
-                    // But if we reach here without error, the request was sent
-                    // Let's wait a moment and then show success
-                    setTimeout(() => {
-                        showCustomAlert('Pedido enviado! Verifique se chegou no webhook.', 'success');
-                        // Reset completo do sistema
-                        resetSystemAfterOrder();
-                    }, 1000); // Wait 1 second to give time for the webhook to process
-                })
-                .catch(getError => {
-                    console.error('Erro no GET também:', getError);
-                    // Only show error if it's a real network error
-                    if (getError.name === 'TypeError' && getError.message.includes('Failed to fetch')) {
-                        showCustomAlert('Erro de conexão: Não foi possível enviar o pedido. Verifique a URL do webhook.', 'error');
-                    } else {
-                        showCustomAlert(`Erro ao enviar pedido: ${getError.message}`, 'error');
-                    }
+                // Com o modo no-cors, não podemos ler a resposta
+                // Mas se chegamos aqui sem erro, a requisição foi enviada
+                // Vamos adicionar um log de debug para confirmar
+                console.log('🚨 DEBUG: Requisição GET enviada para:', cleanWebhookUrl);
+                console.log('🚨 DEBUG: Payload completo enviado:', orderPayload);
+                console.log('🚨 DEBUG: webhook_params enviado:', orderPayload.webhook_params);
+                console.log('🚨 DEBUG: Parâmetros adicionados diretamente à URL:');
+                Object.entries(webhookParams).forEach(([key, value]) => {
+                    console.log(`  ✔️ ${key}: ${value}`);
                 });
+                
+                // Vamos aguardar um momento e mostrar sucesso
+                setTimeout(() => {
+                    showCustomAlert('Pedido enviado com sucesso!', 'success');
+                    // Reset completo do sistema
+                    resetSystemAfterOrder();
+                }, 1000); // Aguarda 1 segundo para dar tempo do webhook processar
+            })
+            .catch(error => {
+                console.error('Erro no envio via GET:', error);
+                
+                // Mostrar erro apenas se for um erro real de rede
+                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                    showCustomAlert('Erro de conexão: Não foi possível enviar o pedido. Verifique a URL do webhook.', 'error');
+                } else {
+                    showCustomAlert(`Erro ao enviar pedido: ${error.message}`, 'error');
+                }
             });
         }
 
@@ -6694,7 +7203,7 @@
             const shareText = `${text}\n${url}`;
             
             navigator.clipboard.writeText(shareText).then(() => {
-                showToast(`📋 Link de ${categoryName} copiado! Compartilhe essa delícia`, 'success', 3000);
+                showToast(`📋 Link de ${categoryName} copiado! Compartilhe!`, 'success', 3000);
             }).catch(() => {
                 // Fallback se clipboard não funcionar
                 showToast('❌ Não foi possível copiar automaticamente', 'error', 2000);
@@ -7866,6 +8375,48 @@
             }
             
             return isValid;
+        }
+        
+        // Função para validar todas as variações antes de adicionar ao carrinho
+        function validateAllVariations() {
+            const variations = document.querySelectorAll('[data-variation-name]');
+            
+            for (const variation of variations) {
+                const variationName = variation.dataset.variationName;
+                const variationData = {
+                    name: variationName,
+                    type: variation.dataset.variationType || 'radio',
+                    required: variation.dataset.variationRequired === 'true',
+                    min: parseInt(variation.dataset.variationMin) || 0,
+                    max: parseInt(variation.dataset.variationMax) || 999
+                };
+                
+                // Verificar seleções mínimas para variações obrigatórias
+                if (variationData.required) {
+                    const isValid = checkMinimumSelections(variationData);
+                    if (!isValid) {
+                        showToast(`Por favor, selecione pelo menos uma opção em "${variationName}"`, 'error');
+                        return false;
+                    }
+                }
+                
+                // Verificar limites para variações checkbox
+                if (variationData.type === 'checkbox') {
+                    const selectedOptions = variation.querySelectorAll('input[type="checkbox"]:checked');
+                    
+                    if (selectedOptions.length < variationData.min) {
+                        showToast(`Selecione pelo menos ${variationData.min} opções em "${variationName}"`, 'error');
+                        return false;
+                    }
+                    
+                    if (selectedOptions.length > variationData.max) {
+                        showToast(`Selecione no máximo ${variationData.max} opções em "${variationName}"`, 'error');
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
         }
     </script>
 
