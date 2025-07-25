@@ -2170,12 +2170,14 @@
         }
 
         // Function to show preloader
-        function showPreloader() {
+       function showPreloader() {
             const preloaderHTML = `
                 <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
                     <div class="text-center">
                         <div class="mb-4">
-                            <img src="assets/panela.gif" alt="preparando o cardapio..." class="mx-auto w-24 h-24" />
+                            <video width="256" height="256" preload="none" style="background: transparent url('https://cdn-icons-png.flaticon.com/512/10292/10292572.png') 50% 50% / fit no-repeat;" autoplay loop muted playsinline>
+                                <source src="https://cdn-icons-mp4.flaticon.com/512/10292/10292572.mp4" type="video/mp4">
+                            </video>
                         </div>
                         <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando...</h2>
                         
@@ -2193,6 +2195,7 @@
             document.body.style.overflow = 'hidden';
             console.log('🚫 Scroll do body desabilitado durante preloader');
         }
+
 
 
         // Function to update progress
