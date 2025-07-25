@@ -2175,7 +2175,7 @@
                 <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
                     <div class="text-center">
                         <div class="mb-4">
-                            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+                            <img src="assets/panela.gif" alt="preparando o cardapio..." class="mx-auto w-24 h-24" />
                         </div>
                         <h2 class="text-xl font-semibold text-gray-800 mb-2">Carregando...</h2>
                         
@@ -2188,18 +2188,39 @@
                 </div>
             `;
             document.body.insertAdjacentHTML('beforeend', preloaderHTML);
-            
+        
             // Desabilitar scroll do body durante o preloader
             document.body.style.overflow = 'hidden';
             console.log('🚫 Scroll do body desabilitado durante preloader');
         }
 
+
         // Function to update progress
+        let currentPercentage = 0; // valor atual do progresso
+
         function updateProgress(percentage) {
             const progressBar = document.getElementById('progress-bar');
-            if (progressBar) {
-                progressBar.style.width = percentage + '%';
+            if (!progressBar) return;
+        
+            const target = Math.max(0, Math.min(100, Number(percentage) || 0));
+            const duration = 500; // ms
+            const start = currentPercentage;
+            const startTime = performance.now();
+        
+            function animate(time) {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                currentPercentage = start + (target - start) * progress;
+                progressBar.style.width = `${currentPercentage}%`;
+        
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    currentPercentage = target;
+                }
             }
+        
+            requestAnimationFrame(animate);
         }
 
         // Function to hide preloader
