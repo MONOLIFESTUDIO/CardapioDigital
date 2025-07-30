@@ -1,6 +1,6 @@
 /**
  * ====================================================================
- * CONFIGURAÇÃO DO CARDÁPIO SHEETS - V3.8 - 30/07/2025 - 09h34
+ * CONFIGURAÇÃO DO CARDÁPIO SHEETS - V3.8 - 30/07/2025 - 09h340
  * ====================================================================
  * 
  * Este arquivo contém todas as configurações principais do sistema,
