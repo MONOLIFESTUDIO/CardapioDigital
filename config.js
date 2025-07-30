@@ -109,7 +109,7 @@ const TIMEZONE = 'America/Sao_Paulo';
  * const PRELOADER_LOGO_URL = 'https://dropbox.com/s/abc/logo.png?dl=0';
  * const PRELOADER_LOGO_URL = ''; // Sem logo
  */
-const PRELOADER_LOGO_URL = 'https://drive.google.com/file/d/1KGoafO0Hupme82TMhJQOhI6jWl-U9AE8/view'; // Adicione a URL do seu logo aqui
+const PRELOADER_LOGO_URL = 'https://drive.google.com/file/d/1r-m9txwTIFxbY5S4QysZTkEvbYTrvbcY/view'; // Adicione a URL do seu logo aqui
 
 /**
  * COR DO PRELOADER:
@@ -122,7 +122,7 @@ const PRELOADER_LOGO_URL = 'https://drive.google.com/file/d/1KGoafO0Hupme82TMhJQ
  * const PRELOADER_COLOR = '#2ecc71'; // Verde
  * const PRELOADER_COLOR = '#9b59b6'; // Roxo 
  */
-const PRELOADER_COLOR = '#b56a19'; // Cor principal do preloader
+const PRELOADER_COLOR = '#8844EE'; // Cor principal do preloader
 
 
 
