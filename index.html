@@ -736,7 +736,7 @@
         </div>
 
         <!-- Menu Sections -->
-        <div id="menu-content snap-none">
+        <div id="menu-content">
             <!-- Sections will be populated here -->
         </div>
     </main>
@@ -877,7 +877,7 @@
     </button>
 
     <!-- Product Modal -->
-    <div id="product-modal" class="fixed inset-0 snap-none bg-black bg-opacity-50 modal-overlay hidden z-50" onclick="closeModal(event)">
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-50" onclick="closeModal(event)">
         <div class="flex items-start justify-center min-h-screen p-4 pt-8">
             <div class="relative bg-white rounded-2xl w-full max-w-md slide-up max-h-[85vh] overflow-visible" onclick="event.stopPropagation()">
                 <!-- Close Button positioned at modal edge -->
@@ -3454,12 +3454,12 @@
             if (direction === 'left') {
                 container.scrollTo({
                     left: currentScroll - scrollAmount,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
             } else {
                 container.scrollTo({
                     left: currentScroll + scrollAmount,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
             }
         }
@@ -3497,7 +3497,7 @@
                         if (searchInput) {
                             searchInput.focus();
                             searchInput.scrollIntoView({
-                                behavior: 'auto',
+                                behavior: 'smooth',
                                 block: 'center'
                             });
                         }
@@ -7009,7 +7009,7 @@
                                         // Reposicionar se necessário
                                         window.scrollTo({
                                             top: Math.max(0, sectionTop - offset),
-                                            behavior: 'auto'
+                                            behavior: 'smooth'
                                         });
                                     }
                                 }
@@ -9001,7 +9001,7 @@
                 // Smooth scroll within modal container
                 modalContainer.scrollTo({
                     top: Math.max(0, targetScrollPosition),
-                    behavior: 'Auto'
+                    behavior: 'smooth'
                 });
                 
                 if (typeof debugLog === 'function') debugLog('📝 Order notes field focused and centered within modal');
@@ -10235,7 +10235,7 @@
                         const elementPosition = section.offsetTop - offset;
                         window.scrollTo({ 
                             top: Math.max(0, elementPosition), 
-                            behavior: 'auto' 
+                            behavior: 'smooth' 
                         });
                         return true;
                     }
@@ -10256,7 +10256,7 @@
                         // Final fallback: scroll to first section if category exists in menu
                         const firstSection = document.querySelector('section[id]');
                         if (firstSection) {
-                            window.scrollTo({ top: firstSection.offsetTop - 150, behavior: 'auto' });
+                            window.scrollTo({ top: firstSection.offsetTop - 150, behavior: 'smooth' });
                         }
                         return;
                     }
@@ -10381,7 +10381,7 @@
 
             container.scrollTo({
                 left: container.scrollLeft + offset,
-                behavior: 'auto'
+                behavior: 'smooth'
             });
         }
 
@@ -10716,7 +10716,7 @@
                 // Smooth scroll within modal container
                 modalContainer.scrollTo({
                     top: Math.max(0, targetScrollPosition),
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
                 
                 if (typeof debugLog === 'function') debugLog('📝 Product notes field focused and centered within modal');
@@ -10739,7 +10739,7 @@
                 // Smooth scroll back to top of modal
                 modalContainer.scrollTo({
                     top: 0,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
                 
                 if (typeof debugLog === 'function') debugLog('🔄 Product modal scroll reset');
