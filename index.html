@@ -3831,13 +3831,13 @@
             modal.classList.remove('hidden');
             
             // Reset scroll do modal para sempre começar do topo
-			const modalScrollContainer = modal.querySelector('.overflow-y-auto');
+            const modalScrollContainer = modal.querySelector('.overflow-y-auto');
             if (modalScrollContainer) {
                 modalScrollContainer.scrollTop = 0;
                 if (typeof debugLog === 'function') {
                     debugLog('📜 Scroll do modal resetado para o topo');
                 }
-            } 
+            }
             
             // Desabilitar scroll do body quando modal abre
             document.body.style.overflow = 'hidden';
@@ -6976,10 +6976,49 @@
             handleInitialHash();
             setupDeselectableRadios();
             setupKeyboardShortcuts();
+            setupResizeHandler();
             setupFormStorageListeners();
         }
         
-        
+        // Setup resize handler para recalcular posições
+        function setupResizeHandler() {
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Recalcular posições após resize
+                    const activeCategory = document.querySelector('.category-item.active');
+                    if (activeCategory) {
+                        const category = activeCategory.getAttribute('data-category');
+                        if (category && category !== 'all') {
+                            // Forçar recalculo da posição da seção
+                            requestAnimationFrame(() => {
+                                const section = document.getElementById(category);
+                                if (section) {
+                                    const header = document.querySelector('header');
+                                    const categoryNav = document.querySelector('.category-nav');
+                                    const headerHeight = header ? header.offsetHeight : 89;
+                                    const navHeight = categoryNav ? categoryNav.offsetHeight : 51;
+                                    const offset = headerHeight + navHeight + 20;
+                                    
+                                    // Verificar se a seção está visível corretamente
+                                    const sectionTop = section.offsetTop;
+                                    const currentScroll = window.scrollY;
+                                    
+                                    if (Math.abs(currentScroll + offset - sectionTop) > 50) {
+                                        // Reposicionar se necessário
+                                        window.scrollTo({
+                                            top: Math.max(0, sectionTop - offset),
+                                            behavior: 'smooth'
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }, 250); // Debounce de 250ms
+            });
+        }
         
         // Setup listeners para salvar dados do formulário no localStorage
         function setupFormStorageListeners() {
