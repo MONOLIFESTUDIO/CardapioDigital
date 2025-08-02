@@ -3376,7 +3376,7 @@
                                             <div class="flex items-start justify-between">
                                                 <h3 class="font-semibold text-gray-900 truncate pr-2">${item.nome}</h3>
                                             </div>
-                                            <p class="text-sm text-gray-600 line-clamp-2 mt-1">here? ${item.descricao}</p>
+                                            <p class="text-sm text-gray-600 line-clamp-2 mt-1">${item.descricao}</p>
                                             <!-- Preço em linha própria -->
                                             <div class="mt-3">
                                                 <span class="text-base font-bold" style="color: var(--cor-primaria)">${getPriceDisplay(item.preco)}</span>
@@ -3531,7 +3531,7 @@
                 <div class="relative">
                     <img src="${processImageUrl(product.imagem)}" alt="${product.nome}" class="w-full h-64 object-cover rounded-t-2xl sm:rounded-t-2xl cursor-pointer hover:opacity-90 transition-opacity lazy-image" loading="lazy" onerror="errorLog('Erro ao carregar imagem do modal:', this.src, 'Produto:', '${product.nome}'); this.src='${getPlaceholderImage()}'" onload="this.classList.add('loaded'); debugLog('Imagem do modal carregada:', this.src)" onclick="openLightbox('${processImageUrl(product.imagem)}', '${product.nome}')" style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;">
                     <div class="absolute bottom-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-mono">
-                        ${product.sku} here?
+                        ${product.sku}
                     </div>
 
                 </div>
