@@ -3454,12 +3454,12 @@
             if (direction === 'left') {
                 container.scrollTo({
                     left: currentScroll - scrollAmount,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
             } else {
                 container.scrollTo({
                     left: currentScroll + scrollAmount,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
             }
         }
@@ -3497,7 +3497,7 @@
                         if (searchInput) {
                             searchInput.focus();
                             searchInput.scrollIntoView({
-                                behavior: 'auto',
+                                behavior: 'smooth',
                                 block: 'center'
                             });
                         }
@@ -6979,45 +6979,7 @@
             setupFormStorageListeners();
         }
         
-        // Setup resize handler para recalcular posições
-        function setupResizeHandler() {
-            let resizeTimeout;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    // Recalcular posições após resize
-                    const activeCategory = document.querySelector('.category-item.active');
-                    if (activeCategory) {
-                        const category = activeCategory.getAttribute('data-category');
-                        if (category && category !== 'all') {
-                            // Forçar recalculo da posição da seção
-                            requestAnimationFrame(() => {
-                                const section = document.getElementById(category);
-                                if (section) {
-                                    const header = document.querySelector('header');
-                                    const categoryNav = document.querySelector('.category-nav');
-                                    const headerHeight = header ? header.offsetHeight : 89;
-                                    const navHeight = categoryNav ? categoryNav.offsetHeight : 51;
-                                    const offset = headerHeight + navHeight + 20;
-                                    
-                                    // Verificar se a seção está visível corretamente
-                                    const sectionTop = section.offsetTop;
-                                    const currentScroll = window.scrollY;
-                                    
-                                    if (Math.abs(currentScroll + offset - sectionTop) > 50) {
-                                        // Reposicionar se necessário
-                                        window.scrollTo({
-                                            top: Math.max(0, sectionTop - offset),
-                                            behavior: 'smooth'
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }, 250); // Debounce de 250ms
-            });
-        }
+        
         
         // Setup listeners para salvar dados do formulário no localStorage
         function setupFormStorageListeners() {
@@ -9000,7 +8962,7 @@
                 // Smooth scroll within modal container
                 modalContainer.scrollTo({
                     top: Math.max(0, targetScrollPosition),
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
                 
                 if (typeof debugLog === 'function') debugLog('📝 Order notes field focused and centered within modal');
@@ -10234,7 +10196,7 @@
                         const elementPosition = section.offsetTop - offset;
                         window.scrollTo({ 
                             top: Math.max(0, elementPosition), 
-                            behavior: 'auto' 
+                            behavior: 'smooth' 
                         });
                         return true;
                     }
@@ -10255,7 +10217,7 @@
                         // Final fallback: scroll to first section if category exists in menu
                         const firstSection = document.querySelector('section[id]');
                         if (firstSection) {
-                            window.scrollTo({ top: firstSection.offsetTop - 150, behavior: 'auto' });
+                            window.scrollTo({ top: firstSection.offsetTop - 150, behavior: 'smooth' });
                         }
                         return;
                     }
@@ -10380,7 +10342,7 @@
 
             container.scrollTo({
                 left: container.scrollLeft + offset,
-                behavior: 'auto'
+                behavior: 'smooth'
             });
         }
 
@@ -10715,7 +10677,7 @@
                 // Smooth scroll within modal container
                 modalContainer.scrollTo({
                     top: Math.max(0, targetScrollPosition),
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
                 
                 if (typeof debugLog === 'function') debugLog('📝 Product notes field focused and centered within modal');
@@ -10738,7 +10700,7 @@
                 // Smooth scroll back to top of modal
                 modalContainer.scrollTo({
                     top: 0,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 });
                 
                 if (typeof debugLog === 'function') debugLog('🔄 Product modal scroll reset');
