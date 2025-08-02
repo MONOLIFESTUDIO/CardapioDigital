@@ -3831,13 +3831,13 @@
             modal.classList.remove('hidden');
             
             // Reset scroll do modal para sempre começar do topo
-            const modalScrollContainer = modal.querySelector('.overflow-y-auto');
+			const modalScrollContainer = modal.querySelector('.overflow-y-auto');
             if (modalScrollContainer) {
                 modalScrollContainer.scrollTop = 0;
                 if (typeof debugLog === 'function') {
                     debugLog('📜 Scroll do modal resetado para o topo');
                 }
-            }
+            } 
             
             // Desabilitar scroll do body quando modal abre
             document.body.style.overflow = 'hidden';
@@ -7009,7 +7009,7 @@
                                         // Reposicionar se necessário
                                         window.scrollTo({
                                             top: Math.max(0, sectionTop - offset),
-                                            behavior: 'auto'
+                                            behavior: 'Smooth'
                                         });
                                     }
                                 }
