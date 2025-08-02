@@ -736,7 +736,7 @@
         </div>
 
         <!-- Menu Sections -->
-        <div id="menu-content">
+        <div id="menu-content snap-none">
             <!-- Sections will be populated here -->
         </div>
     </main>
@@ -877,7 +877,7 @@
     </button>
 
     <!-- Product Modal -->
-    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 modal-overlay hidden z-50" onclick="closeModal(event)">
+    <div id="product-modal" class="fixed inset-0 snap-none bg-black bg-opacity-50 modal-overlay hidden z-50" onclick="closeModal(event)">
         <div class="flex items-start justify-center min-h-screen p-4 pt-8">
             <div class="relative bg-white rounded-2xl w-full max-w-md slide-up max-h-[85vh] overflow-visible" onclick="event.stopPropagation()">
                 <!-- Close Button positioned at modal edge -->
@@ -3532,7 +3532,7 @@
                 if (items.length === 0) return;
 
                 html += `
-                    <section id="${categoryKey}" class="mb-8">
+                    <section id="${categoryKey}" class="mb-8 snap-none">
                         <div class="flex items-center justify-between mb-4 py-2 z-10" style="background:var(--cor-fundo)">
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900">${categoryInfo.titulo_exibicao}</h2>
@@ -3557,7 +3557,7 @@
                                 const needsModal = hasVariations || priceType === 'multiple';
                                 
                                 return `
-                                <div class="food-card bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300" onclick="openProductModal(${item.id})">
+                                <div class="food-card snap-none bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300" onclick="openProductModal(${item.id})">
                                     <div class="flex items-start space-x-4">
                                         <div class="flex-shrink-0">
                                             <img src="${processImageUrl(item.imagem)}" alt="${item.nome}" class="w-20 h-20 object-cover rounded-lg lazy-image" loading="lazy" onerror="errorLog('Erro ao carregar imagem do item:', this.src, 'Item:', '${item.nome}'); this.src='${getPlaceholderImage()}'" onload="this.classList.add('loaded'); debugLog('Imagem do item carregada:', this.src)" style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;">
