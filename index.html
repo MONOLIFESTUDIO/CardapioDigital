@@ -3557,7 +3557,7 @@
                                 const needsModal = hasVariations || priceType === 'multiple';
                                 
                                 return `
-                                <div class="food-card snap-none bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300" onclick="openProductModal(${item.id})">
+                                <div class="food-card bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300" onclick="openProductModal(${item.id})">
                                     <div class="flex items-start space-x-4">
                                         <div class="flex-shrink-0">
                                             <img src="${processImageUrl(item.imagem)}" alt="${item.nome}" class="w-20 h-20 object-cover rounded-lg lazy-image" loading="lazy" onerror="errorLog('Erro ao carregar imagem do item:', this.src, 'Item:', '${item.nome}'); this.src='${getPlaceholderImage()}'" onload="this.classList.add('loaded'); debugLog('Imagem do item carregada:', this.src)" style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;">
