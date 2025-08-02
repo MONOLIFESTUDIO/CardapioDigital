@@ -2597,28 +2597,22 @@
                 </div>` : '';
             
             const preloaderHTML = `
-                <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center" style="linear-gradient(#9B30F9, #8844EE);">
+                <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
                     <div class="text-center">
                         ${logoHTML}
                         
-                        <!-- Texto com efeito snake -->
+                        <!-- Texto "Carregando" com efeito snake -->
                         <div class="loading-text mb-6">
-                            <span class="loading-letter" style="animation-delay: 0s;">M</span>
-                            <span class="loading-letter" style="animation-delay: 0.1s;">O</span>
-                            <span class="loading-letter" style="animation-delay: 0.2s;">N</span>
-                            <span class="loading-letter" style="animation-delay: 0.3s;">T</span>
-                            <span class="loading-letter" style="animation-delay: 0.4s;">A</span>
-                            <span class="loading-letter" style="animation-delay: 0.5s;">N</span>
-                            <span class="loading-letter" style="animation-delay: 0.6s;">D</span>
-                            <span class="loading-letter" style="animation-delay: 0.7s;">O</span><br>
-                            <span class="loading-letter" style="animation-delay: 0.8s;">C</span>
-                            <span class="loading-letter" style="animation-delay: 0.9s;">A</span>
-							<span class="loading-letter" style="animation-delay: 1.0s;">R</span>
-							<span class="loading-letter" style="animation-delay: 1.1s;">D</span>
-							<span class="loading-letter" style="animation-delay: 1.2s;">A</span>
-							<span class="loading-letter" style="animation-delay: 1.3s;">P</span>
-							<span class="loading-letter" style="animation-delay: 1.4s;">I</span>
-							<span class="loading-letter" style="animation-delay: 1.5s;">O</span>
+                            <span class="loading-letter" style="animation-delay: 0s;">C</span>
+                            <span class="loading-letter" style="animation-delay: 0.1s;">a</span>
+                            <span class="loading-letter" style="animation-delay: 0.2s;">r</span>
+                            <span class="loading-letter" style="animation-delay: 0.3s;">r</span>
+                            <span class="loading-letter" style="animation-delay: 0.4s;">e</span>
+                            <span class="loading-letter" style="animation-delay: 0.5s;">g</span>
+                            <span class="loading-letter" style="animation-delay: 0.6s;">a</span>
+                            <span class="loading-letter" style="animation-delay: 0.7s;">n</span>
+                            <span class="loading-letter" style="animation-delay: 0.8s;">d</span>
+                            <span class="loading-letter" style="animation-delay: 0.9s;">o</span>
                         </div>
                         
                         <!-- Barra de progresso minimalista -->
@@ -2639,7 +2633,7 @@
                 
                 /* Logo do preloader - flat design */
                 .preloader-logo {
-                    
+                    animation: logoFloat 3s ease-in-out infinite;
                     opacity: 0;
                     transition: opacity 0.3s ease;
                     display: block;
@@ -3372,77 +3366,37 @@
                                 const needsModal = hasVariations || priceType === 'multiple';
                                 
                                 return `
-                                <div 
-									  class="food-card bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300"
-									  onclick="openProductModal(${item.id})"
-									>
-									  <div class="flex flex-col sm:flex-row sm:items-start sm:space-x-4">
-										<!-- Imagem -->
-										<div class="flex-shrink-0 mb-3 sm:mb-0">
-										  <img 
-											src="${processImageUrl(item.imagem)}" 
-											alt="${item.nome}" 
-											class="w-20 h-20 object-cover rounded-lg lazy-image"
-											loading="lazy"
-											onerror="errorLog('Erro ao carregar imagem do item:', this.src, 'Item:', '${item.nome}'); this.src='${getPlaceholderImage()}'"
-											onload="this.classList.add('loaded'); debugLog('Imagem do item carregada:', this.src)"
-											style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;"
-										  >
-										  <div class="text-xs text-gray-500 text-center mt-1 font-mono">
-											${item.sku}
-										  </div>
-										</div>
-
-										<!-- Texto -->
-										<div class="flex flex-col justify-between flex-1 min-w-0">
-										  <div>
-											<h3 class="font-semibold text-gray-900 truncate">
-											  ${item.nome}
-											</h3>
-											<p class="text-sm text-gray-600 line-clamp-2 mt-1">
-											  ${item.descricao}
-											</p>
-										  </div>
-
-										  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3">
-											<span 
-											  class="text-base font-bold block mb-2 sm:mb-0"
-											  style="color: var(--cor-primaria)"
-											>
-											  ${getPriceDisplay(item.preco)}
-											</span>
-
-											<div class="flex items-center justify-end">
-											  ${
-												needsModal 
-												? `<span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md flex items-center space-x-1 mr-4">
-													<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-													</svg>
-													<span>Opções</span>
-												  </span>` 
-												: ''
-											  }
-											  <button 
-												class="add-to-cart-btn text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300"
-												style="background-color: var(--cor-primaria);"
-												onmouseenter="this.style.backgroundColor='var(--cor-primaria-escura)'"
-												onmouseleave="this.style.backgroundColor='var(--cor-primaria)'"
-												onclick="event.stopPropagation(); ${needsModal ? `openProductModal(${item.id})` : `addToCart(${item.id})`}"
-											  >
-												<div class="flex items-center space-x-1.5">
-												  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-													  d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L6 5H3m4 8a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z" />
-												  </svg>
-												  <span>Add</span>
-												</div>
-											  </button>
-											</div>
-										  </div>
-										</div>
-									  </div>
-									</div>
+                                <div class="food-card bg-white rounded-lg p-4 shadow-sm border border-gray-100 relative cursor-pointer hover:shadow-md transition-shadow duration-300" onclick="openProductModal(${item.id})">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="flex-shrink-0">
+                                            <img src="${processImageUrl(item.imagem)}" alt="${item.nome}" class="w-20 h-20 object-cover rounded-lg lazy-image" loading="lazy" onerror="errorLog('Erro ao carregar imagem do item:', this.src, 'Item:', '${item.nome}'); this.src='${getPlaceholderImage()}'" onload="this.classList.add('loaded'); debugLog('Imagem do item carregada:', this.src)" style="background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite;">
+                                            <div class="text-xs text-gray-500 text-center mt-1 font-mono">${item.sku}</div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-start justify-between">
+                                                <h3 class="font-semibold text-gray-900 truncate pr-2">${item.nome}</h3>
+                                            </div>
+                                            <p class="text-sm text-gray-600 line-clamp-2 mt-1">${item.descricao}</p>
+                                            <!-- Preço em linha própria -->
+                                            <div class="mt-3">
+                                                <span class="text-base font-bold" style="color: var(--cor-primaria)">${getPriceDisplay(item.preco)}</span>
+                                            </div>
+                                            <!-- Botão em linha própria -->
+                                            <div class="mt-3 flex justify-end items-center">
+                                                ${needsModal ? `<span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md flex items-center space-x-1 mr-8"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg><span>Opções</span></span>` : ''}
+                                                <button class="add-to-cart-btn text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300" 
+                                                    style="background-color: var(--cor-primaria)"
+                                                    onmouseenter="this.style.backgroundColor='var(--cor-primaria-escura)'" onmouseleave="this.style.backgroundColor='var(--cor-primaria)'"
+                                                    onclick="event.stopPropagation(); ${needsModal ? 'openProductModal(' + item.id + ')' : 'addToCart(' + item.id + ')'}">
+                                                    <div class="flex items-center space-x-1.5">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L6 5H3m4 8a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
+                                                        </svg>
+                                                        <span>Add</span>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 `;
