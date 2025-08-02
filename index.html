@@ -1,7 +1,7 @@
 <!--
 //====================================================================\\
 ||                                                                   ||
-||   CARDÁPIO SHEETS - V3.8 - 30/07/2025 - 09h34                     ||
+||   CARDÁPIO SHEETS - V3.9 - 31/07/2025 - 17h49                     ||
 ||                                                                   ||
 ||    Desenvolvido com ❤️ por Dante Testa                            ||
 ||    www.dantetesta.com.br | WhatsApp: (19) 99802-9156              ||
@@ -38,7 +38,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    
+
     <title>Cardápio Sheets</title>
 
 <!--   INSIRA ABAIXO AS TAGS DE SEO -->
@@ -51,12 +51,12 @@
         // Teste de carregamento do sistema localStorage
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
-                console.log('🧪 Testando sistema localStorage...');
-                console.log('✅ initializeStorageSystem:', typeof initializeStorageSystem);
-                console.log('✅ saveCartToStorage:', typeof saveCartToStorage);
-                console.log('✅ loadCartFromStorage:', typeof loadCartFromStorage);
-                console.log('✅ saveCouponToStorage:', typeof saveCouponToStorage);
-                console.log('✅ Sistema localStorage carregado com sucesso!');
+                debugLog('🧪 Testando sistema localStorage...');
+                debugLog('✅ initializeStorageSystem:', typeof initializeStorageSystem);
+                debugLog('✅ saveCartToStorage:', typeof saveCartToStorage);
+                debugLog('✅ loadCartFromStorage:', typeof loadCartFromStorage);
+                debugLog('✅ saveCouponToStorage:', typeof saveCouponToStorage);
+                debugLog('✅ Sistema localStorage carregado com sucesso!');
             }, 500);
         });
     </script>
@@ -186,6 +186,32 @@
                 background: rgba(255, 255, 255, 0.98);
                 backdrop-filter: blur(8px);
             }
+        }
+        
+        /* Setas de navegação das categorias */
+        .nav-arrow {
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+        
+        .nav-arrow:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-arrow:active {
+            transform: scale(0.95);
+        }
+        
+        /* Smooth scroll para o container das categorias */
+        #category-nav {
+            scroll-behavior: smooth;
+            /* Allow vertical scrolling on the page while enabling horizontal drag */
+            touch-action: pan-x;
+        }
+        
+        /* Garantir que as setas fiquem fixas */
+        #nav-arrow-left,
+        #nav-arrow-right {
+            flex-shrink: 0;
         }
         
         .category-item {
@@ -664,8 +690,25 @@
     <!-- Categories Navigation -->
     <nav class="category-nav fixed top-[89px] left-0 right-0 z-30 bg-white" style="border-bottom: 1px solid var(--cor-borda) !important;">
         <div class="max-w-4xl mx-auto px-4 py-3">
-            <div class="flex space-x-2 overflow-x-auto scrollbar-hide" id="category-nav">
-                <!-- Categories will be populated dynamically from CSV data -->
+            <div class="relative flex items-center">
+                <!-- Seta Esquerda (Desktop apenas) -->
+                <button id="nav-arrow-left" class="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-md border border-gray-200 hover:bg-gray-50 transition-all duration-200 mr-2 z-10 nav-arrow" style="opacity: 0; pointer-events: none;">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                
+                <!-- Container das categorias -->
+                <div class="flex space-x-2 overflow-x-auto scrollbar-hide flex-1" id="category-nav">
+                    <!-- Categories will be populated dynamically from CSV data -->
+                </div>
+                
+                <!-- Seta Direita (Desktop apenas) -->
+                <button id="nav-arrow-right" class="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-md border border-gray-200 hover:bg-gray-50 transition-all duration-200 ml-2 z-10 nav-arrow">
+                    <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </nav>
@@ -693,7 +736,7 @@
         </div>
 
         <!-- Menu Sections -->
-        <div id="menu-content overflow-x-auto scrollbar-hide">
+        <div id="menu-content">
             <!-- Sections will be populated here -->
         </div>
     </main>
@@ -796,6 +839,16 @@
                     <!-- Créditos serão preenchidos dinamicamente via CSV -->
                     Desenvolvido com <span style="color: #e74c3c; font-size: 0.8rem;">♥</span> por <a href="#" target="_blank" class="transition-all duration-300" style="color: var(--cor-primaria) !important; text-decoration: none; font-weight: 400; position: relative; font-size: 0.75rem;" onmouseover="this.style.color='var(--cor-secundaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.color='var(--cor-primaria)'; this.style.transform='translateY(0)'">Carregando...</a> <span style="color: var(--cor-texto-secundario); opacity: 0.5; font-size: 0.7rem;">👨‍💻</span>
                 </p>
+                
+                <!-- Botão de Limpeza de Cache -->
+                <div class="mt-3">
+                    <button onclick="clearStorageAndReload()" class="inline-flex items-center space-x-1 text-xs px-2 py-1 rounded transition-all duration-300" style="color: var(--cor-texto-secundario) !important; opacity: 0.5; font-size: 0.65rem; background: transparent; border: 1px solid rgba(200, 200, 200, 0.2);" onmouseover="this.style.opacity='0.8'; this.style.borderColor='var(--cor-primaria)'; this.style.color='var(--cor-primaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='0.5'; this.style.borderColor='rgba(200, 200, 200, 0.2)'; this.style.color='var(--cor-texto-secundario)'; this.style.transform='translateY(0)'" title="Limpar cache e dados salvos">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                        <span>Limpar Cache</span>
+                    </button>
+                </div>
             </div>
         </div>
     </footer>
@@ -2796,34 +2849,84 @@
             }
         }
 
+        /**
+         * Função para adicionar parâmetros anti-cache às URLs
+         */
+        function addCacheBuster(url) {
+            const separator = url.includes('?') ? '&' : '?';
+            return `${url}${separator}v=${Date.now()}&nocache=${Math.random()}`;
+        }
+        
+        /**
+         * Função para fazer fetch com cache busting
+         */
+        function fetchWithCacheBuster(url, options = {}) {
+            const cacheBustedUrl = addCacheBuster(url);
+            const fetchOptions = {
+                ...options,
+                cache: 'no-cache',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0',
+                    ...options.headers
+                }
+            };
+            return fetch(cacheBustedUrl, fetchOptions);
+        }
+        
         // Função para limpar localStorage e recarregar página
         function clearStorageAndReload() {
             try {
-                if (confirm('Tem certeza que deseja limpar todos os dados salvos e recarregar a página?')) {
-                    debugLog('🧹 Iniciando limpeza completa do localStorage...');
+                if (confirm('🧹 Limpar Cache\n\nIsso vai:\n• Limpar todos os dados salvos\n• Limpar cache do navegador\n• Recarregar a página\n\nDeseja continuar?')) {
+                    debugLog('🧹 === LIMPEZA COMPLETA DE CACHE ===');
                     
-                    // Usar nova função de limpeza do sistema localStorage
-                    if (typeof clearAllStorageData === 'function') {
-                        clearAllStorageData();
-                    } else {
-                        // Fallback para método antigo
-                        localStorage.clear();
+                    // 1. Limpar localStorage
+                    try {
+                        if (typeof clearAllStorageData === 'function') {
+                            clearAllStorageData();
+                            debugLog('✅ clearAllStorageData() executado');
+                        } else {
+                            localStorage.clear();
+                            debugLog('✅ localStorage.clear() executado');
+                        }
+                    } catch (e) {
+                        errorLog('Erro ao limpar localStorage:', e);
                     }
                     
-                    // Limpar sessionStorage também
+                    // 2. Limpar sessionStorage
                     try {
                         sessionStorage.clear();
-                        debugLog('🧹 sessionStorage limpo');
+                        debugLog('✅ sessionStorage limpo');
                     } catch (e) {
-                        warnLog('⚠️ Erro ao limpar sessionStorage:', e);
+                        errorLog('Erro ao limpar sessionStorage:', e);
                     }
                     
-                    debugLog('🧹 localStorage e sessionStorage limpos - recarregando página');
-                    window.location.reload();
+                    // 3. Limpar cache do navegador (se suportado)
+                    try {
+                        if ('caches' in window) {
+                            caches.keys().then(function(names) {
+                                for (let name of names) {
+                                    caches.delete(name);
+                                }
+                                debugLog('✅ Cache do navegador limpo');
+                            });
+                        }
+                    } catch (e) {
+                        warnLog('Não foi possível limpar cache do navegador:', e);
+                    }
+                    
+                    // 4. Forçar recarregamento sem cache
+                    debugLog('🔄 Recarregando página sem cache...');
+                    debugLog('=== FIM LIMPEZA CACHE ===');
+                    
+                    // Forçar reload sem cache
+                    window.location.reload(true);
                 }
             } catch (e) {
-                errorLog('❌ Erro ao limpar storage:', e);
-                window.location.reload();
+                errorLog('Erro crítico ao limpar cache:', e);
+                // Forçar reload mesmo com erro
+                window.location.reload(true);
             }
         }
 
@@ -2862,6 +2965,13 @@
                 configData = await loadCSVData(CONFIG_CSV_URL);
                 appConfig = processConfigData(configData);
                 debugLog('Configuration loaded:', Object.keys(appConfig).length, 'sections');
+                
+                // DEBUG: Log detalhado do appConfig carregado
+                debugLog('🔠 === DEBUG APP CONFIG CARREGADO ===');
+                debugLog('appConfig completo:', appConfig);
+                debugLog('appConfig.checkout:', appConfig.checkout);
+                debugLog('orders_all_time:', appConfig?.checkout?.orders_all_time);
+                debugLog('=== FIM DEBUG APP CONFIG ===');
                 updateProgress(15);
 
                 // Apply configuration to the page
@@ -3287,12 +3397,93 @@
             // Add event listeners after creating the buttons
             setupCategoryClickListeners();
             
+            // Setup navigation arrows
+            setupNavigationArrows();
+            
             // Ativar primeira categoria real por padrão
             if (sortedCategories.length > 0) {
                 setTimeout(() => {
                     updateActiveCategory(sortedCategories[0].nome_categoria);
                 }, 200);
             }
+        }
+        
+        // Função para controlar a visibilidade das setas de navegação
+        function updateNavigationArrows() {
+            // Só funciona no desktop
+            if (window.innerWidth <= 768) return;
+            
+            const container = document.getElementById('category-nav');
+            const leftArrow = document.getElementById('nav-arrow-left');
+            const rightArrow = document.getElementById('nav-arrow-right');
+            
+            if (!container || !leftArrow || !rightArrow) return;
+            
+            const scrollLeft = container.scrollLeft;
+            const scrollWidth = container.scrollWidth;
+            const clientWidth = container.clientWidth;
+            const maxScroll = scrollWidth - clientWidth;
+            
+            // Seta esquerda: visível se não estiver no início
+            if (scrollLeft <= 5) {
+                leftArrow.style.opacity = '0';
+                leftArrow.style.pointerEvents = 'none';
+            } else {
+                leftArrow.style.opacity = '1';
+                leftArrow.style.pointerEvents = 'auto';
+            }
+            
+            // Seta direita: visível se não estiver no final
+            if (scrollLeft >= maxScroll - 5) {
+                rightArrow.style.opacity = '0';
+                rightArrow.style.pointerEvents = 'none';
+            } else {
+                rightArrow.style.opacity = '1';
+                rightArrow.style.pointerEvents = 'auto';
+            }
+        }
+        
+        // Função para rolar as categorias
+        function scrollCategories(direction) {
+            const container = document.getElementById('category-nav');
+            if (!container) return;
+            
+            const scrollAmount = 200; // Quantidade de pixels para rolar
+            const currentScroll = container.scrollLeft;
+            
+            if (direction === 'left') {
+                container.scrollTo({
+                    left: currentScroll - scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                container.scrollTo({
+                    left: currentScroll + scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // Configurar event listeners das setas
+        function setupNavigationArrows() {
+            const leftArrow = document.getElementById('nav-arrow-left');
+            const rightArrow = document.getElementById('nav-arrow-right');
+            const container = document.getElementById('category-nav');
+            
+            if (!leftArrow || !rightArrow || !container) return;
+            
+            // Event listeners para as setas
+            leftArrow.addEventListener('click', () => scrollCategories('left'));
+            rightArrow.addEventListener('click', () => scrollCategories('right'));
+            
+            // Event listener para scroll do container
+            container.addEventListener('scroll', updateNavigationArrows);
+            
+            // Event listener para resize da janela
+            window.addEventListener('resize', updateNavigationArrows);
+            
+            // Atualizar setas inicialmente
+            setTimeout(updateNavigationArrows, 100);
         }
         
         // Setup click listeners for category buttons
@@ -3342,7 +3533,7 @@
 
                 html += `
                     <section id="${categoryKey}" class="mb-8">
-                        <div class="flex items-center justify-between mb-4 sticky top-[144px] py-2 z-10" style="background:var(--cor-fundo)">
+                        <div class="flex items-center justify-between mb-4 py-2 z-10" style="background:var(--cor-fundo)">
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900">${categoryInfo.titulo_exibicao}</h2>
                                 <p class="text-sm text-gray-600">${categoryInfo.descricao}</p>
@@ -4231,8 +4422,8 @@
         async function openCart() {
             // VERIFICAR SE ESTABELECIMENTO ESTÁ ABERTO
             const isOpen = await isCurrentlyOpen();
+            
             if (!isOpen) {
-                console.log('🚫 Tentativa de abrir carrinho com estabelecimento fechado');
                 showClosedModal();
                 return;
             }
@@ -6046,10 +6237,32 @@
         // Funções utilitárias para trabalhar com timezone global
         function getCurrentDateInTimezone() {
             const now = new Date();
+            
+            // Se globalTimezone não estiver definido, usar data local
+            if (!globalTimezone || globalTimezone === '') {
+                warnLog('Timezone não configurado, usando data local');
+                return now;
+            }
+            
             try {
-                return new Date(now.toLocaleString("en-US", {timeZone: globalTimezone}));
+                // Usar Intl.DateTimeFormat para conversão mais robusta
+                const formatter = new Intl.DateTimeFormat('en-CA', {
+                    timeZone: globalTimezone,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                });
+                
+                const parts = formatter.formatToParts(now);
+                const timezoneString = `${parts.find(p => p.type === 'year').value}-${parts.find(p => p.type === 'month').value}-${parts.find(p => p.type === 'day').value}T${parts.find(p => p.type === 'hour').value}:${parts.find(p => p.type === 'minute').value}:${parts.find(p => p.type === 'second').value}`;
+                
+                return new Date(timezoneString);
             } catch (e) {
-                errorLog('❌ Erro ao aplicar timezone:', globalTimezone, '- usando data local');
+                errorLog('ERRO ao aplicar timezone:', globalTimezone, '- usando data local');
                 return now;
             }
         }
@@ -6064,9 +6277,10 @@
          */
         function acceptsOrdersAllTime() {
             try {
-                return appConfig?.checkout?.orders_all_time === 'Sim';
+                const result = appConfig?.checkout?.orders_all_time === 'Sim';
+                return result;
             } catch (e) {
-                console.log('⚠️ Erro ao verificar orders_all_time, assumindo controle por horário');
+                errorLog('ERRO na função acceptsOrdersAllTime:', e);
                 return false;
             }
         }
@@ -6076,8 +6290,10 @@
          */
         async function isCurrentlyOpen() {
             // Se aceita pedidos 24h, sempre está aberto
-            if (acceptsOrdersAllTime()) {
-                console.log('✅ Pedidos 24h ativados - sempre aberto');
+            const ordersAllTime = acceptsOrdersAllTime();
+            
+            if (ordersAllTime) {
+                debugLog('✅ Pedidos 24h ativados - sempre aberto');
                 return true;
             }
             
@@ -6088,11 +6304,10 @@
                 const currentMinute = currentTime.getMinutes();
                 const currentTimeInMinutes = currentHour * 60 + currentMinute;
                 
-                console.log(`🕐 Verificando horário: ${dayOfWeek} ${currentHour}:${currentMinute.toString().padStart(2, '0')}`);
-                
-                return await checkIfOpenAtTime(dayOfWeek, currentTimeInMinutes);
+                const result = await checkIfOpenAtTime(dayOfWeek, currentTimeInMinutes);
+                return result;
             } catch (e) {
-                console.log('❌ Erro ao verificar horário, assumindo fechado:', e);
+                errorLog('Erro ao verificar horário:', e);
                 return false;
             }
         }
@@ -6101,33 +6316,37 @@
          * Verifica se está aberto em um horário específico
          */
         function checkIfOpenAtTime(dayOfWeek, timeInMinutes) {
-            // Usar a mesma lógica da função updateOperatingHours
-            // Buscar horários do CSV de horários
             return new Promise(async (resolve) => {
                 try {
                     const response = await fetch(HOURS_CSV_URL);
                     const csvText = await response.text();
                     const lines = csvText.trim().split('\n');
                     
-                    // Procurar pelo dia da semana
-                    for (let i = 2; i < lines.length; i++) {
-                        const values = lines[i].split(',');
-                        const csvDayName = values[0]?.trim();
+                    // Procurar pelo dia da semana (começando da linha 1, pois linha 0 é cabeçalho)
+                    for (let i = 1; i < lines.length; i++) {
+                        const line = lines[i];
+                        if (!line || line.trim() === '') continue;
                         
-                        if (csvDayName.toLowerCase() === dayOfWeek.toLowerCase()) {
-                            // Verificar períodos do dia
-                            for (let j = 1; j < values.length; j += 2) {
-                                const startTime = values[j]?.trim();
-                                const endTime = values[j + 1]?.trim();
+                        const values = line.split(',').map(v => v.trim());
+                        const csvDayName = values[0];
+                        
+                        if (csvDayName && csvDayName.toLowerCase() === dayOfWeek.toLowerCase()) {
+                            // Verificar períodos do dia (começando do índice 1)
+                            for (let j = 1; j < values.length; j++) {
+                                const periodString = values[j];
                                 
-                                if (startTime && endTime && startTime !== '' && endTime !== '') {
-                                    const startMinutes = timeStringToMinutes(startTime);
-                                    const endMinutes = timeStringToMinutes(endTime);
+                                if (periodString && periodString.trim() !== '' && periodString.includes(' - ')) {
+                                    const [startTime, endTime] = periodString.split(' - ').map(t => t.trim());
                                     
-                                    if (timeInMinutes >= startMinutes && timeInMinutes <= endMinutes) {
-                                        console.log(`✅ Aberto - Período: ${startTime} às ${endTime}`);
-                                        resolve(true);
-                                        return;
+                                    if (startTime && endTime) {
+                                        const startMinutes = timeStringToMinutes(startTime);
+                                        const endMinutes = timeStringToMinutes(endTime);
+                                        
+                                        if (timeInMinutes >= startMinutes && timeInMinutes <= endMinutes) {
+                                            debugLog(`✅ ABERTO: ${dayOfWeek} ${Math.floor(timeInMinutes/60)}:${(timeInMinutes%60).toString().padStart(2,'0')} está no período ${startTime}-${endTime}`);
+                                            resolve(true);
+                                            return;
+                                        }
                                     }
                                 }
                             }
@@ -6135,10 +6354,10 @@
                         }
                     }
                     
-                    console.log('🚫 Fechado - Fora do horário de funcionamento');
+                    debugLog(`🚫 FECHADO: ${dayOfWeek} ${Math.floor(timeInMinutes/60)}:${(timeInMinutes%60).toString().padStart(2,'0')} fora do horário`);
                     resolve(false);
                 } catch (e) {
-                    console.log('❌ Erro ao verificar horários:', e);
+                    errorLog('ERRO ao verificar horários:', e);
                     resolve(false);
                 }
             });
@@ -6187,7 +6406,7 @@
                 
                 return 'Consulte nossos horários';
             } catch (e) {
-                console.log('❌ Erro ao calcular próximo horário:', e);
+                errorLog('Erro ao calcular próximo horário:', e);
                 return 'Consulte nossos horários';
             }
         }
@@ -6847,7 +7066,7 @@
                 orderData.notes = notes;
                 orderData.deliveryType = deliveryType;
             } catch (e) {
-                console.error('❌ Erro ao atualizar orderData:', e);
+                errorLog('Erro ao atualizar orderData:', e);
             }
         }
         
@@ -7437,7 +7656,7 @@
          * Prepara lista de bairros para autocomplete (chamada durante preloader)
          */
         function prepareNeighborhoodsAutocomplete() {
-            console.log('📋 Preparando lista de bairros para autocomplete...');
+            debugLog('📋 Preparando lista de bairros para autocomplete...');
             
             // Obter dados de bairros de qualquer fonte disponível
             let dadosBairros = null;
@@ -7451,7 +7670,7 @@
             }
             
             if (!dadosBairros || dadosBairros.length === 0) {
-                console.log('⚠️ Nenhum dado de bairro disponível para autocomplete');
+                debugLog('⚠️ Nenhum dado de bairro disponível para autocomplete');
                 return;
             }
             
@@ -7479,8 +7698,8 @@
                 return true;
             });
             
-            console.log(`✅ Lista de autocomplete preparada: ${neighborhoodsList.length} bairros`);
-            console.log('📋 Primeiros 5 bairros:', neighborhoodsList.slice(0, 5).map(b => b.nome));
+            debugLog(`✅ Lista de autocomplete preparada: ${neighborhoodsList.length} bairros`);
+            debugLog('📋 Primeiros 5 bairros:', neighborhoodsList.slice(0, 5).map(b => b.nome));
             
             // Adicionar evento global para esconder autocomplete ao clicar fora
             if (!window.autocompleteEventAdded) {
@@ -7509,7 +7728,7 @@
             
             // Se o valor não mudou e o spinner está ativo, pará-lo
             if (currentValue === lastInputValue && field.classList.contains('neighborhood-loading')) {
-                console.log('🚫 Valor do input não mudou, parando spinner por inatividade');
+                debugLog('🚫 Valor do input não mudou, parando spinner por inatividade');
                 hideNeighborhoodSpinner();
             }
         }
@@ -7519,9 +7738,9 @@
          * Implementa debounce e busca mais precisa por termo completo
          */
         function buscarTaxaPorBairroRedundante(bairroDigitado, forceImmediate = false) {
-            console.log('🔍 === BUSCA REDUNDANTE DE TAXA POR BAIRRO === 🔍');
-            console.log('🏠 Bairro digitado:', bairroDigitado);
-            console.log('⚡ Busca imediata:', forceImmediate);
+            debugLog('🔍 === BUSCA REDUNDANTE DE TAXA POR BAIRRO === 🔍');
+            debugLog('🏠 Bairro digitado:', bairroDigitado);
+            debugLog('⚡ Busca imediata:', forceImmediate);
             
             // Limpar timeout anterior
             if (bairroSearchTimeout) {
@@ -7531,7 +7750,7 @@
             
             // Validação de entrada
             if (!bairroDigitado || typeof bairroDigitado !== 'string' || bairroDigitado.trim().length < 3) {
-                console.log('⚠️ Bairro inválido ou muito curto (mínimo 3 caracteres)');
+                debugLog('⚠️ Bairro inválido ou muito curto (mínimo 3 caracteres)');
                 
                 // Limpar spinner se campo inválido
                 hideNeighborhoodSpinner();
@@ -7551,7 +7770,7 @@
             
             // Verificar se já buscamos este termo recentemente (evitar buscas repetidas)
             if (!forceImmediate && lastSearchedTerm === bairro.toLowerCase()) {
-                console.log('💾 Cache: Termo já buscado recentemente, pulando busca:', bairro);
+                debugLog('💾 Cache: Termo já buscado recentemente, pulando busca:', bairro);
                 
                 // Mesmo com cache, mostrar autocomplete se disponível
                 if (bairro.length >= 2) {
@@ -7562,7 +7781,7 @@
             
             // Se não for busca forçada, mostrar autocomplete e implementar debounce
             if (!forceImmediate) {
-                console.log('⏱️ Mostrando autocomplete e implementando debounce de 800ms...');
+                debugLog('⏱️ Mostrando autocomplete e implementando debounce de 800ms...');
                 
                 // Mostrar autocomplete imediatamente
                 showNeighborhoodAutocomplete(bairro);
@@ -7571,7 +7790,7 @@
                 showNeighborhoodSpinner();
                 
                 bairroSearchTimeout = setTimeout(() => {
-                    console.log('🚀 Executando busca após debounce...');
+                    debugLog('🚀 Executando busca após debounce...');
                     executarBuscaBairro(bairro);
                 }, 800);
                 return;
@@ -7606,7 +7825,7 @@
             
             // Configurar timeout para parar spinner automaticamente após 5 segundos
             spinnerTimeout = setTimeout(() => {
-                console.log('⏰ Timeout: Parando spinner automaticamente após 5 segundos');
+                debugLog('⏰ Timeout: Parando spinner automaticamente após 5 segundos');
                 hideNeighborhoodSpinner();
             }, 5000);
             
@@ -7615,7 +7834,7 @@
                 checkInputChangeAndStopSpinner();
             }, 2000);
             
-            console.log('🔄 Spinner ativado no campo de bairro (timeout: 5s)');
+            debugLog('🔄 Spinner ativado no campo de bairro (timeout: 5s)');
         }
         
         /**
@@ -7639,7 +7858,7 @@
             field.style.backgroundSize = '';
             field.style.paddingRight = '';
             
-            console.log('✅ Spinner removido do campo de bairro');
+            debugLog('✅ Spinner removido do campo de bairro');
         }
         
         /**
@@ -7727,7 +7946,7 @@
             autocompleteContainer.innerHTML = html;
             autocompleteContainer.style.display = 'block';
             
-            console.log(`📝 Autocomplete exibido: ${sugestoes.length} sugestões para "${termo}"`);
+            debugLog(`📝 Autocomplete exibido: ${sugestoes.length} sugestões para "${termo}"`);
         }
         
         /**
@@ -7762,7 +7981,7 @@
             // Remover spinner
             hideNeighborhoodSpinner();
             
-            console.log('🔄 Estado da busca de bairro resetado');
+            debugLog('🔄 Estado da busca de bairro resetado');
         }
         
         /**
@@ -7779,7 +7998,7 @@
             hideNeighborhoodAutocomplete();
             
             // Aplicar taxa imediatamente
-            console.log(`🎯 Bairro selecionado do autocomplete: ${nome} (Taxa: R$ ${taxa})`);
+            debugLog(`🎯 Bairro selecionado do autocomplete: ${nome} (Taxa: R$ ${taxa})`);
             aplicarTaxaEncontrada(taxa, nome);
             
             // Atualizar dados do endereço
@@ -7793,8 +8012,8 @@
          * Executa a busca real do bairro na planilha
          */
         function executarBuscaBairro(bairro) {
-            console.log('🔍 Executando busca para:', bairro);
-            console.log('📝 Bairro processado:', bairro);
+            debugLog('🔍 Executando busca para:', bairro);
+            debugLog('📋 Bairro processado:', bairro);
             
             // Atualizar cache do termo buscado
             lastSearchedTerm = bairro.toLowerCase();
@@ -7805,21 +8024,21 @@
             // Fonte 1: window.neighborhoodsData
             if (window.neighborhoodsData && Array.isArray(window.neighborhoodsData) && window.neighborhoodsData.length > 0) {
                 dadosBairros = window.neighborhoodsData;
-                console.log('✅ Usando window.neighborhoodsData:', dadosBairros.length, 'registros');
+                debugLog('✅ Usando window.neighborhoodsData:', dadosBairros.length, 'registros');
             }
             // Fonte 2: neighborhoodsData global
             else if (typeof neighborhoodsData !== 'undefined' && Array.isArray(neighborhoodsData) && neighborhoodsData.length > 0) {
                 dadosBairros = neighborhoodsData;
                 window.neighborhoodsData = neighborhoodsData; // Copiar para window
-                console.log('✅ Usando neighborhoodsData global:', dadosBairros.length, 'registros');
+                debugLog('✅ Usando neighborhoodsData global:', dadosBairros.length, 'registros');
             }
             // Fonte 3: localNeighborhoodsData
             else if (window.localNeighborhoodsData && Array.isArray(window.localNeighborhoodsData) && window.localNeighborhoodsData.length > 0) {
                 dadosBairros = window.localNeighborhoodsData;
-                console.log('✅ Usando window.localNeighborhoodsData:', dadosBairros.length, 'registros');
+                debugLog('✅ Usando window.localNeighborhoodsData:', dadosBairros.length, 'registros');
             }
             else {
-                console.error('❌ Nenhum dado de bairro disponível!');
+                errorLog('Nenhum dado de bairro disponível!');
                 exibirAlertaTaxaNaoEncontrada(bairro);
                 
                 // Remover spinner sempre
@@ -7829,10 +8048,10 @@
             
             // Normalizar bairro para busca (remover acentos, maiúsculas, etc.)
             const bairroNormalizado = normalizarTexto(bairro.toLowerCase());
-            console.log('🔄 Bairro normalizado:', bairroNormalizado);
+            debugLog('🔄 Bairro normalizado:', bairroNormalizado);
             
             // BUSCA NIVEL 1: Busca exata (prioritária)
-            console.log('🎯 Tentando busca EXATA...');
+            debugLog('🎯 Tentando busca EXATA...');
             let resultado = dadosBairros.find(item => {
                 const itemBairro = normalizarTexto((item.bairro || item.neighborhood || '').toLowerCase());
                 return itemBairro === bairroNormalizado;
@@ -7840,7 +8059,7 @@
             
             // BUSCA NIVEL 2: Busca exata sem normalização (caso especial)
             if (!resultado) {
-                console.log('🎯 Tentando busca EXATA sem normalização...');
+                debugLog('🎯 Tentando busca EXATA sem normalização...');
                 resultado = dadosBairros.find(item => {
                     const itemBairro = (item.bairro || item.neighborhood || '').toLowerCase().trim();
                     return itemBairro === bairro.toLowerCase().trim();
@@ -7849,7 +8068,7 @@
             
             // BUSCA NIVEL 3: Busca parcial muito restritiva (apenas se o termo for muito similar)
             if (!resultado && bairro.length >= 5) {
-                console.log('🎯 Tentando busca PARCIAL restritiva...');
+                debugLog('🎯 Tentando busca PARCIAL restritiva...');
                 resultado = dadosBairros.find(item => {
                     const itemBairro = normalizarTexto((item.bairro || item.neighborhood || '').toLowerCase());
                     // Apenas se o bairro digitado está contido no bairro da planilha E tem pelo menos 80% de similaridade
@@ -7859,7 +8078,7 @@
                 });
                 
                 if (resultado) {
-                    console.log('✅ Encontrado por busca parcial restritiva');
+                    debugLog('✅ Encontrado por busca parcial restritiva');
                 }
             }
             
@@ -7868,7 +8087,7 @@
                 const taxa = parseFloat(resultado.taxa || resultado.fee || 0);
                 
                 if (!isNaN(taxa) && taxa > 0) {
-                    console.log('✅ TAXA ENCONTRADA!', {
+                    debugLog('✅ TAXA ENCONTRADA!', {
                         bairroOriginal: bairro,
                         bairroEncontrado: resultado.bairro || resultado.neighborhood,
                         taxa: taxa
@@ -7880,12 +8099,12 @@
                     hideNeighborhoodSpinner();
                     return;
                 } else {
-                    console.log('⚠️ Taxa inválida encontrada:', resultado.taxa || resultado.fee);
+                    errorLog('⚠️ Taxa inválida encontrada:', resultado.taxa || resultado.fee);
                 }
             }
             
             // Se chegou até aqui, não encontrou
-            console.log('❌ Taxa não encontrada para o bairro:', bairro);
+            debugLog('❌ Taxa não encontrada para o bairro:', bairro);
             exibirAlertaTaxaNaoEncontrada(bairro);
             
             // Limpar cache para permitir novas buscas
@@ -7944,7 +8163,7 @@
          * Função para aplicar taxa encontrada
          */
         function aplicarTaxaEncontrada(taxa, bairro) {
-            console.log('✅ Aplicando taxa encontrada:', taxa);
+            debugLog('✅ Aplicando taxa encontrada:', taxa);
             
             // Definir taxa global
             window.currentDeliveryFee = taxa;
@@ -7952,7 +8171,7 @@
             // Atualizar orderData
             if (window.orderData && window.orderData.address) {
                 window.orderData.address.deliveryFee = taxa;
-                console.log('✅ Taxa atualizada em orderData.address');
+                debugLog('✅ Taxa atualizada em orderData.address');
             }
             
             // Exibir taxa na interface
@@ -7975,7 +8194,7 @@
          * Função para exibir alerta quando taxa não é encontrada
          */
         function exibirAlertaTaxaNaoEncontrada(bairro) {
-            console.log('⚠️ Exibindo alerta de taxa não encontrada');
+            debugLog('⚠️ Exibindo alerta de taxa não encontrada');
             
             // Limpar taxa
             limparTaxaDeEntrega();
@@ -7997,7 +8216,7 @@
          * Função para limpar taxa de entrega
          */
         function limparTaxaDeEntrega() {
-            console.log('🧽 Limpando taxa de entrega');
+            debugLog('🧹 Limpando taxa de entrega');
             
             // Limpar variável global
             window.currentDeliveryFee = null;
@@ -8023,15 +8242,15 @@
          * AGORA: Só executa quando o campo realmente existe (checkout aberto)
          */
         function iniciarMonitoramentoRedundanteBairro() {
-            console.log('🔄 Iniciando monitoramento REDUNDANTE do campo de bairro');
+            debugLog('🔄 Iniciando monitoramento REDUNDANTE do campo de bairro');
             
             const campo = document.getElementById('neighborhood');
             if (!campo) {
-                console.log('⚠️ Campo de bairro não encontrado - checkout não está aberto');
+                debugLog('⚠️ Campo de bairro não encontrado - checkout não está aberto');
                 return; // NÃO tentar novamente automaticamente
             }
             
-            console.log('✅ Campo de bairro encontrado, configurando eventos...');
+            debugLog('✅ Campo de bairro encontrado, configurando eventos...');
             
             // Variável para debounce
             let timeoutBusca = null;
@@ -8058,7 +8277,7 @@
                 
                 // Agendar nova busca com tempo maior para palavra completa
                 timeoutBusca = setTimeout(() => {
-                    console.log('🚀 Executando busca para palavra completa:', valor);
+                    debugLog('🚀 Executando busca para palavra completa:', valor);
                     
                     // Remover indicador visual
                     campo.style.backgroundColor = '';
@@ -8081,7 +8300,7 @@
                 if (timeoutBusca) clearTimeout(timeoutBusca);
                 const valor = campo.value.trim();
                 if (valor.length >= 3) {
-                    console.log('🚀 Busca imediata por CHANGE:', valor);
+                    debugLog('🚀 Busca imediata por CHANGE:', valor);
                     buscarTaxaPorBairroRedundante(valor);
                 }
             });
@@ -8090,7 +8309,7 @@
                 if (timeoutBusca) clearTimeout(timeoutBusca);
                 const valor = campo.value.trim();
                 if (valor.length >= 3) {
-                    console.log('🚀 Busca imediata por BLUR:', valor);
+                    debugLog('🚀 Busca imediata por BLUR:', valor);
                     buscarTaxaPorBairroRedundante(valor);
                 }
             });
@@ -8099,7 +8318,7 @@
                 setTimeout(() => {
                     const valor = campo.value.trim();
                     if (valor.length >= 3) {
-                        console.log('🚀 Busca imediata por PASTE:', valor);
+                        debugLog('🚀 Busca imediata por PASTE:', valor);
                         buscarTaxaPorBairroRedundante(valor);
                     }
                 }, 200);
@@ -8108,7 +8327,7 @@
             // Sobrescrever atributo oninput apenas para updateAddressData
             campo.setAttribute('oninput', 'updateAddressData();');
             
-            console.log('✅ Monitoramento redundante configurado com sucesso!');
+            debugLog('✅ Monitoramento redundante configurado com sucesso!');
             
             // Efeito visual para confirmar
             campo.style.border = '2px solid #10b981';
@@ -8125,7 +8344,7 @@
         
         // Função de teste global
         window.testarBuscaBairro = function(bairro) {
-            console.log('🧪 Testando busca para:', bairro);
+            debugLog('🧪 Testando busca para:', bairro);
             buscarTaxaPorBairroRedundante(bairro || 'Centro');
         };
         
@@ -9157,7 +9376,7 @@
             
             return parseFloat(cleanValue) || 0;
             } catch (error) {
-                console.error('Erro em parsePrice:', error, 'priceString:', priceString);
+                errorLog('Erro em parsePrice:', error, 'priceString:', priceString);
                 return 0;
             }
         }
@@ -9288,7 +9507,7 @@
                         return formatCurrency(price);
                 }
             } catch (error) {
-                console.error('Erro em getBasePriceDisplay:', error, 'priceField:', priceField);
+                errorLog('Erro em getBasePriceDisplay:', error, 'priceField:', priceField);
                 return '💬 Consulte';
             }
         }
@@ -9319,7 +9538,7 @@
                         return formatCurrency(price);
                 }
             } catch (error) {
-                console.error('Erro em getPriceDisplay:', error, 'priceField:', priceField);
+                errorLog('Erro em getPriceDisplay:', error, 'priceField:', priceField);
                 return '<span style="color: var(--cor-secundaria); font-weight: bold;">💬 Consulte</span>';
             }
         }
@@ -9688,8 +9907,9 @@
         function resetSystemAfterOrder() {
             debugLog('=== RESET COMPLETO DO SISTEMA ===');
             
-            // 1. Limpar carrinho
+            // 1. Limpar carrinho (memória e localStorage)
             cart = [];
+            clearCartFromStorage(); // Limpa o localStorage do carrinho
             updateCartUI();
             
             // 2. Reset orderData
@@ -10148,28 +10368,39 @@
             }, 1500); // 1.5 segundos
         }
 
-        // Atualizar categoria ativa - VERSÃO SIMPLES
+        // Centralizar botão ativo no menu de categorias
+        function centerCategoryButton(button) {
+            const container = document.getElementById('category-nav');
+            if (!container || !button) return;
+
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
+
+            const offset = buttonRect.left - containerRect.left -
+                            (containerRect.width / 2 - buttonRect.width / 2);
+
+            container.scrollTo({
+                left: container.scrollLeft + offset,
+                behavior: 'smooth'
+            });
+        }
+
+        // Atualizar categoria ativa e centralizar no menu horizontal
         function updateActiveCategory(category) {
             // Remover classe active de todos os botões
             document.querySelectorAll('.category-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
+
             // Adicionar classe active no botão correspondente
             const activeButton = document.querySelector(`[data-category="${category}"]`);
             if (activeButton) {
                 activeButton.classList.add('active');
-                
-                // Centralizar botão ativo no scroll horizontal
-                activeButton.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
-                });
+                centerCategoryButton(activeButton);
             }
         }
 
-        // Função removida - agora usamos scrollIntoView nativo
+        // A centralização é feita manualmente para evitar "snap" vertical
 
         // Setup search
         function setupSearch() {
@@ -11048,7 +11279,7 @@
                 nextOpenTimeElement.textContent = 'Consulte nossos horários';
             }
             
-            console.log('🚫 Modal de estabelecimento fechado exibido');
+            debugLog('🚫 Modal de estabelecimento fechado exibido');
         }
         
         /**
@@ -11059,7 +11290,7 @@
             modal.classList.add('hidden');
             document.body.style.overflow = '';
             
-            console.log('✅ Modal de estabelecimento fechado fechado');
+            debugLog('✅ Modal de estabelecimento fechado fechado');
         }
         
         /**
@@ -11095,12 +11326,12 @@
                 const isOpen = await isCurrentlyOpen();
                 
                 if (!isOpen && isCheckoutOpen()) {
-                    console.log('⚠️ Estabelecimento fechou durante uso - fechando checkout');
+                    debugLog('⚠️ Estabelecimento fechou durante uso - fechando checkout');
                     closeCheckoutIfOpen();
                     showClosedModal();
                 }
             } catch (e) {
-                console.log('❌ Erro na verificação contínua de horário:', e);
+                errorLog('Erro na verificação contínua de horário:', e);
             }
         }
         
@@ -11124,16 +11355,16 @@
                     statusDot.style.backgroundColor = '#10B981'; // Verde
                     statusText.textContent = '🟢 Aberto';
                     statusText.style.color = '#10B981';
-                    console.log('✅ Status atualizado: ABERTO');
+                    debugLog('✅ Status atualizado: ABERTO');
                 } else {
                     // Fechado - Vermelho
                     statusDot.style.backgroundColor = '#EF4444'; // Vermelho
                     statusText.textContent = '🔴 Fechado';
                     statusText.style.color = '#EF4444';
-                    console.log('🚫 Status atualizado: FECHADO');
+                    debugLog('🚫 Status atualizado: FECHADO');
                 }
             } catch (e) {
-                console.log('❌ Erro ao atualizar indicador de status:', e);
+                errorLog('Erro ao atualizar indicador de status:', e);
                 // Status de erro - Amarelo
                 const statusDot = document.getElementById('status-dot');
                 const statusText = document.getElementById('status-text');
@@ -11976,7 +12207,7 @@
         if (STORAGE_CONFIG.DEBUG && typeof debugLog === 'function') {
             debugLog('💾 [localStorage]', message, ...args);
         } else if (STORAGE_CONFIG.DEBUG) {
-            console.log('💾 [localStorage]', message, ...args);
+            debugLog('💾 [localStorage]', message, ...args);
         }
     }
     
