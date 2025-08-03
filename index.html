@@ -1,7 +1,7 @@
 <!--
 //====================================================================\\
 ||                                                                   ||
-||   CARDÁPIO SHEETS - V3.9 - 31/07/2025 - 17h49                     ||
+||   CARDÁPIO SHEETS - V3.9 - 02/08/2025 - 23h38                     ||
 ||                                                                   ||
 ||    Desenvolvido com ❤️ por Dante Testa                            ||
 ||    www.dantetesta.com.br | WhatsApp: (19) 99802-9156              ||
@@ -204,8 +204,6 @@
         /* Smooth scroll para o container das categorias */
         #category-nav {
             scroll-behavior: smooth;
-            /* Allow vertical scrolling on the page while enabling horizontal drag */
-            touch-action: pan-x;
         }
         
         /* Garantir que as setas fiquem fixas */
@@ -660,9 +658,19 @@
                 opacity: 1;
             }
         }
+        
+     
     </style>
+
+
+
+  
 </head>
 <body style="background-color: var(--cor-fundo) !important;">
+
+  
+   
+
     <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="max-w-4xl mx-auto px-4 py-4">
@@ -685,6 +693,7 @@
                 </div>
             </div>
         </div>
+     
     </header>
 
     <!-- Categories Navigation -->
@@ -840,13 +849,22 @@
                     Desenvolvido com <span style="color: #e74c3c; font-size: 0.8rem;">♥</span> por <a href="#" target="_blank" class="transition-all duration-300" style="color: var(--cor-primaria) !important; text-decoration: none; font-weight: 400; position: relative; font-size: 0.75rem;" onmouseover="this.style.color='var(--cor-secundaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.color='var(--cor-primaria)'; this.style.transform='translateY(0)'">Carregando...</a> <span style="color: var(--cor-texto-secundario); opacity: 0.5; font-size: 0.7rem;">👨‍💻</span>
                 </p>
                 
-                <!-- Botão de Limpeza de Cache -->
-                <div class="mt-3">
-                    <button onclick="clearStorageAndReload()" class="inline-flex items-center space-x-1 text-xs px-2 py-1 rounded transition-all duration-300" style="color: var(--cor-texto-secundario) !important; opacity: 0.5; font-size: 0.65rem; background: transparent; border: 1px solid rgba(200, 200, 200, 0.2);" onmouseover="this.style.opacity='0.8'; this.style.borderColor='var(--cor-primaria)'; this.style.color='var(--cor-primaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='0.5'; this.style.borderColor='rgba(200, 200, 200, 0.2)'; this.style.color='var(--cor-texto-secundario)'; this.style.transform='translateY(0)'" title="Limpar cache e dados salvos">
+                <!-- Botões de Ferramentas -->
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <!-- Botão Limpar Cache -->
+                    <button onclick="clearStorageAndReload()" class="inline-flex items-center space-x-1 text-xs px-2 py-1 rounded transition-all duration-300" style="color: var(--cor-texto-secundario) !important; opacity: 0.5; font-size: 0.65rem; background: transparent; border: 1px solid rgba(200, 200, 200, 0.2); -webkit-tap-highlight-color: transparent;" onmouseover="this.style.opacity='0.8'; this.style.borderColor='var(--cor-primaria)'; this.style.color='var(--cor-primaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='0.5'; this.style.borderColor='rgba(200, 200, 200, 0.2)'; this.style.color='var(--cor-texto-secundario)'; this.style.transform='translateY(0)'" ontouchstart="this.style.opacity='0.8'; this.style.borderColor='var(--cor-primaria)'; this.style.color='var(--cor-primaria)'; this.style.transform='translateY(-1px)'" ontouchend="this.style.opacity='0.5'; this.style.borderColor='rgba(200, 200, 200, 0.2)'; this.style.color='var(--cor-texto-secundario)'; this.style.transform='translateY(0)'" title="Limpar cache e dados salvos">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                         </svg>
                         <span>Limpar Cache</span>
+                    </button>
+                    
+                    <!-- Botão Atalhos F1 -->
+                    <button onclick="openHelpModal()" class="inline-flex items-center space-x-1 text-xs px-2 py-1 rounded transition-all duration-300" style="color: var(--cor-texto-secundario) !important; opacity: 0.5; font-size: 0.65rem; background: transparent; border: 1px solid rgba(200, 200, 200, 0.2); -webkit-tap-highlight-color: transparent;" onmouseover="this.style.opacity='0.8'; this.style.borderColor='var(--cor-primaria)'; this.style.color='var(--cor-primaria)'; this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='0.5'; this.style.borderColor='rgba(200, 200, 200, 0.2)'; this.style.color='var(--cor-texto-secundario)'; this.style.transform='translateY(0)'" ontouchstart="this.style.opacity='0.8'; this.style.borderColor='var(--cor-primaria)'; this.style.color='var(--cor-primaria)'; this.style.transform='translateY(-1px)'" ontouchend="this.style.opacity='0.5'; this.style.borderColor='rgba(200, 200, 200, 0.2)'; this.style.color='var(--cor-texto-secundario)'; this.style.transform='translateY(0)'" title="Abrir ferramentas e atalhos (F1)">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M11,16H13V18H11V16M12.61,6.04C10.55,6.04 8.99,7.59 8.99,9.65H10.96C10.96,8.65 11.7,7.96 12.61,7.96C13.52,7.96 14.26,8.65 14.26,9.65C14.26,10.1 14.05,10.5 13.75,10.79L12.79,11.75C12.35,12.19 12.14,12.63 12.14,13.54H14.11C14.11,13.04 14.32,12.6 14.76,12.16L15.72,11.2C16.23,10.69 16.69,10.04 16.69,9.65C16.69,7.59 15.13,6.04 12.61,6.04Z"/>
+                        </svg>
+                        <span>Atalhos <kbd class="text-xs opacity-75">F1</kbd></span>
                     </button>
                 </div>
             </div>
@@ -854,7 +872,7 @@
     </footer>
 
     <!-- Share FAB -->
-    <button id="share-fab" class="fixed bottom-8 left-4 text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300" style="background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)) !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;" onclick="shareGeneral()" title="Compartilhar cardápio" onmouseover="this.style.background='linear-gradient(135deg, var(--cor-secundaria), var(--cor-primaria))'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.3)'; this.querySelector('svg').style.animation='smoothSpin 0.6s ease-in'" onmouseout="this.style.background='linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.2)'; this.querySelector('svg').style.animation='none'">
+    <button id="share-fab" class="fixed left-4 text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300" style="bottom: 92px; background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria)) !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;" onclick="shareGeneral()" title="Compartilhar cardápio" onmouseover="this.style.background='linear-gradient(135deg, var(--cor-secundaria), var(--cor-primaria))'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.3)'; this.querySelector('svg').style.animation='smoothSpin 0.6s ease-in'" onmouseout="this.style.background='linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria))'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.2)'; this.querySelector('svg').style.animation='none'">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition: all 0.3s ease;">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
         </svg>
@@ -3533,7 +3551,7 @@
 
                 html += `
                     <section id="${categoryKey}" class="mb-8">
-                        <div class="flex items-center justify-between mb-4 py-2 z-10" style="background:var(--cor-fundo)">
+                        <div class="flex items-center justify-between mb-4 sticky top-[144px] py-2 z-10" style="background:var(--cor-fundo)">
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900">${categoryInfo.titulo_exibicao}</h2>
                                 <p class="text-sm text-gray-600">${categoryInfo.descricao}</p>
@@ -6976,7 +6994,27 @@
             handleInitialHash();
             setupDeselectableRadios();
             setupKeyboardShortcuts();
+            setupResizeHandler();
             setupFormStorageListeners();
+        }
+        
+        // Setup resize handler melhorado - sem interferir no scroll do usuário
+        function setupResizeHandler() {
+            let resizeTimeout;
+            // ❌ REMOVIDO: Event listener de scroll que conflitava com scroll spy
+            // O scroll spy já gerencia a detecção de scroll adequadamente
+            
+            // Event listener de resize - SIMPLIFICADO para não interferir com scroll spy
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Apenas atualizar setas de navegação das categorias se necessário
+                    if (typeof updateNavigationArrows === 'function') {
+                        updateNavigationArrows();
+                    }
+                    debugLog('📱 Resize handler executado - setas atualizadas');
+                }, 300);
+            });
         }
         
         // Setup listeners para salvar dados do formulário no localStorage
@@ -10244,16 +10282,24 @@
             let ticking = false;
             
             function updateScrollSpy() {
-                if (!scrollSpyEnabled) return;
+                // 🔍 DEBUG: Verificar se scroll spy está habilitado
+                if (!scrollSpyEnabled) {
+                    debugLog('🚫 updateScrollSpy: BLOQUEADO (scrollSpyEnabled = false)');
+                    ticking = false;
+                    return;
+                }
+                
+                debugLog('🔍 updateScrollSpy: EXECUTANDO (scrollSpyEnabled = true)');
                 
                 // Calcular offset do header + menu
                 const header = document.querySelector('header');
-                const categoryNav = document.querySelector('.category-nav');
-                const headerHeight = header ? header.offsetHeight : 89;
-                const navHeight = categoryNav ? categoryNav.offsetHeight : 51;
+                const nav = document.getElementById('category-nav');
+                const headerHeight = header ? header.offsetHeight : 0;
+                const navHeight = nav ? nav.offsetHeight : 0;
                 const totalOffset = headerHeight + navHeight + 20; // 20px margem
                 
                 const scrollPosition = window.scrollY + totalOffset;
+                debugLog('📍 Posição do scroll:', scrollPosition);
                 
                 // Pegar todas as seções ativas
                 const sections = categoriesData
@@ -10295,16 +10341,25 @@
                     }
                 }
                 
+                // 🔍 DEBUG: Verificar detecção de categoria ativa
+                debugLog('🎯 Categoria detectada pelo scroll:', activeSection);
+                debugLog('📏 Categoria atual armazenada:', currentActiveCategory);
+                debugLog('⚖️ Comparação (activeSection !== currentActiveCategory):', activeSection !== currentActiveCategory);
+                
                 // Só atualizar se mudou
                 if (activeSection && activeSection !== currentActiveCategory) {
+                    debugLog('✅ MUDOU! Atualizando categoria de', currentActiveCategory, 'para', activeSection);
                     currentActiveCategory = activeSection;
                     updateActiveCategory(activeSection);
+                } else {
+                    debugLog('🚫 NÃO MUDOU - mantendo categoria atual:', currentActiveCategory);
                 }
                 
                 ticking = false;
             }
             
             function onScroll() {
+                debugLog('📜 onScroll chamada - ticking:', ticking);
                 if (!ticking) {
                     requestAnimationFrame(updateScrollSpy);
                     ticking = true;
@@ -10320,46 +10375,49 @@
         
         // Desabilitar scroll spy temporariamente após cliques
         function disableScrollSpyTemporarily() {
+            debugLog('🚫 Scroll spy DESABILITADO temporariamente');
             scrollSpyEnabled = false;
-            if (scrollSpyTimeout) clearTimeout(scrollSpyTimeout);
+            if (scrollSpyTimeout) {
+                clearTimeout(scrollSpyTimeout);
+                debugLog('⏰ Timeout anterior cancelado');
+            }
             scrollSpyTimeout = setTimeout(() => {
                 scrollSpyEnabled = true;
+                debugLog('✅ Scroll spy REABILITADO após 1.5s');
+                debugLog('🔄 Estado atual scrollSpyEnabled:', scrollSpyEnabled);
             }, 1500); // 1.5 segundos
+            debugLog('⏱️ Novo timeout de 1.5s iniciado');
         }
 
-        // Centralizar botão ativo no menu de categorias
-        function centerCategoryButton(button) {
-            const container = document.getElementById('category-nav');
-            if (!container || !button) return;
-
-            const containerRect = container.getBoundingClientRect();
-            const buttonRect = button.getBoundingClientRect();
-
-            const offset = buttonRect.left - containerRect.left -
-                            (containerRect.width / 2 - buttonRect.width / 2);
-
-            container.scrollTo({
-                left: container.scrollLeft + offset,
-                behavior: 'smooth'
-            });
-        }
-
-        // Atualizar categoria ativa e centralizar no menu horizontal
+        // Atualizar categoria ativa - VERSÃO CORRIGIDA
         function updateActiveCategory(category) {
+            // ✅ CORREÇÃO CRÍTICA: Atualizar variável de controle do scroll spy
+            // Isso resolve o bug onde scroll spy "trava" após clicar em categoria
+            currentActiveCategory = category;
+            
             // Remover classe active de todos os botões
             document.querySelectorAll('.category-item').forEach(item => {
                 item.classList.remove('active');
             });
-
+            
             // Adicionar classe active no botão correspondente
             const activeButton = document.querySelector(`[data-category="${category}"]`);
             if (activeButton) {
                 activeButton.classList.add('active');
-                centerCategoryButton(activeButton);
+                
+                // Centralizar botão ativo no scroll horizontal
+                activeButton.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
             }
+            
+            // 🐛 DEBUG: Log para verificar se categoria foi atualizada corretamente
+            debugLog('🎯 Categoria ativa sincronizada:', category);
         }
 
-        // A centralização é feita manualmente para evitar "snap" vertical
+        // Função removida - agora usamos scrollIntoView nativo
 
         // Setup search
         function setupSearch() {
@@ -12665,6 +12723,126 @@
 })();
 
     </script>
+
+
+
+<!-- ====================================================================
+     SISTEMA DE TRADUÇÃO AUTOMÁTICA - GTRANSLATE
+     ====================================================================
+     Configurado dinamicamente através das variáveis TRADUCAO e LANGS
+     definidas no arquivo config.js
+     ==================================================================== -->
+<div id="gtranslate_wrapper"></div>
+
+<script>
+debugLog('🔍 === DEBUG SISTEMA DE TRADUÇÃO ===');
+debugLog('TRADUCAO definida?', typeof TRADUCAO !== 'undefined');
+debugLog('TRADUCAO valor:', TRADUCAO);
+debugLog('LANGS definida?', typeof LANGS !== 'undefined');
+debugLog('LANGS valor:', LANGS);
+debugLog('BANDEIRAS definida?', typeof BANDEIRAS !== 'undefined');
+debugLog('BANDEIRAS valor:', BANDEIRAS);
+
+// Verificar se o sistema de tradução está habilitado
+if (typeof TRADUCAO !== 'undefined' && TRADUCAO === true) {
+    infoLog('✅ Condição de tradução atendida - carregando GTranslate');
+    
+    // Carregar script do GTranslate apenas se habilitado
+    const gtranslateScript = document.createElement('script');
+    gtranslateScript.src = 'https://cdn.gtranslate.net/widgets/latest/float.js';
+    gtranslateScript.defer = true;
+    
+    // Adicionar listeners para debug
+    gtranslateScript.onload = function() {
+        infoLog('✅ Script GTranslate carregado com sucesso');
+    };
+    gtranslateScript.onerror = function() {
+        errorLog('❌ Erro ao carregar script GTranslate');
+    };
+    
+    document.head.appendChild(gtranslateScript);
+    debugLog('📦 Script GTranslate adicionado ao DOM');
+    
+    // Configurar GTranslate com base nas variáveis do config.js
+    window.gtranslateSettings = {
+        default_language: typeof LANGS !== 'undefined' && LANGS.length > 0 ? LANGS[0] : "pt",
+        native_language_names: true, // Mostrar nomes dos idiomas em suas línguas nativas
+        detect_browser_language: true, // Detectar idioma do navegador automaticamente
+        languages: typeof LANGS !== 'undefined' && LANGS.length > 0 ? LANGS : ["pt", "en", "es"],
+        wrapper_selector: "#gtranslate_wrapper",
+        float: "right",
+        flag_style: "3d", // Estilo das bandeiras: "3d", "default", "round"
+        switcher_type: "flags", // Tipo do seletor: "flags", "dropdown", "popup"
+        switcher_open_direction: "bottom", // Direção de abertura: "bottom", "top"
+        alt_flags: BANDEIRAS // 🌎 Bandeiras definidas no config.js
+    };
+    
+    debugLog('⚙️ Configurações GTranslate definidas:');
+    debugLog('- default_language:', window.gtranslateSettings.default_language);
+    debugLog('- languages:', window.gtranslateSettings.languages);
+    debugLog('- alt_flags:', window.gtranslateSettings.alt_flags);
+    infoLog('🌐 Sistema de tradução habilitado');
+    infoLog('📋 Idiomas disponíveis:', window.gtranslateSettings.languages);
+    infoLog('🎯 Idioma padrão:', window.gtranslateSettings.default_language);
+} else {
+    infoLog('🚫 Sistema de tradução desabilitado via config.js');
+    // Ocultar o wrapper se tradução estiver desabilitada
+    const wrapper = document.getElementById('gtranslate_wrapper');
+    if (wrapper) {
+        wrapper.style.display = 'none';
+    }
+}
+
+// ====================================================================
+// POSICIONAMENTO DINÂMICO DO BOTÃO DE COMPARTILHAMENTO
+// ====================================================================
+/**
+ * Ajusta a posição do botão de compartilhamento baseado no status da tradução:
+ * - TRADUCAO = true: bottom: 92px (posição original)
+ * - TRADUCAO = false: bottom: 30px (mesma altura do carrinho)
+ */
+function adjustShareButtonPosition() {
+    debugLog('🔍 === DEBUG POSICIONAMENTO BOTÃO COMPARTILHAMENTO ===');
+    debugLog('TRADUCAO definida?', typeof TRADUCAO !== 'undefined');
+    debugLog('TRADUCAO valor:', TRADUCAO);
+    
+    const shareButton = document.getElementById('share-fab');
+    debugLog('Botão compartilhamento encontrado?', !!shareButton);
+    
+    if (shareButton) {
+        // Verificar se tradução está habilitada
+        const translationEnabled = typeof TRADUCAO !== 'undefined' && TRADUCAO === true;
+        debugLog('Tradução habilitada?', translationEnabled);
+        
+        if (translationEnabled) {
+            // Tradução habilitada: manter posição original (92px)
+            shareButton.style.bottom = '92px';
+            infoLog('✅ Botão compartilhamento: posição 92px (tradução ativa)');
+            debugLog('Posição aplicada:', shareButton.style.bottom);
+        } else {
+            // Tradução desabilitada: alinhar com carrinho (30px)
+            shareButton.style.bottom = '30px';
+            infoLog('✅ Botão compartilhamento: posição 30px (tradução desabilitada)');
+            debugLog('Posição aplicada:', shareButton.style.bottom);
+        }
+    } else {
+        warnLog('❌ Botão compartilhamento não encontrado no DOM');
+    }
+    debugLog('=== FIM DEBUG POSICIONAMENTO ===');
+}
+
+// Executar ajuste de posicionamento após DOM carregado
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(adjustShareButtonPosition, 500);
+    });
+} else {
+    // DOM já carregado, executar com delay para garantir que elementos estejam disponíveis
+    setTimeout(adjustShareButtonPosition, 500);
+}
+</script>
+
+
 
 </body>
 </html>
